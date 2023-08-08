@@ -1,0 +1,30 @@
+project:
+  type: book
+  output-dir: docs
+
+book:
+  title: "An Introduction to Network Analysis for GIS"
+  author: "Dr. Carmen Cabrera-Arnau, Prof. Francisco Rowe, Andrew Renninger, Dr. Marin Maureira, Dr. Rafael Prieto-Curiel"
+  date: today
+  chapters:
+    - index.qmd
+    - overview.qmd
+    - introduction.qmd
+    - data-description.qmd
+    - african-network.qmd
+    - percolation.qmd
+
+#  search: true
+#  site-url: https://CrmnCA.github.io/nets4gis/
+#  repo-url: https://github.com/CrmnCA/nets4gis
+
+bibliography: references.bib
+margin-header: |
+  ![](/margin-header2.png)
+
+format:
+  html:
+    theme: journal
+
+editor: visual
+
