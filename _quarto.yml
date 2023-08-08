@@ -14,9 +14,9 @@ book:
     - african-network.qmd
     - percolation.qmd
 
-#  search: true
-#  site-url: https://CrmnCA.github.io/nets4gis/
-#  repo-url: https://github.com/CrmnCA/nets4gis
+  search: true
+  site-url: https://CrmnCA.github.io/nets4gis/
+  repo-url: https://github.com/CrmnCA/nets4gis
 
 bibliography: references.bib
 margin-header: |
