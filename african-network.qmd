@@ -1,1 +1,12 @@
-# African network
+# The African road network
+
+## Data
+
+## Creating a network from a data frame
+
+### Preparing the data to generate an igraph object
+
+### Visualising the African road network as a spatial network
+
+## Network metrics
+

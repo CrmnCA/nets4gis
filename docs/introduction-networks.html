@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>An Introduction to Network Analysis for GIS - 4&nbsp; Percolation theory</title>
+<title>An Introduction to Network Analysis for GIS - 2&nbsp; Introduction to the basics of network analysis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,7 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./african-network.html" rel="prev">
+<link href="./african-network.html" rel="next">
+<link href="./come-prepared.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -73,7 +74,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./percolation.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Percolation theory</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./introduction-networks.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction to the basics of network analysis</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -115,7 +116,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./introduction-networks.html" class="sidebar-item-text sidebar-link">
+  <a href="./introduction-networks.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction to the basics of network analysis</span></span></a>
   </div>
 </li>
@@ -127,7 +128,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./percolation.html" class="sidebar-item-text sidebar-link active">
+  <a href="./percolation.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Percolation theory</span></span></a>
   </div>
 </li>
@@ -143,13 +144,22 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">4.1</span> Introduction</a>
+  <li><a href="#dependencies" id="toc-dependencies" class="nav-link active" data-scroll-target="#dependencies"><span class="header-section-number">2.1</span> Dependencies</a></li>
+  <li><a href="#creating-networks" id="toc-creating-networks" class="nav-link" data-scroll-target="#creating-networks"><span class="header-section-number">2.2</span> Creating networks</a>
   <ul class="collapse">
-  <li><a href="#percolation-based-on-nodes" id="toc-percolation-based-on-nodes" class="nav-link" data-scroll-target="#percolation-based-on-nodes"><span class="header-section-number">4.1.1</span> Percolation based on nodes</a></li>
-  <li><a href="#percolation-based-on-edges" id="toc-percolation-based-on-edges" class="nav-link" data-scroll-target="#percolation-based-on-edges"><span class="header-section-number">4.1.2</span> Percolation based on edges</a></li>
+  <li><a href="#starting-from-the-basics" id="toc-starting-from-the-basics" class="nav-link" data-scroll-target="#starting-from-the-basics"><span class="header-section-number">2.2.1</span> Starting from the basics</a></li>
+  <li><a href="#adding-attributes" id="toc-adding-attributes" class="nav-link" data-scroll-target="#adding-attributes"><span class="header-section-number">2.2.2</span> Adding attributes</a></li>
+  <li><a href="#basic-visualisation" id="toc-basic-visualisation" class="nav-link" data-scroll-target="#basic-visualisation"><span class="header-section-number">2.2.3</span> Basic visualisation</a></li>
   </ul></li>
-  <li><a href="#uncovering-the-hierarchical-structure-of-the-african-road-network" id="toc-uncovering-the-hierarchical-structure-of-the-african-road-network" class="nav-link" data-scroll-target="#uncovering-the-hierarchical-structure-of-the-african-road-network"><span class="header-section-number">4.2</span> Uncovering the hierarchical structure of the African road network</a></li>
-  <li><a href="#measuring-network-robustness" id="toc-measuring-network-robustness" class="nav-link" data-scroll-target="#measuring-network-robustness"><span class="header-section-number">4.3</span> Measuring network robustness</a></li>
+  <li><a href="#network-metrics" id="toc-network-metrics" class="nav-link" data-scroll-target="#network-metrics"><span class="header-section-number">2.3</span> Network metrics</a>
+  <ul class="collapse">
+  <li><a href="#density" id="toc-density" class="nav-link" data-scroll-target="#density"><span class="header-section-number">2.3.1</span> Density</a></li>
+  <li><a href="#reciprocity" id="toc-reciprocity" class="nav-link" data-scroll-target="#reciprocity"><span class="header-section-number">2.3.2</span> Reciprocity</a></li>
+  <li><a href="#degree" id="toc-degree" class="nav-link" data-scroll-target="#degree"><span class="header-section-number">2.3.3</span> Degree</a></li>
+  <li><a href="#distances" id="toc-distances" class="nav-link" data-scroll-target="#distances"><span class="header-section-number">2.3.4</span> Distances</a></li>
+  <li><a href="#centrality" id="toc-centrality" class="nav-link" data-scroll-target="#centrality"><span class="header-section-number">2.3.5</span> Centrality</a></li>
+  <li><a href="#hubs-and-authorities" id="toc-hubs-and-authorities" class="nav-link" data-scroll-target="#hubs-and-authorities"><span class="header-section-number">2.3.6</span> Hubs and authorities</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -158,7 +168,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Percolation theory</span></h1>
+<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction to the basics of network analysis</span></h1>
 </div>
 
 
@@ -173,22 +183,43 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<section id="introduction" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">4.1</span> Introduction</h2>
-<section id="percolation-based-on-nodes" class="level3" data-number="4.1.1">
-<h3 data-number="4.1.1" class="anchored" data-anchor-id="percolation-based-on-nodes"><span class="header-section-number">4.1.1</span> Percolation based on nodes</h3>
+<section id="dependencies" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="dependencies"><span class="header-section-number">2.1</span> Dependencies</h2>
 </section>
-<section id="percolation-based-on-edges" class="level3" data-number="4.1.2">
-<h3 data-number="4.1.2" class="anchored" data-anchor-id="percolation-based-on-edges"><span class="header-section-number">4.1.2</span> Percolation based on edges</h3>
+<section id="creating-networks" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="creating-networks"><span class="header-section-number">2.2</span> Creating networks</h2>
+<section id="starting-from-the-basics" class="level3" data-number="2.2.1">
+<h3 data-number="2.2.1" class="anchored" data-anchor-id="starting-from-the-basics"><span class="header-section-number">2.2.1</span> Starting from the basics</h3>
+</section>
+<section id="adding-attributes" class="level3" data-number="2.2.2">
+<h3 data-number="2.2.2" class="anchored" data-anchor-id="adding-attributes"><span class="header-section-number">2.2.2</span> Adding attributes</h3>
+</section>
+<section id="basic-visualisation" class="level3" data-number="2.2.3">
+<h3 data-number="2.2.3" class="anchored" data-anchor-id="basic-visualisation"><span class="header-section-number">2.2.3</span> Basic visualisation</h3>
 </section>
 </section>
-<section id="uncovering-the-hierarchical-structure-of-the-african-road-network" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="uncovering-the-hierarchical-structure-of-the-african-road-network"><span class="header-section-number">4.2</span> Uncovering the hierarchical structure of the African road network</h2>
+<section id="network-metrics" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="network-metrics"><span class="header-section-number">2.3</span> Network metrics</h2>
+<section id="density" class="level3" data-number="2.3.1">
+<h3 data-number="2.3.1" class="anchored" data-anchor-id="density"><span class="header-section-number">2.3.1</span> Density</h3>
 </section>
-<section id="measuring-network-robustness" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="measuring-network-robustness"><span class="header-section-number">4.3</span> Measuring network robustness</h2>
+<section id="reciprocity" class="level3" data-number="2.3.2">
+<h3 data-number="2.3.2" class="anchored" data-anchor-id="reciprocity"><span class="header-section-number">2.3.2</span> Reciprocity</h3>
+</section>
+<section id="degree" class="level3" data-number="2.3.3">
+<h3 data-number="2.3.3" class="anchored" data-anchor-id="degree"><span class="header-section-number">2.3.3</span> Degree</h3>
+</section>
+<section id="distances" class="level3" data-number="2.3.4">
+<h3 data-number="2.3.4" class="anchored" data-anchor-id="distances"><span class="header-section-number">2.3.4</span> Distances</h3>
+</section>
+<section id="centrality" class="level3" data-number="2.3.5">
+<h3 data-number="2.3.5" class="anchored" data-anchor-id="centrality"><span class="header-section-number">2.3.5</span> Centrality</h3>
+</section>
+<section id="hubs-and-authorities" class="level3" data-number="2.3.6">
+<h3 data-number="2.3.6" class="anchored" data-anchor-id="hubs-and-authorities"><span class="header-section-number">2.3.6</span> Hubs and authorities</h3>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -427,11 +458,14 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./african-network.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">The African road network</span></span>
+      <a href="./come-prepared.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Come prepared</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="./african-network.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">The African road network</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->

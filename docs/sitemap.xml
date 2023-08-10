@@ -2,6 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://CrmnCA.github.io/nets4gis/overview.html</loc>
-    <lastmod>2023-08-08T16:49:36.699Z</lastmod>
+    <lastmod>2023-08-10T10:02:06.550Z</lastmod>
+  </url>
+  <url>
+    <loc>https://CrmnCA.github.io/nets4gis/index.html</loc>
+    <lastmod>2023-08-10T10:05:58.801Z</lastmod>
+  </url>
+  <url>
+    <loc>https://CrmnCA.github.io/nets4gis/introduction.html</loc>
+    <lastmod>2023-08-10T10:04:16.414Z</lastmod>
+  </url>
+  <url>
+    <loc>https://CrmnCA.github.io/nets4gis/come-prepared.html</loc>
+    <lastmod>2023-08-10T10:52:36.840Z</lastmod>
+  </url>
+  <url>
+    <loc>https://CrmnCA.github.io/nets4gis/data-description.html</loc>
+    <lastmod>2023-08-10T10:06:13.225Z</lastmod>
+  </url>
+  <url>
+    <loc>https://CrmnCA.github.io/nets4gis/african-network.html</loc>
+    <lastmod>2023-08-10T10:23:33.000Z</lastmod>
+  </url>
+  <url>
+    <loc>https://CrmnCA.github.io/nets4gis/percolation.html</loc>
+    <lastmod>2023-08-10T10:52:29.514Z</lastmod>
+  </url>
+  <url>
+    <loc>https://CrmnCA.github.io/nets4gis/introduction-networks.html</loc>
+    <lastmod>2023-08-10T10:52:32.373Z</lastmod>
   </url>
 </urlset>

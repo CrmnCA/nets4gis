@@ -1,0 +1,25 @@
+# Introduction to the basics of network analysis
+
+## Dependencies
+
+## Creating networks
+
+### Starting from the basics
+
+### Adding attributes
+
+### Basic visualisation
+
+## Network metrics
+
+### Density
+
+### Reciprocity
+
+### Degree
+
+### Distances
+
+### Centrality
+
+### Hubs and authorities

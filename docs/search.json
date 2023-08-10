@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "An Introduction to Network Analysis for GIS",
     "section": "",
-    "text": "Welcome\nThis website hosts the materials for the workshop “An Introduction to Network Analysis for GIS”. This training workshop was designed and is delivered by Dr. Carmen Cabrera-Arnau, Prof. Francisco Rowe, Dr. Rafael Prieto Curiel, Andrew Renninger and Valentina Marin Maureira\nThe website is free to use and is licensed under the Attribution-NonCommercial-NoDerivatives 4.0 International.\n\n\nContact\n\nDr. Carmen Cabrera-Arnau, Lecturer in Geographic Data Science\nc.cabrera-arnau [at] liverpool.ac.uk\nDepartment of Geography and Planning, University of Liverpool, Liverpool, United Kingdom"
+    "text": "Welcome\nThis website hosts the materials for the workshop “An Introduction to Network Analysis for GIS”. The training workshop was designed by Dr Carmen Cabrera-Arnau, Prof Francisco Rowe, Dr Rafael Prieto Curiel, Andrew Renninger and Valentina Marin Maureira.\nThe website is free to use and is licensed under the Attribution-NonCommercial-NoDerivatives 4.0 International.\n\n\nContact\n\nDr Carmen Cabrera-Arnau, Lecturer in Geographic Data Science\nc.cabrera-arnau [at] liverpool.ac.uk\nDepartment of Geography & Planning, University of Liverpool, UK"
   },
   {
     "objectID": "overview.html#description",
@@ -16,16 +16,16 @@
   {
     "objectID": "overview.html#structure",
     "href": "overview.html#structure",
-    "title": "Overview",
-    "section": "Structure",
-    "text": "Structure\n\n\n\n\n\n\n\nTime\nActivity\n\n\n\n\n9.00-9.30\nWelcome"
+    "title": "1  Be prepared",
+    "section": "1.1 Structure",
+    "text": "1.1 Structure\n\n\n\n\n\n\n\nTime\nActivity\n\n\n\n\n15 min\nWelcome, introduction to workshop activities\n\n\n20 min\nDownloading the workshop materials from Github\n\n\n35 min\nImporting libraries, network theory basics\n\n\n10 min\nComfort break\n\n\n45 min\nThe African road network\n\n\n45 min\nExperiments and percolation\n\n\n10 min\nWrap-up"
   },
   {
     "objectID": "overview.html#before-the-workshop",
     "href": "overview.html#before-the-workshop",
-    "title": "Overview",
-    "section": "Before the workshop",
-    "text": "Before the workshop\n\n\n\n\n\n\nImportant\n\n\n\nPlease make sure you download and install the most recent version of R, RStudio and Quarto on the computer that you will be using during the workshop, and install the indicated R packages – see detailed instructions below.\n\n\n\n\n\n\n\n\nNote\n\n\n\nAll three software packages are open and free to use.\n\n\nR\nYou can download R here. Make sure you select the appropriate version for your Operating System: Windows, MacOS (Apple silicon M1/M2 or older intel Macs). For example, if you use a macOS laptop with an M1 processor, click on ‘Download R for macOS’ and then, click the link to download the installer file (.pkg extension for macOS) under the header ‘For Apple silicon (M1/M2) Macs’. You can then open the installer and follow the instructions that you will be prompted with. For Windows users, click on ‘install R for the first time’ and follow the prompts.\nRStudio\nYou will also need to download RStudio Desktop (or simply RStudio), which is an integrated development environment to help you write code in R more easily. To download RStudio, follow this link and scroll down to the section titled ‘All Installers and Tarballs’. Download the appropriate installer file according to your Operating System. Then, open the installer and follow the installation instructions that you will be prompted with.\nQuarto\nDownload Quarto from this website. Quarto is a publishing system that will allow you to open and work on the computational notebooks for the workshop. On ‘Step 1’ on the website, download the version of Quarto that matches your Operating System. Open the installer file, run it and follow the prompts.\nR packages\nOnce you have installed R, you will need to install some R extensions, known as packages, that will be useful for the applications explored in this workshop. The packages you need to install are:\n\ntidyverse\nggthemes\n…\n\nTo install the packages, open RStudio. On the console window (normally at the bottom left), write the following command: install.packages(\"name of package\"). Make sure you replace “name of package” by the actual name of the package that you want to install e.g. install.packages(\"tidyverse\"). Then, press enter and repeat this process until you have installed all the packages in the list.\nYou can install all the packages by copying and running the code below:\n\nlist.of.packages.cran &lt;- c(\n   \"tidyverse\",\n   \"ggthemes\"\n)\n\nnew.packages.cran &lt;- list.of.packages.cran[!(list.of.packages.cran %in% installed.packages()[,\"Package\"])]\nif(length(new.packages.cran)) install.packages(new.packages.cran)\n\nfor(i in 1:length(list.of.packages.cran)) {\n  library(list.of.packages.cran[i], character.only = T)\n}\n\nYou can load all the packages by copying and running the code below:\n\ndeps &lt;- list(\n   \"tidyverse\",\n   \"ggthemes\"\n)\n\nfor(lib in deps){library(lib, character.only = TRUE)}\n\n\n\n\n\n\n\nNote\n\n\n\nWe might ask you to install more packages on the day that this workshop is taking place.\n\n\n\n\n\n\n\n\nImportant\n\n\n\nInstructions by email will be sent before the workshop to download the Github repository and data which will be used during the workshop. Please ensure you have downloaded the repository and data before the workshop."
+    "title": "1  Come prepared",
+    "section": "1.2 Before the workshop",
+    "text": "1.2 Before the workshop\n\n\n\n\n\n\nImportant\n\n\n\nPlease make sure you download and install the most recent version of R, RStudio and Quarto on the computer that you will be using during the workshop, and install the indicated R packages – see detailed instructions below.\n\n\n\n\n\n\n\n\nNote\n\n\n\nAll three software packages are open and free to use.\n\n\nR\nYou can download R here. Make sure you select the appropriate version for your Operating System: Windows, MacOS (Apple silicon M1/M2 or older intel Macs). For example, if you use a macOS laptop with an M1 processor, click on ‘Download R for macOS’ and then, click the link to download the installer file (.pkg extension for macOS) under the header ‘For Apple silicon (M1/M2) Macs’. You can then open the installer and follow the instructions that you will be prompted with. For Windows users, click on ‘install R for the first time’ and follow the prompts.\nRStudio\nYou will also need to download RStudio Desktop (or simply RStudio), which is an integrated development environment to help you write code in R more easily. To download RStudio, follow this link and scroll down to the section titled ‘All Installers and Tarballs’. Download the appropriate installer file according to your Operating System. Then, open the installer and follow the installation instructions that you will be prompted with.\nQuarto\nDownload Quarto from this website. Quarto is a publishing system that will allow you to open and work on the computational notebooks for the workshop. On ‘Step 1’ on the website, download the version of Quarto that matches your Operating System. Open the installer file, run it and follow the prompts.\nR packages\nOnce you have installed R, you will need to install some R extensions, known as packages, that will be useful for the applications explored in this workshop. The packages you need to install are:\n\ntidyverse\nggthemes\n…\n\nTo install the packages, open RStudio. On the console window (normally at the bottom left), write the following command: install.packages(\"name of package\"). Make sure you replace “name of package” by the actual name of the package that you want to install e.g. install.packages(\"tidyverse\"). Then, press enter and repeat this process until you have installed all the packages in the list.\nYou can also install all the packages by copying and running the code below:\n\nlist.of.packages.cran &lt;- c(\n   \"tidyverse\",\n   \"ggthemes\"\n)\n\nnew.packages.cran &lt;- list.of.packages.cran[!(list.of.packages.cran %in% installed.packages()[,\"Package\"])]\nif(length(new.packages.cran)) install.packages(new.packages.cran)\n\nfor(i in 1:length(list.of.packages.cran)) {\n  library(list.of.packages.cran[i], character.only = T)\n}\n\nYou can load all the packages by copying and running the code below:\n\ndeps &lt;- list(\n   \"tidyverse\",\n   \"ggthemes\"\n)\n\nfor(lib in deps){library(lib, character.only = TRUE)}\n\n\n\n\n\n\n\nImportant\n\n\n\nFurther instructions on how to download the workshop material from Github will be given during the workshop."
   },
   {
     "objectID": "overview.html#during-the-workshop",
@@ -145,5 +145,110 @@
     "title": "Welcome",
     "section": "",
     "text": "This website hosts the materials for the workshop “Using Digital Footprint Data to Measure and Monitor Human Mobility”. This training workshop was designed and is delivered by Prof. Francisco Rowe, Dr. Carmen Cabrera-Arnau, Dr. Miguel González-Leonardo, Ruth Neville and Andrea Nasuto.\nThe website is free to use and is licensed under the Attribution-NonCommercial-NoDerivatives 4.0 International.\n\nContact\n\nProf. Francisco Rowe, Professor in Population Data Science\nf.rowe-gonzalez [at] liverpool.ac.uk\nDepartment of Geography and Planning, University of Liverpool, Liverpool, United Kingdom"
+  },
+  {
+    "objectID": "overview.html#workshop-structure",
+    "href": "overview.html#workshop-structure",
+    "title": "1  Come prepared",
+    "section": "1.1 Workshop structure",
+    "text": "1.1 Workshop structure\n\n\n\n\n\n\n\nTime\nActivity\n\n\n\n\n15 min\nWelcome, introduction to workshop activities\n\n\n20 min\nDownloading the workshop materials from Github\n\n\n35 min\nImporting libraries, network theory basics\n\n\n10 min\nComfort break\n\n\n45 min\nThe African road network\n\n\n45 min\nExperiments and percolation\n\n\n10 min\nWrap-up"
+  },
+  {
+    "objectID": "come-prepared.html#workshop-structure",
+    "href": "come-prepared.html#workshop-structure",
+    "title": "1  Come prepared",
+    "section": "1.1 Workshop structure",
+    "text": "1.1 Workshop structure\n\n\n\n\n\n\n\nTime\nActivity\n\n\n\n\n15 min\nWelcome, introduction to workshop activities\n\n\n20 min\nDownloading the workshop materials from Github\n\n\n35 min\nImporting libraries, network theory basics\n\n\n10 min\nComfort break\n\n\n45 min\nThe African road network\n\n\n45 min\nExperiments and percolation\n\n\n10 min\nWrap-up"
+  },
+  {
+    "objectID": "come-prepared.html#before-the-workshop",
+    "href": "come-prepared.html#before-the-workshop",
+    "title": "1  Come prepared",
+    "section": "1.2 Before the workshop",
+    "text": "1.2 Before the workshop\n\n\n\n\n\n\nImportant\n\n\n\nPlease make sure you download and install the most recent version of R, RStudio and Quarto on the computer that you will be using during the workshop, and install the indicated R packages – see detailed instructions below.\n\n\n\n\n\n\n\n\nNote\n\n\n\nAll three software packages are open and free to use.\n\n\nR\nYou can download R here. Make sure you select the appropriate version for your Operating System: Windows, MacOS (Apple silicon M1/M2 or older intel Macs). For example, if you use a macOS laptop with an M1 processor, click on ‘Download R for macOS’ and then, click the link to download the installer file (.pkg extension for macOS) under the header ‘For Apple silicon (M1/M2) Macs’. You can then open the installer and follow the instructions that you will be prompted with. For Windows users, click on ‘install R for the first time’ and follow the prompts.\nRStudio\nYou will also need to download RStudio Desktop (or simply RStudio), which is an integrated development environment to help you write code in R more easily. To download RStudio, follow this link and scroll down to the section titled ‘All Installers and Tarballs’. Download the appropriate installer file according to your Operating System. Then, open the installer and follow the installation instructions that you will be prompted with.\nQuarto\nDownload Quarto from this website. Quarto is a publishing system that will allow you to open and work on the computational notebooks for the workshop. On ‘Step 1’ on the website, download the version of Quarto that matches your Operating System. Open the installer file, run it and follow the prompts.\nR packages\nOnce you have installed R, you will need to install some R extensions, known as packages, that will be useful for the applications explored in this workshop. The packages you need to install are:\n\ntidyverse\nggthemes\n…\n\nTo install the packages, open RStudio. On the console window (normally at the bottom left), write the following command: install.packages(\"name of package\"). Make sure you replace “name of package” by the actual name of the package that you want to install e.g. install.packages(\"tidyverse\"). Then, press enter and repeat this process until you have installed all the packages in the list.\nYou can also install all the packages by copying and running the code below:\n\nlist.of.packages.cran &lt;- c(\n   \"tidyverse\",\n   \"ggthemes\"\n)\n\nnew.packages.cran &lt;- list.of.packages.cran[!(list.of.packages.cran %in% installed.packages()[,\"Package\"])]\nif(length(new.packages.cran)) install.packages(new.packages.cran)\n\nfor(i in 1:length(list.of.packages.cran)) {\n  library(list.of.packages.cran[i], character.only = T)\n}\n\nYou can load all the packages by copying and running the code below:\n\ndeps &lt;- list(\n   \"tidyverse\",\n   \"ggthemes\"\n)\n\nfor(lib in deps){library(lib, character.only = TRUE)}\n\n\n\n\n\n\n\nImportant\n\n\n\nFurther instructions on how to download the workshop material from Github will be given during the workshop."
+  },
+  {
+    "objectID": "introduction-networks.html#dependencies",
+    "href": "introduction-networks.html#dependencies",
+    "title": "2  Introduction to the basics of network analysis",
+    "section": "2.1 Dependencies",
+    "text": "2.1 Dependencies"
+  },
+  {
+    "objectID": "introduction-networks.html#creating-networks",
+    "href": "introduction-networks.html#creating-networks",
+    "title": "2  Introduction to the basics of network analysis",
+    "section": "2.2 Creating networks",
+    "text": "2.2 Creating networks\n\n2.2.1 Starting from the basics\n\n\n2.2.2 Adding attributes\n\n\n2.2.3 Basic visualisation"
+  },
+  {
+    "objectID": "introduction-networks.html#network-metrics",
+    "href": "introduction-networks.html#network-metrics",
+    "title": "2  Introduction to the basics of network analysis",
+    "section": "2.3 Network metrics",
+    "text": "2.3 Network metrics\n\n2.3.1 Density\n\n\n2.3.2 Reciprocity\n\n\n2.3.3 Degree\n\n\n2.3.4 Distances\n\n\n2.3.5 Centrality\n\n\n2.3.6 Hubs and authorities"
+  },
+  {
+    "objectID": "african-network.html#data",
+    "href": "african-network.html#data",
+    "title": "3  The African road network",
+    "section": "3.1 Data",
+    "text": "3.1 Data"
+  },
+  {
+    "objectID": "african-network.html#generating-networks-from-data-files",
+    "href": "african-network.html#generating-networks-from-data-files",
+    "title": "3  The African road network",
+    "section": "3.2 Generating networks from data files",
+    "text": "3.2 Generating networks from data files\n\n3.2.1 Preparing the data to generate an igraph object"
+  },
+  {
+    "objectID": "african-network.html#creating-a-network-from-a-data-frame",
+    "href": "african-network.html#creating-a-network-from-a-data-frame",
+    "title": "3  The African road network",
+    "section": "3.2 Creating a network from a data frame",
+    "text": "3.2 Creating a network from a data frame\n\n3.2.1 Preparing the data to generate an igraph object\n\n\n3.2.2 Visualising the African road network as a spatial network"
+  },
+  {
+    "objectID": "african-network.html#experiments",
+    "href": "african-network.html#experiments",
+    "title": "3  The African road network",
+    "section": "3.3 Experiments",
+    "text": "3.3 Experiments"
+  },
+  {
+    "objectID": "african-network.html#network-metrics",
+    "href": "african-network.html#network-metrics",
+    "title": "3  The African road network",
+    "section": "3.3 Network metrics",
+    "text": "3.3 Network metrics"
+  },
+  {
+    "objectID": "percolation.html#introduction",
+    "href": "percolation.html#introduction",
+    "title": "4  Percolation theory",
+    "section": "4.1 Introduction",
+    "text": "4.1 Introduction\n\n4.1.1 Percolation based on nodes\n\n\n4.1.2 Percolation based on edges"
+  },
+  {
+    "objectID": "percolation.html#uncovering-hierarchical-structures",
+    "href": "percolation.html#uncovering-hierarchical-structures",
+    "title": "4  Percolation theory",
+    "section": "4.2 Uncovering hierarchical structures",
+    "text": "4.2 Uncovering hierarchical structures"
+  },
+  {
+    "objectID": "percolation.html#measuring-network-robustness",
+    "href": "percolation.html#measuring-network-robustness",
+    "title": "4  Percolation theory",
+    "section": "4.3 Measuring network robustness",
+    "text": "4.3 Measuring network robustness"
+  },
+  {
+    "objectID": "percolation.html#uncovering-the-hierarchical-structure-of-the-african-road-network",
+    "href": "percolation.html#uncovering-the-hierarchical-structure-of-the-african-road-network",
+    "title": "4  Percolation theory",
+    "section": "4.2 Uncovering the hierarchical structure of the African road network",
+    "text": "4.2 Uncovering the hierarchical structure of the African road network"
   }
 ]

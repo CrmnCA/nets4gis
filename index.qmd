@@ -1,12 +1,12 @@
 # Welcome {.unnumbered}
 
-This website hosts the materials for the workshop "An Introduction to Network Analysis for GIS". This training workshop was designed and is delivered by Dr. Carmen Cabrera-Arnau, Prof. Francisco Rowe, Dr. Rafael Prieto Curiel, Andrew Renninger and Valentina Marin Maureira
+This website hosts the materials for the workshop "An Introduction to Network Analysis for GIS". The training workshop was designed by Dr Carmen Cabrera-Arnau, Prof Francisco Rowe, Dr Rafael Prieto Curiel, Andrew Renninger and Valentina Marin Maureira.
 
 The website is free to use and is licensed under the Attribution-NonCommercial-NoDerivatives 4.0 International.
 
 
 # Contact {.unnumbered}
 
-> | Dr. Carmen Cabrera-Arnau, Lecturer in Geographic Data Science
+> | Dr Carmen Cabrera-Arnau, Lecturer in Geographic Data Science
 > | c.cabrera-arnau \[at\] liverpool.ac.uk
-> | Department of Geography and Planning, University of Liverpool, Liverpool, United Kingdom
+> | Department of Geography & Planning, University of Liverpool, UK

@@ -1,12 +1,17 @@
-# Overview {.unnumbered}
+# Come prepared
 
 
-## Structure
+## Workshop structure
 
-| Time        | Activity                                                    |
-|----------------------|--------------------------------------------------|
-| 9.00-9.30   | Welcome       |
-|   |                         |
+| Time         | Activity                                                   |
+|--------------|------------------------------------------------------------|
+| 15 min       | Welcome, introduction to workshop activities               |
+| 20 min       | Downloading the workshop materials from Github             |
+| 35 min       | Importing libraries, network theory basics                 |
+| 10 min       | Comfort break                                              |
+| 45 min       | The African road network                                   |
+| 45 min       | Experiments and percolation                                |
+| 10 min       | Wrap-up                                                    |
 
 ## Before the workshop
 
@@ -40,7 +45,7 @@ Once you have installed R, you will need to install some R extensions, known as 
 
 To install the packages, open RStudio. On the console window (normally at the bottom left), write the following command: `install.packages("name of package")`. Make sure you replace "name of package" by the actual name of the package that you want to install e.g. `install.packages("tidyverse")`. Then, press enter and repeat this process until you have installed all the packages in the list.
 
-You can install all the packages by copying and running the code below:
+You can also install all the packages by copying and running the code below:
 
 ```{r}
 #| eval: false
@@ -69,14 +74,7 @@ deps <- list(
 for(lib in deps){library(lib, character.only = TRUE)}
 ```
 
-::: callout-note
-We might ask you to install more packages on the day that this workshop is taking place.
-:::
 
 ::: callout-important
-Instructions by email will be sent before the workshop to download the Github repository and data which will be used during the workshop. Please ensure you have downloaded the repository and data *before* the workshop.
+Further instructions on how to download the workshop material from Github will be given during the workshop.
 :::
-
-## During the workshop
-
-All the workshop material will be made available on this [website](). Further instructions on how to download the material will be given during the workshop.

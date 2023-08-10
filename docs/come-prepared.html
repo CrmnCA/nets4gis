@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>An Introduction to Network Analysis for GIS - 4&nbsp; Percolation theory</title>
+<title>An Introduction to Network Analysis for GIS - 1&nbsp; Come prepared</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -30,7 +64,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./african-network.html" rel="prev">
+<link href="./introduction-networks.html" rel="next">
+<link href="./index.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -73,7 +108,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./percolation.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Percolation theory</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./come-prepared.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Come prepared</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -109,7 +144,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./come-prepared.html" class="sidebar-item-text sidebar-link">
+  <a href="./come-prepared.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Come prepared</span></span></a>
   </div>
 </li>
@@ -127,7 +162,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./percolation.html" class="sidebar-item-text sidebar-link active">
+  <a href="./percolation.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Percolation theory</span></span></a>
   </div>
 </li>
@@ -143,13 +178,8 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">4.1</span> Introduction</a>
-  <ul class="collapse">
-  <li><a href="#percolation-based-on-nodes" id="toc-percolation-based-on-nodes" class="nav-link" data-scroll-target="#percolation-based-on-nodes"><span class="header-section-number">4.1.1</span> Percolation based on nodes</a></li>
-  <li><a href="#percolation-based-on-edges" id="toc-percolation-based-on-edges" class="nav-link" data-scroll-target="#percolation-based-on-edges"><span class="header-section-number">4.1.2</span> Percolation based on edges</a></li>
-  </ul></li>
-  <li><a href="#uncovering-the-hierarchical-structure-of-the-african-road-network" id="toc-uncovering-the-hierarchical-structure-of-the-african-road-network" class="nav-link" data-scroll-target="#uncovering-the-hierarchical-structure-of-the-african-road-network"><span class="header-section-number">4.2</span> Uncovering the hierarchical structure of the African road network</a></li>
-  <li><a href="#measuring-network-robustness" id="toc-measuring-network-robustness" class="nav-link" data-scroll-target="#measuring-network-robustness"><span class="header-section-number">4.3</span> Measuring network robustness</a></li>
+  <li><a href="#workshop-structure" id="toc-workshop-structure" class="nav-link active" data-scroll-target="#workshop-structure"><span class="header-section-number">1.1</span> Workshop structure</a></li>
+  <li><a href="#before-the-workshop" id="toc-before-the-workshop" class="nav-link" data-scroll-target="#before-the-workshop"><span class="header-section-number">1.2</span> Before the workshop</a></li>
   </ul>
 </nav>
     </div>
@@ -158,7 +188,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Percolation theory</span></h1>
+<h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Come prepared</span></h1>
 </div>
 
 
@@ -173,20 +203,129 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<section id="introduction" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">4.1</span> Introduction</h2>
-<section id="percolation-based-on-nodes" class="level3" data-number="4.1.1">
-<h3 data-number="4.1.1" class="anchored" data-anchor-id="percolation-based-on-nodes"><span class="header-section-number">4.1.1</span> Percolation based on nodes</h3>
+<section id="workshop-structure" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="workshop-structure"><span class="header-section-number">1.1</span> Workshop structure</h2>
+<table class="table">
+<colgroup>
+<col style="width: 18%">
+<col style="width: 81%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Time</th>
+<th>Activity</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>15 min</td>
+<td>Welcome, introduction to workshop activities</td>
+</tr>
+<tr class="even">
+<td>20 min</td>
+<td>Downloading the workshop materials from Github</td>
+</tr>
+<tr class="odd">
+<td>35 min</td>
+<td>Importing libraries, network theory basics</td>
+</tr>
+<tr class="even">
+<td>10 min</td>
+<td>Comfort break</td>
+</tr>
+<tr class="odd">
+<td>45 min</td>
+<td>The African road network</td>
+</tr>
+<tr class="even">
+<td>45 min</td>
+<td>Experiments and percolation</td>
+</tr>
+<tr class="odd">
+<td>10 min</td>
+<td>Wrap-up</td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="percolation-based-on-edges" class="level3" data-number="4.1.2">
-<h3 data-number="4.1.2" class="anchored" data-anchor-id="percolation-based-on-edges"><span class="header-section-number">4.1.2</span> Percolation based on edges</h3>
-</section>
-</section>
-<section id="uncovering-the-hierarchical-structure-of-the-african-road-network" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="uncovering-the-hierarchical-structure-of-the-african-road-network"><span class="header-section-number">4.2</span> Uncovering the hierarchical structure of the African road network</h2>
-</section>
-<section id="measuring-network-robustness" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="measuring-network-robustness"><span class="header-section-number">4.3</span> Measuring network robustness</h2>
+<section id="before-the-workshop" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="before-the-workshop"><span class="header-section-number">1.2</span> Before the workshop</h2>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Please make sure you download and install the most recent version of R, RStudio and Quarto on the computer that you will be using during the workshop, and install the indicated R packages – see detailed instructions below.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>All three software packages are open and free to use.</p>
+</div>
+</div>
+<p><strong>R</strong></p>
+<p>You can download R <a href="https://cran.r-project.org/">here</a>. Make sure you select the appropriate version for your Operating System: Windows, MacOS (Apple silicon M1/M2 or older intel Macs). For example, if you use a macOS laptop with an M1 processor, click on ‘Download R for macOS’ and then, click the link to download the installer file (.pkg extension for macOS) under the header ‘For Apple silicon (M1/M2) Macs’. You can then open the installer and follow the instructions that you will be prompted with. For Windows users, click on ‘<a href="https://cran.r-project.org/bin/windows/base/">install R for the first time</a>’ and follow the prompts.</p>
+<p><strong>RStudio</strong></p>
+<p>You will also need to download RStudio Desktop (or simply RStudio), which is an integrated development environment to help you write code in R more easily. To download RStudio, follow this <a href="https://posit.co/download/rstudio-desktop/">link</a> and scroll down to the section titled ‘All Installers and Tarballs’. Download the appropriate installer file according to your Operating System. Then, open the installer and follow the installation instructions that you will be prompted with.</p>
+<p><strong>Quarto</strong></p>
+<p>Download Quarto from this <a href="https://quarto.org/docs/get-started/">website</a>. Quarto is a publishing system that will allow you to open and work on the computational notebooks for the workshop. On ‘Step 1’ on the website, download the version of Quarto that matches your Operating System. Open the installer file, run it and follow the prompts.</p>
+<p><strong>R packages</strong></p>
+<p>Once you have installed R, you will need to install some R extensions, known as packages, that will be useful for the applications explored in this workshop. The packages you need to install are:</p>
+<ul>
+<li><code>tidyverse</code></li>
+<li><code>ggthemes</code></li>
+<li>…</li>
+</ul>
+<p>To install the packages, open RStudio. On the console window (normally at the bottom left), write the following command: <code>install.packages("name of package")</code>. Make sure you replace “name of package” by the actual name of the package that you want to install e.g.&nbsp;<code>install.packages("tidyverse")</code>. Then, press enter and repeat this process until you have installed all the packages in the list.</p>
+<p>You can also install all the packages by copying and running the code below:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>list.of.packages.cran <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>   <span class="st">"tidyverse"</span>,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>   <span class="st">"ggthemes"</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>new.packages.cran <span class="ot">&lt;-</span> list.of.packages.cran[<span class="sc">!</span>(list.of.packages.cran <span class="sc">%in%</span> <span class="fu">installed.packages</span>()[,<span class="st">"Package"</span>])]</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="fu">length</span>(new.packages.cran)) <span class="fu">install.packages</span>(new.packages.cran)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(list.of.packages.cran)) {</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">library</span>(list.of.packages.cran[i], <span class="at">character.only =</span> T)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>You can load all the packages by copying and running the code below:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>deps <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>   <span class="st">"tidyverse"</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>   <span class="st">"ggthemes"</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(lib <span class="cf">in</span> deps){<span class="fu">library</span>(lib, <span class="at">character.only =</span> <span class="cn">TRUE</span>)}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Further instructions on how to download the workshop material from Github will be given during the workshop.</p>
+</div>
+</div>
 
 
 </section>
@@ -427,11 +566,14 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./african-network.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">The African road network</span></span>
+      <a href="./index.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Welcome</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="./introduction-networks.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction to the basics of network analysis</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->

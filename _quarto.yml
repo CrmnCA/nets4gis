@@ -4,13 +4,12 @@ project:
 
 book:
   title: "An Introduction to Network Analysis for GIS"
-  author: "Dr. Carmen Cabrera-Arnau, Prof. Francisco Rowe, Andrew Renninger, Dr. Marin Maureira, Dr. Rafael Prieto-Curiel"
+  author: "Dr Carmen Cabrera-Arnau, Prof Francisco Rowe, Andrew Renninger, Dr Marin Maureira, Dr Rafael Prieto-Curiel"
   date: today
   chapters:
     - index.qmd
-    - overview.qmd
-    - introduction.qmd
-    - data-description.qmd
+    - come-prepared.qmd
+    - introduction-networks.qmd
     - african-network.qmd
     - percolation.qmd
 
