@@ -19,7 +19,7 @@ book:
 
 bibliography: references.bib
 margin-header: |
-  ![](/margin-header2.png)
+  ![](/margin-header.png)
 
 format:
   html:
