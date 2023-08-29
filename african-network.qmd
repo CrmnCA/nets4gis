@@ -4,9 +4,111 @@
 
 ## Creating a network from a data frame
 
-### Preparing the data to generate an igraph object
+```{r}
+#| warning: false
+
+#Support for simple features, a standardised way to encode spatial vector data
+library(sf)
+#Data manipulation
+library(dplyr)
+# An R package for network manipulation and analysis
+library(igraph)
+# Provides a number of useful functions for working with character strings in R
+library(stringr)
+```
+
+```{r}
+df_nodes <- read.csv("https://raw.githubusercontent.com/rafaelprietocuriel/AfricanUrbanNetwork/main/AfricaNetworkNodes.csv")
+
+df_edges <- read.csv("https://raw.githubusercontent.com/rafaelprietocuriel/AfricanUrbanNetwork/main/AfricaNetworkEdges.csv")
+```
+
+```{r}
+g_africa <- graph_from_data_frame(d = df_edges,
+                                       vertices = df_nodes,
+                                       directed = FALSE)
+```
+
+```{r}
+V(g_africa)$name
+```
+```{r}
+vertex_attr_names(g_africa)
+```
+
+```{r}
+edge_attr_names(g_africa)
+```
 
 ### Visualising the African road network as a spatial network
 
+```{r}
+plot(g_africa) 
+```
+
+
+```{r}
+
+V(g_africa)$size <- 0.4*(V(g_africa)$Pop2015/100000)^0.4
+
+plot(g_africa, vertex.size=V(g_africa)$size, edge.arrow.size=.15, edge.arrow.width=.2, edge.curved=0.1, edge.width=1, edge.color ="gray90",
+vertex.color="red", vertex.frame.color="red",
+vertex.label=" ", vertex.label.color="black",
+vertex.label.cex=.65) 
+```
+
+
 ## Network metrics
 
+### Density
+
+```{r}
+edge_density(g_africa, loops=FALSE)
+```
+
+### Reciprocity
+
+```{r}
+reciprocity(g_africa)
+```
+
+### Degree
+
+```{r}
+# Compute degree of the nodes given by v belonging to graph g_US, in this case the in-degree
+deg <- degree(g_africa, v=V(g_africa))
+
+# Produces histogram of the frequency of nodes with a certain in-degree
+hist(deg, breaks = 30, main="Histogram of node degree")
+```
+
+```{r}
+V(g_africa)$agglosName[degree(g_africa)==max(degree(g_africa))]
+V(g_africa)$name[degree(g_africa)==max(degree(g_africa))]
+```
+
+```{r}
+degree(g_africa, v=c("2896"), mode="in")
+```
+
+### Distances
+
+```{r}
+shortest_paths(g_africa, 
+from = V(g_africa)$agglosName=="Cairo",
+to = V(g_africa)$agglosName=="Lagos",
+weights=NA, #If weights=NULL and the graph has a weight edge attribute, then the weigth attribute is used. If this is NA then no weights are used (even if the graph has a weight attribute)
+output = "both") # outputs both path nodes and edges
+```
+
+```{r}
+diameter(g_africa, directed=TRUE, weights=NA)
+```
+
+```{r}
+mean_distance(g_africa, directed=TRUE, weights=NA)
+```
+
+### Centrality
+
+### Hubs and authorities
