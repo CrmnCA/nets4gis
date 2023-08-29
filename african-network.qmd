@@ -30,7 +30,7 @@ g_africa <- graph_from_data_frame(d = df_edges,
 ```
 
 ```{r}
-V(g_africa)$name
+head(V(g_africa)$name)
 ```
 ```{r}
 vertex_attr_names(g_africa)
@@ -43,16 +43,11 @@ edge_attr_names(g_africa)
 ### Visualising the African road network as a spatial network
 
 ```{r}
-plot(g_africa) 
-```
 
-
-```{r}
-
-V(g_africa)$size <- 0.4*(V(g_africa)$Pop2015/100000)^0.4
+V(g_africa)$size <- 0.035*(V(g_africa)$Pop2015/10000)^0.72
 
 plot(g_africa, vertex.size=V(g_africa)$size, edge.arrow.size=.15, edge.arrow.width=.2, edge.curved=0.1, edge.width=1, edge.color ="gray90",
-vertex.color="red", vertex.frame.color="red",
+vertex.color="red", vertex.frame.color="black", vertex.frame.width=0.2,
 vertex.label=" ", vertex.label.color="black",
 vertex.label.cex=.65) 
 ```
@@ -79,7 +74,7 @@ reciprocity(g_africa)
 deg <- degree(g_africa, v=V(g_africa))
 
 # Produces histogram of the frequency of nodes with a certain in-degree
-hist(deg, breaks = 30, main="Histogram of node degree")
+hist(deg, breaks = 50, main="Histogram of node degree")
 ```
 
 ```{r}
@@ -111,4 +106,34 @@ mean_distance(g_africa, directed=TRUE, weights=NA)
 
 ### Centrality
 
+```{r}
+close_centr <- closeness(g_africa, weights=NA) #using unweighted edges
+hist(close_centr, breaks = 50, main="Histogram of closeness centrality")
+```
+```{r}
+between_centr <- betweenness(g_africa, v = V(g_africa), directed = TRUE, weights = NA)
+hist(between_centr, breaks = 30, main="Histogram of betweenness centrality")
+```
+
+
 ### Hubs and authorities
+
+```{r}
+hs <- hub_score(g_africa, weights=NULL)$vector #In this case, we use the weighted edges
+hist(hs, breaks = 50, main="Histogram of hub score")
+```
+
+
+```{r}
+as <- authority_score(g_africa, weights=NULL)$vector
+hist(as, breaks = 50, main="Histogram of authority score")
+```
+
+```{r}
+c = cluster_fast_greedy(g_africa)
+plot(c, g_africa, vertex.size=V(g_africa)$size, edge.arrow.size=.15, edge.arrow.width=.2, edge.curved=0.1, edge.width=1, edge.color ="gray90",
+vertex.color="red", vertex.frame.color="black", vertex.frame.width=0.2,
+vertex.label=" ", vertex.label.color="black",
+vertex.label.cex=.65)
+```
+
