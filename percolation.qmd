@@ -1,11 +1,71 @@
 # Percolation theory
 
+```{r}
+# Load required packages
+library(igraph)    # for network analysis
+library(sf)        # for spatial data handling
+library(ggplot2)   # for plotting
+library(leaflet)   # for interactive maps
+
+```
+
+
+
 ## Introduction
 
-### Percolation based on nodes
 
-### Percolation based on edges
 
 ## Uncovering the hierarchical structure of the African road network
+
+```{r}
+# Read edge and node data from URLs
+df_edges <- read.csv("https://raw.githubusercontent.com/rafaelprietocuriel/AfricanUrbanNetwork/main/AfricaNetworkEdges.csv")
+df_nodes <- read.csv("https://raw.githubusercontent.com/rafaelprietocuriel/AfricanUrbanNetwork/main/AfricaNetworkNodes.csv", encoding='UTF-8')
+```
+
+```{r}
+# Create a graph 'g_africa' from data frames 'df_edges' and 'df_nodes'
+# The graph is undirected (directed = FALSE)
+G <- graph_from_data_frame(d = df_edges,
+                                       vertices = df_nodes,
+                                       directed = FALSE)
+
+```
+
+```{r}
+# Create an empty list to store lengths
+
+components <- data.frame(nodeID = integer(0), component = integer(0), threshold = integer(0), gcc = integer(0))
+```
+
+```{r}
+
+# Iterate over thresholds
+for (i in seq(0, 0)) {
+  # Create a copy of the graph G
+  G_ <- G 
+  
+  # Find indices of edges with lengths greater than the current threshold (i)
+  edges_to_remove <- which(E(G_)$l > i)
+  
+  # Delete edges from G_ based on their indices
+  G_ <- delete_edges(G_, edges_to_remove)
+  
+  # Get connected components of the modified graph G_
+  connected_components <- components(G_)
+  
+  # Create a data frame 'df_threshold' containing node IDs, component indices,
+  # threshold values, and sizes of connected components
+  df_threshold <- data.frame(nodeID = df_nodes$Agglomeration_ID, component = connected_components$membership, threshold = rep(i, times= nrow(df_nodes)), gcc = connected_components$csize)
+  
+  # Append 'df_threshold' to the 'components' data frame
+  components <- rbind(components, df_threshold)
+}
+
+
+head(components)
+```
+
+
 
 ## Measuring network robustness

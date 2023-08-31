@@ -15,9 +15,9 @@ library(stringr)
 
 ## Data
 
-Here, we work with a network of African roads constructed by considering all continental cities with more than 100,000 inhabitants as the nodes, obtained from [@Moriconi16]. The edges of the network were created based on the road infrastructure from OpenStreetMap [@openstreetmapOpenStreetMap], using all primary roads, highways and trunk roads. Each edge was constructed by measuring the physical distance of consecutive points that describe the intricate patterns of the roads. Thus, a reasonably good estimate of its road length is available for each edge. Additional nodes besides cities are needed to fully describe the road infrastructure, such as some road intersections. These nodes are labelled as “transport nodes” and help define possible routes between cities. Some transport nodes correspond to towns with less than 100,000 inhabitants, so they are labelled as attached to nearby cities. The urban network enables us to consider the existing roads in the continent and measure the travelling distance rather than the physical distance between cities. The constructed network is formed by 7,361 nodes (2,162 cities and 5,199 transport nodes) and 9,159 edges. For more details on how the network was built, see [@PRIETOCURIELmethodsX].
+Here, we work with a network of African roads constructed by considering all continental cities with more than 100,000 inhabitants as the nodes, obtained from [@Moriconi16]. The edges of the network were created based on the road infrastructure from OpenStreetMap [@openstreetmapOpenStreetMap], using all primary roads, highways and trunk roads. Each edge was constructed by measuring the physical distance of consecutive points that describe the intricate patterns of the roads. Thus, a reasonably good estimate of its road length is available for each edge. Additional nodes besides cities are needed to fully describe the road infrastructure, such as some road intersections. These nodes are labelled as "transport nodes" and help define possible routes between cities. Some transport nodes correspond to towns with less than 100,000 inhabitants, so they are labelled as attached to nearby cities. The urban network enables us to consider the existing roads in the continent and measure the travelling distance rather than the physical distance between cities. The constructed network is formed by 7,361 nodes (2,162 cities and 5,199 transport nodes) and 9,159 edges. For more details on how the network was built, see [@PRIETOCURIELmethodsX].
 
-The network is connected, meaning that it is possible to find a sequence of nodes and existing roads linking any pair of cities, and therefore, it is also possible to find the shortest road distance between any two cities and define it as the network distance. The network consists of 361,000 km of road infrastructure and connects 461 million people living in African cities, representing roughly 39% of the continent’s population [@PrietoCurielBeyond].
+The network is connected, meaning that it is possible to find a sequence of nodes and existing roads linking any pair of cities, and therefore, it is also possible to find the shortest road distance between any two cities and define it as the network distance. The network consists of 361,000 km of road infrastructure and connects 461 million people living in African cities, representing roughly 39% of the continent's population [@PrietoCurielBeyond].
 
 ## Creating a network from data frame
 
@@ -48,7 +48,7 @@ We can have a look at the names of the vertex attributes, which are automaticall
 vertex_attr_names(g_africa)
 ```
 
-where "name" is the ID of each node in the network, "agglosName" is the name of the city represented by the node, it is set to "road" if the node is a transport node. "x" and "y" represent the coordinates of each node, "Pop2015" is the population of the city nodes, "ISO3" is the code for the country that each node is situated in, "Region" represents the region within the African continent that each node is situated in, and "Between" and "degree" represent the betweenness centrality and the degree of each node in the network, which we will also compute below. 
+where "name" is the ID of each node in the network, "agglosName" is the name of the city represented by the node, it is set to "road" if the node is a transport node. "x" and "y" represent the coordinates of each node, "Pop2015" is the population of the city nodes, "ISO3" is the code for the country that each node is situated in, "Region" represents the region within the African continent that each node is situated in, and "Between" and "degree" represent the betweenness centrality and the degree of each node in the network, which we will also compute below.
 
 In particular, we can look at the first few values of the attribute "name":
 
@@ -63,6 +63,7 @@ We can also obtain the names of the edge attributes, which are taken from the co
 # Retrieve the attribute names associated with edges in the 'g_africa' graph
 edge_attr_names(g_africa)
 ```
+
 where "l" represents the length in kilometres by road segment and it considers curves, "h" is the type of edge (primary, highway, etc.), "time" is the estimated minutes to travel through the edge, considering different speeds for distinc types of road, "timeU" is also the estimated minutes to travel throgh the edge, but allowing extra time if the extrema of the edge are urban nodes, "timeUCB" allows extra time for edges that cross a border, "border" is a binary variable taking value 1 is it crosses a border and 0 otherwise and "added" is also a binary variable taking value 1 if an edge was artificially added to ensure the connectedness of the network and 0 otherwise.
 
 ### Visualising the African road network as a spatial network
@@ -83,6 +84,7 @@ vertex.color="red", vertex.frame.color="black", vertex.frame.width=0.2,
 vertex.label=" ", vertex.label.color="black",
 vertex.label.cex=.65) 
 ```
+
 ## Network metrics
 
 The following metrics can help us obtain further insights into the network structure. They are also valuable as a way to characterise the network so it can later be compared to other networks or to itself through time.
@@ -118,6 +120,7 @@ deg <- degree(g_africa, v=V(g_africa))
 # Produces histogram of the frequency of nodes with a certain in-degree
 hist(deg, breaks = 50, main="Histogram of node degree")
 ```
+
 We observe that most nodes have degree 3. Nodes of degree 1 are terminal nodes. Nodes of degree 2 are relatively less common than those of degree 1 and 3. This is likely due to the method used to build the network, where all the transport nodes of degree 2 are eliminated in order to simplify the network. Beyond degree 4, it is relatively rare to find any nodes. From the histogram, we see the maximum degree observed in the network is 13. Below, we obtain the name of the node with the maximum degree as well as the value of the degree (13).
 
 ```{r}
@@ -130,7 +133,6 @@ highest_degree_vertex_names <- V(g_africa)$name[degree(g_africa) == max(degree(g
 # Calculate the degree of vertices with the highest degree in the 'g_africa' graph
 degree(g_africa, v=highest_degree_vertex_names)
 ```
-
 
 ### Distances
 
@@ -176,15 +178,15 @@ hist(close_centr, breaks = 50, main="Histogram of closeness centrality")
 ```
 
 Similarly, we also compute the betweenness centrality for all nodes and represent it as a histogram.
+
 ```{r}
 between_centr <- betweenness(g_africa, v = V(g_africa), directed = TRUE, weights = NA)
 hist(between_centr, breaks = 30, main="Histogram of betweenness centrality")
 ```
 
-
 ### Communities
 
-One way of detecting communities in networks is by using modularity-based methods. Modularity measures the concentration of edges between groups of nodes compared to what we would expect if the edges were placed at random. 
+One way of detecting communities in networks is by using modularity-based methods. Modularity measures the concentration of edges between groups of nodes compared to what we would expect if the edges were placed at random.
 
 An example of a modularity-based method is the fast greedy algorithm [@NewmanPRE04], which starts with a subnetwork formed only by edges between highly connected nodes. Then, in each iteration the algorithm samples random edges that increase the level of modularity in the subnetwork and adds them.
 
@@ -199,3 +201,5 @@ vertex.label.cex=.65)
 ```
 
 Can you find some interesting patterns in these communities?
+
+------------------------------------------------------------------------
