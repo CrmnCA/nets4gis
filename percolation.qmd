@@ -9,6 +9,7 @@ library(ggplot2)
 library(ggraph)
 library(patchwork)
 library(tidygraph)
+library(RColorBrewer)
 ```
 
 ## Introduction
@@ -80,10 +81,13 @@ At the end of the previous session, we used the fast greedy algorithm to detect 
 
 ```{r}
 
+# Create a list to store the plots
+plots_list <- list()
+i=1
 
 # Iterate over thresholds
-for (j in seq(30, 90, 45)) {
-
+for (j in seq(60, 360, 60)) {
+  
   df_edges_perco <- subset(df_edges, timeUCB < j)
   
   G_perco <- graph_from_data_frame(d = df_edges_perco,
@@ -93,24 +97,38 @@ for (j in seq(30, 90, 45)) {
   # Find connected components
   component_info <- components(G_perco)
 
-  # Extract component membership
-  component_membership <- component_info$membership
+  # Define a color palette for connected components (replace with your own colors)
+  component_colors <- rainbow(max(component_info$membership) + 1)
 
-  # Create a color palette for components
-  num_components <- max(component_membership)
-  colors <- rainbow(num_components)
+  # Create a data frame with node names and corresponding colors
+  node_colors <- data.frame(
+    name = df_nodes$Agglomeration_ID,
+    color = component_colors[component_info$membership + 1]
+  )
+  
+  # For isolated nodes, assign gray color
+  isolated_nodes <- V(G_perco)[degree(G_perco) == 0]
+  # Assuming 'attribute_name' is the attribute you want to retrieve
+  attribute_values <- get.vertex.attribute(G_perco, "AgglomerationID")[isolated_nodes]
+
+  
+  node_colors$color[node_colors$name %in% attribute_values] <- "gray"
   
   # Assign a 'size' attribute to vertices in graph 'G' based on a function of population data
   V(G_perco)$size <- 0.5*(V(G_perco)$Pop2015/10000)^0.4
 
-  G_perco_tbl <- as_tbl_graph(G_perco)
+  custom_layout <- data.frame(
+  name = V(G_perco)$name,  # Node names from the graph
+  x = df_nodes$x,  # Custom x-coordinates
+  y = df_nodes$y   # Custom y-coordinates
+  )
   
   # Plot the graph 'G_' with specific visual attributes
-  plot_threshold <- ggraph(G_perco_tbl) +
-    geom_edge_link(aes(edge_alpha = 0.5)) +
-    geom_node_point(aes(color = colors[component_membership]), 
+  plot <- ggraph(as_tbl_graph(G_perco), custom_layout) +
+    geom_edge_link() +
+    geom_node_point(aes(color = node_colors$color), 
                     size = V(G_perco)$size) +
-    theme_void()
+                    theme(legend.position = "none")
     
      # plot(G_perco, 
      # vertex.size = V(G_perco)$size,         # Set vertex size based on the 'size' attribute
@@ -126,19 +144,18 @@ for (j in seq(30, 90, 45)) {
      # vertex.label.color = "black",    # Set vertex label color
      # vertex.label.cex = 0.65)         # Set vertex label size 
   
-  # Generate the variable name dynamically
-  variable_name <- paste("plot_", j, sep = "")
+  # Add the plot to the list
+  plots_list[[i]] <- plot
   
-  # Assign a value to the dynamically named variable
-  assign(variable_name, plot_threshold)  # Replace with your variable assignment
-  
+  i <- i+1
 }
 ```
 
 
 
 ```{r}
-plot_30 + plot_75
+plots_list %>%
+  wrap_plots(nrow = 2) 
 
 ```
 
