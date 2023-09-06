@@ -194,7 +194,7 @@ hist(between_centr, breaks = 30, main = "Histogram of betweenness centrality")
 
 One way of detecting communities in networks is by using modularity-based methods. Modularity measures the concentration of edges between groups of nodes compared to what we would expect if the edges were placed at random.
 
-An example of a modularity-based method is the fast greedy algorithm [@NewmanPRE04], which starts with the original network but with no edges, so there are as many communities as nodes. Then, in each iteration of the algorithm a  randomly chosen edge from the original network is placed back. The selected quality measure, in this case modularity, is evaluated. If the added edge increases the value of the modularity, it is retained. It is discarded otherwise. The process is repeated until the modularity function is maximised.
+An example of a modularity-based method is the fast greedy algorithm [@NewmanPRE04], which starts with the original network but with no edges, so there are as many communities as nodes. Then, in each iteration of the algorithm a  randomly chosen edge from the original network is placed back. The selected quality measure, in this case modularity, is evaluated. The added edge is retained if it increases the value of the modularity, or discarded otherwise. The process is repeated until the modularity function is maximised.
 
 We can test this algorithm for the African road network and plot the result to see how the nodes are assigned to different communities (note that a node can belong to more than one community):
 
