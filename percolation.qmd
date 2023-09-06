@@ -1,15 +1,19 @@
 # Percolation theory
 
+## Dependencies
+
 ```{r}
 # Load required packages
 library(igraph)    # for network analysis
-library(sf)        # for spatial data handling
-library(ggplot2)   # for plotting
-library(leaflet)   # for interactive maps
 
 ```
 
 ## Introduction
+
+
+The term percolation normally refers to the process whereby a fluid moves slowly through a porous material, for example, the percolation of rain water through rocks gives rise to aquifers. The study and modelling of this infiltration process in physics, chemistry and material science is known as percolation theory. If you think about it, a rock can be modelled as three-dimensional lattice (if the rock was cube-shaped, this lattice would be like a Rubik cube but instead of being $3 \times 3\times 3$, it is $n\times n \times n$). Then, the pores in the rock would be represented by "open sites" in this lattice (this would correspond to missing pieces in the Rubik cube) and the bits of the rock where there is material and therefore, no chance for the water to go through, would be represented by "closed sites" (this would correspond to pieces in the Rubik cube that are actually present). A typical question in percolation theory would then be as follows. If sites may be open with probability $p$ or closed with probability $1-p$ and these probabilities are assumed to be independent for each site, what is the probability that the water can go through the top to the bottom of the rock for a given value of $p$?
+
+In recent decades, the mathematical study of percolation has been applied in a more general way, to understand the behavior of connected clusters or pathways in any system that can be modelled as lattice or as a network. While the formulation of the percolation models vary slightly from lattices to networks, it follows the same principles. For example, let's consider the spread of a certain pandemic, where contagion between two humans may take place with probability $p$ if an infected individual spends more than 10 minutes at less than 2 meters away from a healthy one. Then, we can think of the pandemic as a fluid moving slowly, but instead of going through a porous rock, it goes through a network of people where only certain pathways for contagion are allowed (i.e. only through people that are physically close to each other for long enough). The people can be modelled as nodes of a network, and edges are present if they spend more than 10 minutes at a distance of less than 2 meters. Then, each edge or connection has an associated probability of contagion $p$. Applying percolation theory, we could answer the question of "what are the chances that the pandemic travels from city A to city B given the structure of the network and the fact that the probability of contagion is $p$?"
 
 ## Uncovering the hierarchical structure of the African road network
 
@@ -20,41 +24,53 @@ df_nodes <- read.csv("https://raw.githubusercontent.com/rafaelprietocuriel/Afric
 ```
 
 ```{r}
+# Filter the data frame df_nodes to only include rows where the 'Region' column is equal to "South"
 df_nodes <- subset(df_nodes, Region == "South")
 ```
 
 ```{r}
+# Filter the data frame df_edges to only include rows where the 'from' column is in the list of Agglomeration_ID values from df_nodes
 df_edges <- subset(df_edges, from %in% df_nodes$Agglomeration_ID)
+
+# Filter the data frame df_edges to only include rows where the 'to' column is in the list of Agglomeration_ID values from df_nodes
 df_edges <- subset(df_edges, to %in% df_nodes$Agglomeration_ID)
 ```
 
 ```{r}
-# Create a graph 'g_africa' from data frames 'df_edges' and 'df_nodes'
-# The graph is undirected (directed = FALSE)
+# Create an undirected graph 'G' from a data frame 'df_edges' representing edges and a data frame 'df_nodes' representing vertices
 G <- graph_from_data_frame(d = df_edges,
-                                       vertices = df_nodes,
-                                       directed = FALSE)
-
+                           vertices = df_nodes,
+                           directed = FALSE)
 ```
 
 ```{r}
+# Assign a 'size' attribute to vertices in graph 'G' based on a function of population data
 V(G)$size <- 0.5*(V(G)$Pop2015/10000)^0.4
 
-plot(G, vertex.size=V(G)$size, edge.arrow.size=.15, edge.arrow.width=.2, edge.curved=0.1, edge.width=1, edge.color ="gray90",
-vertex.color="red", vertex.frame.color="black", vertex.frame.width=0.2,
-vertex.label=" ", vertex.label.color="black",
-vertex.label.cex=.65) 
+# Plot the graph 'G' with specific visual attributes
+plot(G, 
+     vertex.size = V(G)$size,          # Set vertex size based on the 'size' attribute
+     edge.arrow.size = 0.15,           # Set arrow size for directed edges
+     edge.arrow.width = 0.2,          # Set arrow width for directed edges
+     edge.curved = 0.1,               # Set edge curvature
+     edge.width = 1,                  # Set edge width
+     edge.color = "gray90",           # Set edge color
+     vertex.color = "red",            # Set vertex color
+     vertex.frame.color = "black",    # Set vertex frame (border) color
+     vertex.frame.width = 0.2,        # Set vertex frame (border) width
+     vertex.label = " ",              # Set vertex labels to empty
+     vertex.label.color = "black",    # Set vertex label color
+     vertex.label.cex = 0.65)         # Set vertex label size 
 ```
 
 ```{r}
-# Create an empty list to store lengths
-
+# Create an empty data frame to store component information
 components <- data.frame(nodeID = integer(0), component = integer(0), threshold = integer(0), gcc = integer(0))
 
+# Create empty lists to store thresholds, gccs, and ncs
 thresholds <- list()
 gccs <- list()
 ncs <- list()
-
 ```
 
 ```{r}
@@ -80,37 +96,28 @@ for (i in seq(0, max(df_edges$l))) {
   # Append 'df_threshold' to the 'components' data frame
   components <- rbind(components, df_threshold)
   
+  # Append the current threshold value to the 'thresholds' list
   thresholds <- append(thresholds, i)
+  
+  # Append the maximum connected component size to the 'gccs' list
   gccs <- append(gccs, max(connected_components$csize))
+  
+  # Append the number of connected components to the 'ncs' list
   ncs <- append(ncs, connected_components$no)
 }
 
-
+# Display the first few rows of the 'components' data frame
 head(components)
 ```
 
 ```{r}
+# Plot the threshold values on the x-axis and the maximum connected component sizes (gccs) on the y-axis
 plot(thresholds, gccs)
 ```
 ```{r}
+# Plot the threshold values on the x-axis and the number of connected components (ncs) on the y-axis
 plot(thresholds, ncs)
 ```
 
-
-
-```{r}
-components_100 <- subset(components, components$threshold == 100)
-```
-
-```{r}
-vertex_attr(G, "components_100") <- components_100$component
-```
-
-```{r}
-plot(G, vertex.size=V(G)$size, edge.arrow.size=.15, edge.arrow.width=.2, edge.curved=0.1, edge.width=1, edge.color ="gray90",
-vertex.color=V(G)$components_100, vertex.frame.color="black", vertex.frame.width=0.2,
-vertex.label=" ", vertex.label.color="black",
-vertex.label.cex=.65) 
-```
 
 ## Measuring network robustness

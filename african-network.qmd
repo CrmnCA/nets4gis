@@ -1,16 +1,11 @@
 # The African road network
 
+## Dependencies
+
 ```{r}
 #| warning: false
-
-#Support for simple features, a standardised way to encode spatial vector data
-library(sf)
-#Data manipulation
-library(dplyr)
 # An R package for network manipulation and analysis
 library(igraph)
-# Provides a number of useful functions for working with character strings in R
-library(stringr)
 ```
 
 ## Data

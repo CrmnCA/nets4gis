@@ -206,10 +206,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="workshop-structure" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="workshop-structure"><span class="header-section-number">1.1</span> Workshop structure</h2>
 <table class="table">
-<colgroup>
-<col style="width: 18%">
-<col style="width: 81%">
-</colgroup>
 <thead>
 <tr class="header">
 <th>Time</th>
@@ -283,36 +279,39 @@ Note
 <p><strong>Quarto</strong></p>
 <p>Download Quarto from this <a href="https://quarto.org/docs/get-started/">website</a>. Quarto is a publishing system that will allow you to open and work on the computational notebooks for the workshop. On ‘Step 1’ on the website, download the version of Quarto that matches your Operating System. Open the installer file, run it and follow the prompts.</p>
 <p><strong>R packages</strong></p>
-<p>Once you have installed R, you will need to install some R extensions, known as packages, that will be useful for the applications explored in this workshop. The packages you need to install are:</p>
+<p>Once you have installed R, you will need to install some R extensions, known as packages, that will be useful for the applications explored in this workshop. In this case, you only need to install one package:</p>
 <ul>
-<li><code>tidyverse</code></li>
-<li><code>ggthemes</code></li>
-<li>…</li>
+<li><code>igraph</code></li>
 </ul>
-<p>To install the packages, open RStudio. On the console window (normally at the bottom left), write the following command: <code>install.packages("name of package")</code>. Make sure you replace “name of package” by the actual name of the package that you want to install e.g.&nbsp;<code>install.packages("tidyverse")</code>. Then, press enter and repeat this process until you have installed all the packages in the list.</p>
-<p>You can also install all the packages by copying and running the code below:</p>
+<p>To install any package, open RStudio. On the console window (normally at the bottom left), write the following command: <code>install.packages("name of package")</code>. Make sure you replace “name of package” by the actual name of the package that you want to install e.g.&nbsp;<code>install.packages("tidyverse")</code>. Then, press enter and repeat this process until you have installed all the packages in the list.</p>
+<p>If there are several packages you need to install (suppose you need to install <code>tidyverse</code>, <code>ggthemes</code>, <code>igraph</code> and <code>dyplr</code>), you can also install them all at once by copying and running the code below:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>list.of.packages.cran <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>   <span class="st">"tidyverse"</span>,</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>   <span class="st">"ggthemes"</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>new.packages.cran <span class="ot">&lt;-</span> list.of.packages.cran[<span class="sc">!</span>(list.of.packages.cran <span class="sc">%in%</span> <span class="fu">installed.packages</span>()[,<span class="st">"Package"</span>])]</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="fu">length</span>(new.packages.cran)) <span class="fu">install.packages</span>(new.packages.cran)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(list.of.packages.cran)) {</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">library</span>(list.of.packages.cran[i], <span class="at">character.only =</span> T)</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>   <span class="st">"ggthemes"</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>   <span class="st">"igraph"</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>   <span class="st">"dyplr"</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>new.packages.cran <span class="ot">&lt;-</span> list.of.packages.cran[<span class="sc">!</span>(list.of.packages.cran <span class="sc">%in%</span> <span class="fu">installed.packages</span>()[,<span class="st">"Package"</span>])]</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="fu">length</span>(new.packages.cran)) <span class="fu">install.packages</span>(new.packages.cran)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(list.of.packages.cran)) {</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">library</span>(list.of.packages.cran[i], <span class="at">character.only =</span> T)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>You can load all the packages by copying and running the code below:</p>
+<p>Once your packages are install, you will need to load them in order to be able to use it in your code. This can be done by copying and running the code below:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>deps <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>   <span class="st">"tidyverse"</span>,</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>   <span class="st">"ggthemes"</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(lib <span class="cf">in</span> deps){<span class="fu">library</span>(lib, <span class="at">character.only =</span> <span class="cn">TRUE</span>)}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>   <span class="st">"ggthemes"</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>   <span class="st">"igraph"</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>   <span class="st">"dyplr"</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(lib <span class="cf">in</span> deps){<span class="fu">library</span>(lib, <span class="at">character.only =</span> <span class="cn">TRUE</span>)}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>But as we mentioned, we only need igraph here, so you can install it simply using <code>install.packages("igraph")</code> and once it is installed, you can load it simply running <code>library(igraph)</code>.</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
