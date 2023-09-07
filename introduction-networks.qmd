@@ -151,7 +151,7 @@ You have already seen how we can visualise networks using the base R function **
 ```{r}
 plot(network_isolated, 
      # adjust nodes
-     vertex.frame.color = "black",    # line colour
+     vertex.frame.color = "gray90",    # line colour
      vertex.label.color = "black",    # label colour 
      vertex.label.cex = 1,            # label font size
      vertex.label.dist = 3,           # label distance
