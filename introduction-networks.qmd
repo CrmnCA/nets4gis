@@ -89,6 +89,7 @@ network_isolated <- graph(
 
 # plot
 plot(network_isolated, 
+      layout = layout.circle(network_isolated),
      vertex.frame.color="red",  
      vertex.label.color="black",
      vertex.label.cex=0.9, 
@@ -149,7 +150,8 @@ network_isolated$title <- "Network of human mobility between cities"
 You have already seen how we can visualise networks using the base R function **plot**. We will now elaborate on how individual components of the network can be visually adjusted using specific parameters in the plot function. More sophisticated data visualisations can be produced integrating geographic information, see Chapter 5 in @roweetal2023-rps.
 
 ```{r}
-plot(network_isolated, 
+plot(network_isolated,
+     layout = layout.circle(network_isolated),
      # adjust nodes
      vertex.frame.color = "gray90",    # line colour
      vertex.label.color = "black",    # label colour 
@@ -159,20 +161,40 @@ plot(network_isolated,
      vertex.size=10,                  # size
      # adjust edges
      edge.curved=0.3,     # curvature
-     edge.arrow.size=.5,  # size
-     edge.arrow.width=.2,
-     edge.width=E(network_isolated)$width,
+     edge.arrow.size=0.5,  # size
+     edge.arrow.width=.5,
+     edge.width=E(network_isolated)$weight,
      edge.color = "gray") # colour
 ```
 
-
 ## Network metrics
+
+Next we will provide a brief description of commonly used metrics to analyse the basic structure of networks. 
 
 ### Density
 
+The density of a network refers to the proportion of existing edges over all possible edges. In a network with $n$ nodes, the total number of possible edges is $x \times (n-1)$. A density equal to $1$ corresponds to a situation where $x \times (n-1)$ edges are present. A network with no edges at all would have density equal to 0. We can obtain the density of a network by running the following code:
+
+```{r}
+edge_density(network_isolated, 
+             loops=FALSE)
+```
+
+
 ### Reciprocity
 
+The reciprocity in a directed network is the proportion of reciprocated connections between nodes (i.e. number of pairs of nodes with edges in both directions) from all the existing edges.
+
+```{r}
+reciprocity(network_isolated)
+```
+
+
 ### Degree
+
+The degree of a node is the number of edges connecting a given node i.e. starting or ending at a given node. The in-degree of a node in a directed network is the number of edges ending in a given node. The out-degree is the number of edges starting from a given node. The degree() function allows computing the degree of one or more nodes, and specifying the measures of interest i.e. the total degree, in-degree or out-degree.
+
+
 
 ### Distances
 
