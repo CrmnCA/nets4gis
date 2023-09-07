@@ -2,6 +2,7 @@
 
 ## Dependencies
 
+We first install all the libraries required for this session.
 ```{r}
 #| include = FALSE
 rm(list=ls()) # clear working space
@@ -291,7 +292,24 @@ hist(between_centr,
 
 ### Hubs and authorities
 
-```{r}
+We call hubs or authorities nodes with a higher-than-average degree. Normally, the name hub is used to nodes with high out-degree. Authority is used to nodes with high in-degree. Jon Kleinberg developed an algorithm to detect hubs and authorities. 
 
+```{r}
+net_hub <- hub_score(network_isolated, 
+                weights=NULL)$vector #  use the weighted edges
+
+hist(net_hub, 
+     breaks = 50, 
+     main = "Histogram of hub score")
+```
+We can also explore the authority score for each node:
+
+```{r}
+net_aut <- authority_score(network_isolated, 
+                           weights=NULL)$vector
+
+hist(net_aut, 
+     breaks = 50, 
+     main = "Histogram of authority score")
 ```
 
