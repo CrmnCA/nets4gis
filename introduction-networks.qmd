@@ -214,9 +214,44 @@ The path length between nodes $A$ and $B$ is generally defined as the number of 
 
 The path length can be defined in alternative ways. For example, the path length can be defined as the sum of the weights of the edges forming a path if the edges are weighted. 
 
-In R, we can use the function **shortest_paths()** to find the shortest path between a given pair of nodes and its length. For example, below we can see that the shortest path between the MSA containing New York and the MSA containing Los Angeles is one. This is not surprising since we would expect an edge connecting these two MSAs representing the fact that there is people migrating from one to the other in two consecutive years.
+We can use the function `shortest_paths()` to find the shortest path between a given pair of nodes:
+
+```{r}
+shortest_paths(network_isolated, 
+               from = V(network_isolated)$name == "City 1",
+               to = V(network_isolated)$name == "City 5",
+               weights=NA, # if weights = NULL and a weight edge attribute is present, this is used.
+               output = "both") # outputs are produced for both path nodes and edges
+
+
+```
+
+Of all shortest paths in a network, the longest path length is the network diameter. 
+
+```{r}
+diameter(network_isolated, 
+         directed=TRUE, 
+         weights=NA)
+```
+
+The mean distance is the average length of all shortest paths in the network. The mean distance will always be smaller or equal than the diameter.
+
+```{r}
+mean_distance(network_isolated, 
+              directed=TRUE, 
+              weights=NA)
+```
 
 
 ### Centrality
+
+Centrality metrics assign scores to nodes (and sometimes also edges) according to their position within a network. These metrics can be used to identify the most influential nodes.
+
+We have already explored some concepts which can be regarded as centrality metrics, for example, the degree of a node or the weighted degree of a node, also known as the strength of a node, which is the sum of edge weights that link to adjacent nodes or, in other words, the in-flow or out-flow associated with each node. As we can see from the code below, many nodes in g_US have an in-flow of less than 100 immigrants. Note that we have set mode to c(“in”) for inflow and we have set the weights parameter to NULL since we want to know the sum of weights for the incoming edges and not just the total number of incoming edges.
+
+```{r}
+
+```
+
 
 ### Hubs and authorities
