@@ -247,11 +247,51 @@ mean_distance(network_isolated,
 
 Centrality metrics assign scores to nodes (and sometimes also edges) according to their position within a network. These metrics can be used to identify the most influential nodes.
 
-We have already explored some concepts which can be regarded as centrality metrics, for example, the degree of a node or the weighted degree of a node, also known as the strength of a node, which is the sum of edge weights that link to adjacent nodes or, in other words, the in-flow or out-flow associated with each node. As we can see from the code below, many nodes in g_US have an in-flow of less than 100 immigrants. Note that we have set mode to c(“in”) for inflow and we have set the weights parameter to NULL since we want to know the sum of weights for the incoming edges and not just the total number of incoming edges.
+We can measure the degree of a node, or the weighted degree of a node. This is known as the strength of a node. It is the sum of edge weights linked to adjacent nodes, or also known as in-flow or out-flow associated with each node.
+
+```{r}
+# compute strength of network nodes
+net_strength <- strength(network_isolated, # network object
+                         vids = V(network_isolated), #	vertices
+                         mode = c("in"), # “in” for in-degree
+                         loops = FALSE, # whether to loop the edge count
+                         weights = NULL # if weights = NULL and a weight edge attribute is present, this is used.
+)
+  
+# histogram 
+hist(net_strength, 
+     breaks = 50, 
+     main="Histogram of node strength")
+```
+
+Two important centrality metrics are (1) closeness centrality, and (2) betweenness centrality. Closeness centrality is a measure of the shortest path length between a node and all the other nodes. For a given node, it is computed as the inverse of the average shortest paths between that node and every other node in the network. A node with closeness centrality close to 1 indicates that on average the node is very close to the other nodes in the network. A closeness centrality of 0 represents an isolated node.
+
+```{r}
+close_centr <- closeness(network_isolated, 
+                         mode="in", 
+                         weights=NA) # using unweighted edges
+
+hist(close_centr, 
+     breaks = 50, 
+     main = "Histogram of closeness centrality")
+```
+
+Betweenness centrality is a measure of the number of shortest paths going through a node. Nodes with high values of betweenness centrality indicates that they play a very important role in the overall connectivity of the network. Betweenness can also be computed for edges.
+
+```{r}
+between_centr <- betweenness(network_isolated, 
+                             v = V(network_isolated), 
+                             directed = TRUE, 
+                             weights = NA)
+
+hist(between_centr, 
+     breaks = 50, 
+     main = "Histogram of betweenness centrality")
+```
+
+### Hubs and authorities
 
 ```{r}
 
 ```
 
-
-### Hubs and authorities
