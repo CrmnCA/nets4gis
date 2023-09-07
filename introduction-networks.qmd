@@ -194,9 +194,28 @@ reciprocity(network_isolated)
 
 The degree of a node is the number of edges connecting a given node i.e. starting or ending at a given node. The in-degree of a node in a directed network is the number of edges ending in a given node. The out-degree is the number of edges starting from a given node. The degree() function allows computing the degree of one or more nodes, and specifying the measures of interest i.e. the total degree, in-degree or out-degree.
 
+```{r}
+# compute in-degree
+net_degree <- degree(network_isolated, 
+                     v=V(network_isolated), 
+                     mode="in")
 
+# display histogram of in-degree
+hist(net_degree, 
+     breaks = 30, 
+     main = "Node in-degree")
+```
 
-### Distances
+### Distance
+
+A path in a network between node $A$ and node $B$ is a sequence of edges joining distinct nodes, starting at node $A$ and ending at node $B$. In a **directed path** edges are all directed at the same direction.
+
+The path length between nodes $A$ and $B$ is generally defined as the number of edges forming a path. The shortest path is the minimum count of edges present to travel from $A$ to $B$.
+
+The path length can be defined in alternative ways. For example, the path length can be defined as the sum of the weights of the edges forming a path if the edges are weighted. 
+
+In R, we can use the function **shortest_paths()** to find the shortest path between a given pair of nodes and its length. For example, below we can see that the shortest path between the MSA containing New York and the MSA containing Los Angeles is one. This is not surprising since we would expect an edge connecting these two MSAs representing the fact that there is people migrating from one to the other in two consecutive years.
+
 
 ### Centrality
 
