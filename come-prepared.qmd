@@ -9,7 +9,7 @@
 | 35 min | Importing libraries, network theory basics     |
 | 10 min | Comfort break                                  |
 | 45 min | The African road network                       |
-| 45 min | Experiments and percolation                    |
+| 45 min | Percolation                                    |
 | 10 min | Wrap-up                                        |
 
 ## Before the workshop
@@ -39,18 +39,31 @@ Download Quarto from this [website](https://quarto.org/docs/get-started/). Quart
 Once you have installed R, you will need to install some R extensions, known as packages, that will be useful for the applications explored in this workshop. In this case, you only need to install one package:
 
 -   `igraph`
+-   `sf`
+-   `tidyverse`
+-   `ggplot2`
+-   `ggraph`
+-   `patchwork`
+-   `tidygraph`
+-   `RColorBrewer`
+-   `rnaturalearth`
 
 To install any package, open RStudio. On the console window (normally at the bottom left), write the following command: `install.packages("name of package")`. Make sure you replace "name of package" by the actual name of the package that you want to install e.g. `install.packages("tidyverse")`. Then, press enter and repeat this process until you have installed all the packages in the list.
 
-If there are several packages you need to install (suppose you need to install `tidyverse`, `ggthemes`, `igraph` and `dyplr`), you can also install them all at once by copying and running the code below:
+If there are several packages you need to install, you can also install them all at once by copying and running the code below:
 
 ```{r}
 #| eval: false
 list.of.packages.cran <- c(
+   "igraph", 
+   "sf",
    "tidyverse",
-   "ggthemes",
-   "igraph",
-   "dyplr"
+   "ggplot2",
+   "ggraph",
+   "patchwork",
+   "tidygraph",
+   "RColorBrewer",
+   "rnaturalearth"
 )
 
 new.packages.cran <- list.of.packages.cran[!(list.of.packages.cran %in% installed.packages()[,"Package"])]
@@ -61,21 +74,26 @@ for(i in 1:length(list.of.packages.cran)) {
 }
 ```
 
-Once your packages are install, you will need to load them in order to be able to use it in your code. This can be done by copying and running the code below:
+Once your packages are installed, you will need to load them in order to be able to use it in your code. This can be done by copying and running the code below:
 
 ```{r}
 #| eval: false
 deps <- list(
+   "igraph", 
+   "sf",
    "tidyverse",
-   "ggthemes",
-   "igraph",
-   "dyplr"
+   "ggplot2",
+   "ggraph",
+   "patchwork",
+   "tidygraph",
+   "RColorBrewer",
+   "rnaturalearth"
 )
 
 for(lib in deps){library(lib, character.only = TRUE)}
 ```
 
-But as we mentioned, we only need igraph here, so you can install it simply using `install.packages("igraph")` and once it is installed, you can load it simply running `library(igraph)`.
+Or you can load them one by one simply running, for example, `library(igraph)` for `igraph`.
 
 ::: callout-important
 Further instructions on how to download the workshop material from Github will be given during the workshop.

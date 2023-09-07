@@ -10,6 +10,8 @@ library(ggraph)
 library(patchwork)
 library(tidygraph)
 library(RColorBrewer)
+library(rnaturalearth)
+library(sf)
 ```
 
 ## Introduction
@@ -86,7 +88,7 @@ plots_list <- list()
 i=1
 
 # Iterate over thresholds
-for (j in seq(60, 360, 60)) {
+for (j in seq(60, 180, 60)) {
   
   df_edges_perco <- subset(df_edges, timeUCB < j)
   
@@ -96,25 +98,23 @@ for (j in seq(60, 360, 60)) {
   
   # Find connected components
   component_info <- components(G_perco)
+  
+  # Create a data frame with node names and corresponding colors
+  df_nodes$component_ID = component_info$membership
 
   # Define a color palette for connected components (replace with your own colors)
-  component_colors <- rainbow(max(component_info$membership) + 1)
+  component_colors <- sample(rainbow(component_info$no), replace=FALSE)
+
+  # Assign colors to nodes based on connected component
+  node_colors <- component_colors[component_info$membership]
 
   # Create a data frame with node names and corresponding colors
-  node_colors <- data.frame(
-    name = df_nodes$Agglomeration_ID,
-    color = component_colors[component_info$membership + 1]
-  )
+  df_nodes$color = node_colors
   
-  # For isolated nodes, assign gray color
-  isolated_nodes <- V(G_perco)[degree(G_perco) == 0]
-  # Assuming 'attribute_name' is the attribute you want to retrieve
-  attribute_values <- get.vertex.attribute(G_perco, "AgglomerationID")[isolated_nodes]
+  df_nodes$degree = degree(G_perco)
+  
+  df_nodes$color[df_nodes$degree == 0] <- "gray"
 
-  
-  node_colors$color[node_colors$name %in% attribute_values] <- "gray"
-  
-  # Assign a 'size' attribute to vertices in graph 'G' based on a function of population data
   V(G_perco)$size <- 0.5*(V(G_perco)$Pop2015/10000)^0.4
 
   custom_layout <- data.frame(
@@ -126,24 +126,11 @@ for (j in seq(60, 360, 60)) {
   # Plot the graph 'G_' with specific visual attributes
   plot <- ggraph(as_tbl_graph(G_perco), custom_layout) +
     geom_edge_link() +
-    geom_node_point(aes(color = node_colors$color), 
+    geom_node_point(aes(color = factor(df_nodes$color)), 
                     size = V(G_perco)$size) +
+                    scale_color_identity() +
                     theme(legend.position = "none")
     
-     # plot(G_perco, 
-     # vertex.size = V(G_perco)$size,         # Set vertex size based on the 'size' attribute
-     # edge.arrow.size = 0.15,          # Set arrow size for directed edges
-     # edge.arrow.width = 0.2,          # Set arrow width for directed edges
-     # edge.curved = 0.1,               # Set edge curvature
-     # edge.width = 1,                  # Set edge width
-     # edge.color = "gray90",           # Set edge color
-     # vertex.color = colors[component_membership],            # Set vertex color
-     # vertex.frame.color = "black",    # Set vertex frame (border) color
-     # vertex.frame.width = 0.2,        # Set vertex frame (border) width
-     # vertex.label = " ",              # Set vertex labels to empty
-     # vertex.label.color = "black",    # Set vertex label color
-     # vertex.label.cex = 0.65)         # Set vertex label size 
-  
   # Add the plot to the list
   plots_list[[i]] <- plot
   
@@ -155,20 +142,176 @@ for (j in seq(60, 360, 60)) {
 
 ```{r}
 plots_list %>%
-  wrap_plots(nrow = 2) 
+  wrap_plots(nrow = 1) 
+
+```
+
+```{r}
+
+world <- ne_download(scale = "small", category = "cultural", type = "admin_0_countries", 
+                     returnclass = "sf")
+target_countries <- c("Botswana", "eSwatini", "Lesotho", "Namibia", "South Africa")
+world_subset <- world[world$SOVEREIGNT %in% target_countries, ]
+```
+
+```{r}
+
+df_nodes_perco_60 <- df_nodes
+df_edges_perco_60 <- subset(df_edges, timeUCB < 60)
+
+G_perco_60 <- graph_from_data_frame(d = df_edges_perco_60,
+                         vertices = df_nodes_perco_60,
+                         directed = FALSE)
+
+# Find connected components
+component_info_60 <- components(G_perco_60)
+
+# Create a data frame with node names and corresponding colors
+df_nodes_perco_60$component_ID = component_info_60$membership
+```
+
+```{r}
+# Define a color palette for connected components (replace with your own colors)
+component_colors_60 <- sample(rainbow(component_info_60$no), replace=FALSE)
+
+# Assign colors to nodes based on connected component
+node_colors_60 <- component_colors_60[component_info_60$membership]
+
+# Create a data frame with node names and corresponding colors
+df_nodes_perco_60$color = node_colors_60
+
+df_nodes_perco_60$degree = degree(G_perco_60)
+
+df_nodes_perco_60$color[df_nodes_perco_60$degree == 0] <- "gray"
+
+V(G_perco_60)$size <- 0.5*(V(G_perco_60)$Pop2015/10000)^0.4
+
+custom_layout <- data.frame(
+name = V(G_perco_60)$name,  # Node names from the graph
+x = df_nodes_perco_60$x,  # Custom x-coordinates
+y = df_nodes_perco_60$y   # Custom y-coordinates
+)
+
+# Plot the graph 'G_' with specific visual attributes
+plot_60 <- ggraph(as_tbl_graph(G_perco_60), custom_layout) +
+  geom_edge_link() +
+  geom_node_point(aes(color = factor(df_nodes_perco_60$color)), 
+                  size = V(G_perco_60)$size) +
+                  scale_color_identity() +
+                  theme(legend.position = "none") +
+  geom_sf(data = world_subset, fill = NA, color = "black")
 
 ```
 
 
 
+```{r}
+
+df_nodes_perco_120 <- df_nodes
+df_edges_perco_120 <- subset(df_edges, timeUCB < 120)
+
+G_perco_120 <- graph_from_data_frame(d = df_edges_perco_120,
+                         vertices = df_nodes_perco_120,
+                         directed = FALSE)
+
+# Find connected components
+component_info_120 <- components(G_perco_120)
+
+# Create a data frame with node names and corresponding colors
+df_nodes_perco_120$component_ID = component_info_120$membership
+```
+
+```{r}
+# Define a color palette for connected components (replace with your own colors)
+component_colors_120 <- sample(rainbow(component_info_120$no), replace=FALSE)
+
+# Assign colors to nodes based on connected component
+node_colors_120 <- component_colors_120[component_info_120$membership]
+
+# Create a data frame with node names and corresponding colors
+df_nodes_perco_120$color = node_colors_120
+
+df_nodes_perco_120$degree = degree(G_perco_120)
+
+df_nodes_perco_120$color[df_nodes_perco_120$degree == 0] <- "gray"
+
+V(G_perco_120)$size <- 0.5*(V(G_perco_120)$Pop2015/10000)^0.4
+
+custom_layout <- data.frame(
+name = V(G_perco_120)$name,  # Node names from the graph
+x = df_nodes_perco_120$x,  # Custom x-coordinates
+y = df_nodes_perco_120$y   # Custom y-coordinates
+)
+
+# Plot the graph 'G_' with specific visual attributes
+plot_120 <- ggraph(as_tbl_graph(G_perco_120), custom_layout) +
+  geom_edge_link() +
+  geom_node_point(aes(color = factor(df_nodes_perco_120$color)), 
+                  size = V(G_perco_120)$size) +
+                  scale_color_identity() +
+                  theme(legend.position = "none") +
+  geom_sf(data = world_subset, fill = NA, color = "black")
+
+```
 
 
+```{r}
+
+df_nodes_perco_180 <- df_nodes
+df_edges_perco_180 <- subset(df_edges, timeUCB < 180)
+
+G_perco_180 <- graph_from_data_frame(d = df_edges_perco_180,
+                         vertices = df_nodes_perco_180,
+                         directed = FALSE)
+
+# Find connected components
+component_info_180 <- components(G_perco_180)
+
+# Create a data frame with node names and corresponding colors
+df_nodes_perco_180$component_ID = component_info_180$membership
+```
+
+```{r}
+# Define a color palette for connected components (replace with your own colors)
+component_colors_180 <- sample(rainbow(component_info_180$no), replace=FALSE)
+
+# Assign colors to nodes based on connected component
+node_colors_180 <- component_colors_180[component_info_180$membership]
+
+# Create a data frame with node names and corresponding colors
+df_nodes_perco_180$color = node_colors_180
+
+df_nodes_perco_180$degree = degree(G_perco_180)
+
+df_nodes_perco_180$color[df_nodes_perco_180$degree == 0] <- "gray"
+
+V(G_perco_180)$size <- 0.5*(V(G_perco_180)$Pop2015/10000)^0.4
+
+custom_layout <- data.frame(
+name = V(G_perco_180)$name,  # Node names from the graph
+x = df_nodes_perco_180$x,  # Custom x-coordinates
+y = df_nodes_perco_180$y   # Custom y-coordinates
+)
+
+# Plot the graph 'G_' with specific visual attributes
+plot_180 <- ggraph(as_tbl_graph(G_perco_180), custom_layout) +
+  geom_edge_link() +
+  geom_node_point(aes(color = factor(df_nodes_perco_180$color)), 
+                  size = V(G_perco_180)$size) +
+                  scale_color_identity() +
+                  theme(legend.position = "none") +
+  geom_sf(data = world_subset, fill = NA, color = "black")
+
+```
 
 
+```{r}
+plot_60 + plot_120 + plot_180
+```
 
-## Measuring network robustness
+## Analysing network robustness
 
-
+### Changes in the size of the giant connected component as edges are removed
 
 ```{r}
 # Create an empty data frame to store component information
@@ -181,8 +324,6 @@ ncs <- list()
 ```
 
 
-
-## Original by removing
 
 ```{r}
 
@@ -233,4 +374,36 @@ plot(thresholds, gccs)
 plot(thresholds, ncs)
 ```
 
+### Changes in the average distance as nodes are removed
 
+```{r}
+# Create empty lists to store thresholds, gccs, and ncs
+populations <- list()
+average_distances <- list()
+```
+
+```{r}
+
+# Iterate over thresholds
+for (node_id in V(G)) {
+  
+  # Retrieve the population attribute for the current node
+  populations <- append(populations, V(G)[node_id]$Pop2015)
+  
+  # Create a copy of the graph G
+  G_ <- G 
+  
+  # Find indices of edges with lengths greater than the current threshold (i)
+  G_ <- delete_vertices(G_, node_id)
+  
+  average_distance <- mean_distance(G_)
+  
+  average_distances <- append(average_distances, average_distance)
+  
+}
+
+```
+
+```{r}
+plot(populations, average_distances)
+```

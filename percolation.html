@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>An Introduction to Network Analysis for GIS - 4&nbsp; Percolation theory</title>
+<title>percolation</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -57,161 +57,34 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href="./african-network.html" rel="prev">
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
-<script id="quarto-search-options" type="application/json">{
-  "location": "sidebar",
-  "copy-button": false,
-  "collapse-after": 3,
-  "panel-placement": "start",
-  "type": "textbox",
-  "limit": 20,
-  "language": {
-    "search-no-results-text": "No results",
-    "search-matching-documents-text": "matching documents",
-    "search-copy-link-title": "Copy link to search",
-    "search-hide-matches-text": "Hide additional matches",
-    "search-more-match-text": "more match in this document",
-    "search-more-matches-text": "more matches in this document",
-    "search-clear-button-title": "Clear",
-    "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit",
-    "search-label": "Search"
-  }
-}</script>
+<script src="percolation_files/libs/clipboard/clipboard.min.js"></script>
+<script src="percolation_files/libs/quarto-html/quarto.js"></script>
+<script src="percolation_files/libs/quarto-html/popper.min.js"></script>
+<script src="percolation_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="percolation_files/libs/quarto-html/anchor.min.js"></script>
+<link href="percolation_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="percolation_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="percolation_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="percolation_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="percolation_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
 
-<body class="nav-sidebar floating">
+<body class="fullcontent">
 
-<div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav">
-    <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-        <i class="bi bi-layout-text-sidebar-reverse"></i>
-      </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./percolation.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Percolation theory</span></a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
-        <i class="bi bi-search"></i>
-      </button>
-    </div>
-  </nav>
-</header>
-<!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
-<!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
-    <div class="sidebar-title mb-0 py-0">
-      <a href="./">An Introduction to Network Analysis for GIS</a> 
-        <div class="sidebar-tools-main">
-    <a href="https://github.com/CrmnCA/nets4gis" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
-</div>
-    </div>
-      </div>
-        <div class="mt-2 flex-shrink-0 align-items-center">
-        <div class="sidebar-search">
-        <div id="quarto-search" class="" title="Search"></div>
-        </div>
-        </div>
-    <div class="sidebar-menu-container"> 
-    <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Welcome</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./come-prepared.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Come prepared</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./introduction-networks.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction to the basics of network analysis</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./african-network.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">The African road network</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./percolation.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Percolation theory</span></span></a>
-  </div>
-</li>
-    </ul>
-    </div>
-</nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
-<!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar"><div class="quarto-margin-header"><div class="margin-header-item">
-<p><img src="./margin-header.png" class="img-fluid"></p>
-</div></div>
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#dependencies" id="toc-dependencies" class="nav-link active" data-scroll-target="#dependencies"><span class="header-section-number">4.1</span> Dependencies</a></li>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction"><span class="header-section-number">4.2</span> Introduction</a></li>
-  <li><a href="#modelling-community-formation-in-the-african-road-network" id="toc-modelling-community-formation-in-the-african-road-network" class="nav-link" data-scroll-target="#modelling-community-formation-in-the-african-road-network"><span class="header-section-number">4.3</span> Modelling community formation in the African road network</a></li>
-  <li><a href="#analysing-network-robustness" id="toc-analysing-network-robustness" class="nav-link" data-scroll-target="#analysing-network-robustness"><span class="header-section-number">4.4</span> Analysing network robustness</a>
-  <ul class="collapse">
-  <li><a href="#changes-in-the-size-of-the-giant-connected-component-as-edges-are-removed" id="toc-changes-in-the-size-of-the-giant-connected-component-as-edges-are-removed" class="nav-link" data-scroll-target="#changes-in-the-size-of-the-giant-connected-component-as-edges-are-removed"><span class="header-section-number">4.4.1</span> Changes in the size of the giant connected component as edges are removed</a></li>
-  <li><a href="#changes-in-the-average-distance-as-nodes-are-removed" id="toc-changes-in-the-average-distance-as-nodes-are-removed" class="nav-link" data-scroll-target="#changes-in-the-average-distance-as-nodes-are-removed"><span class="header-section-number">4.4.2</span> Changes in the average distance as nodes are removed</a></li>
-  </ul></li>
-  </ul>
-</nav>
-    </div>
-<!-- main -->
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Percolation theory</span></h1>
-</div>
 
 
-
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
-
-</header>
-
-<section id="dependencies" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="dependencies"><span class="header-section-number">4.1</span> Dependencies</h2>
+<section id="percolation-theory" class="level1">
+<h1>Percolation theory</h1>
+<section id="dependencies" class="level2">
+<h2 class="anchored" data-anchor-id="dependencies">Dependencies</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load required packages</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(igraph)    <span class="co"># for network analysis</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -268,8 +141,8 @@ The sp package is now running under evolution status 2
 </div>
 </div>
 </section>
-<section id="introduction" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="introduction"><span class="header-section-number">4.2</span> Introduction</h2>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
 <p>The term percolation normally refers to the process whereby a fluid moves slowly through a porous material, for example, the percolation of rain water through rocks gives rise to aquifers. The study and modelling of this infiltration process in physics, chemistry and material science is known as percolation theory. If you think about it, a rock can be modelled as a three-dimensional lattice (if the rock was cube-shaped, this lattice would be like a Rubik cube but instead of being <span class="math inline">\(3 \times 3\times 3\)</span>, it is <span class="math inline">\(n\times n \times n\)</span>). Then, the pores in the rock would be represented by “open sites” in this lattice (this would correspond to missing pieces in the Rubik cube) and the bits of the rock where there is material and therefore, no chance for the water to go through, would be represented by “closed sites” (this would correspond to pieces in the Rubik cube that are actually present). A typical question in percolation theory would then be as follows. If sites may be open with probability <span class="math inline">\(p\)</span> or closed with probability <span class="math inline">\(1-p\)</span> and these probabilities are assumed to be independent for each site, what is the probability that the water can go through the top to the bottom of the rock for a given value of <span class="math inline">\(p\)</span>?</p>
 <p>In recent decades, the mathematical study of percolation has been applied in a more general way, to understand the behavior of connected clusters or pathways in any system that can be modelled as a lattice or as a network. While the formulation of the percolation models varies slightly from lattices to networks, it follows the same principles. For example, let’s consider the spread of a certain pandemic, where contagion between two humans may take place with probability <span class="math inline">\(p\)</span> if an infected individual spends more than 10 minutes at less than 2 meters away from a healthy one. Then, we can think of the pandemic as a fluid moving slowly, but instead of going through a porous rock, it goes through a social network of people. The people can be modelled as the nodes of the social network, and edges are present between two individuals if they spend long enough in close physical contact. Then, each edge or connection has an associated probability of contagion <span class="math inline">\(p\)</span>. Applying percolation theory, we could answer the question of “what are the chances that the pandemic makes its way from city A to city B given the structure of the network and the fact that the probability of contagion is <span class="math inline">\(p\)</span>?”</p>
 <p>Percolation theory can therefore be used in a variety of contexts to better understand the properties of a system characterised by the connections between its components. Here, we use percolation models to improve our understanding of the structure and resilience of the African road network.</p>
@@ -321,8 +194,8 @@ The sp package is now running under evolution status 2
 </div>
 </div>
 </section>
-<section id="modelling-community-formation-in-the-african-road-network" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="modelling-community-formation-in-the-african-road-network"><span class="header-section-number">4.3</span> Modelling community formation in the African road network</h2>
+<section id="modelling-community-formation-in-the-african-road-network" class="level2">
+<h2 class="anchored" data-anchor-id="modelling-community-formation-in-the-african-road-network">Modelling community formation in the African road network</h2>
 <p>At the end of the previous session, we used the fast greedy algorithm to detect communities based on the topology of the African road network. We used an R implementation of the fast greedy algorithm through the built-in function <code>cluter_fast_greedy()</code>. While a built-in function gives us results in a very straightforward way, it also makes the process less transparent. In this section, we implement a percolation theory approach to model the formation of communities of nodes (cities) as the connectivity properties of the network are varied.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a list to store the plots</span></span>
@@ -538,10 +411,10 @@ The sp package is now running under evolution status 2
 </div>
 </div>
 </section>
-<section id="analysing-network-robustness" class="level2" data-number="4.4">
-<h2 data-number="4.4" class="anchored" data-anchor-id="analysing-network-robustness"><span class="header-section-number">4.4</span> Analysing network robustness</h2>
-<section id="changes-in-the-size-of-the-giant-connected-component-as-edges-are-removed" class="level3" data-number="4.4.1">
-<h3 data-number="4.4.1" class="anchored" data-anchor-id="changes-in-the-size-of-the-giant-connected-component-as-edges-are-removed"><span class="header-section-number">4.4.1</span> Changes in the size of the giant connected component as edges are removed</h3>
+<section id="analysing-network-robustness" class="level2">
+<h2 class="anchored" data-anchor-id="analysing-network-robustness">Analysing network robustness</h2>
+<section id="changes-in-the-size-of-the-giant-connected-component-as-edges-are-removed" class="level3">
+<h3 class="anchored" data-anchor-id="changes-in-the-size-of-the-giant-connected-component-as-edges-are-removed">Changes in the size of the giant connected component as edges are removed</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create an empty data frame to store component information</span></span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>components <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">nodeID =</span> <span class="fu">integer</span>(<span class="dv">0</span>), <span class="at">component =</span> <span class="fu">integer</span>(<span class="dv">0</span>), <span class="at">threshold =</span> <span class="fu">integer</span>(<span class="dv">0</span>), <span class="at">gcc =</span> <span class="fu">integer</span>(<span class="dv">0</span>))</span>
@@ -610,8 +483,8 @@ The sp package is now running under evolution status 2
 </div>
 </div>
 </section>
-<section id="changes-in-the-average-distance-as-nodes-are-removed" class="level3" data-number="4.4.2">
-<h3 data-number="4.4.2" class="anchored" data-anchor-id="changes-in-the-average-distance-as-nodes-are-removed"><span class="header-section-number">4.4.2</span> Changes in the average distance as nodes are removed</h3>
+<section id="changes-in-the-average-distance-as-nodes-are-removed" class="level3">
+<h3 class="anchored" data-anchor-id="changes-in-the-average-distance-as-nodes-are-removed">Changes in the average distance as nodes are removed</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create empty lists to store thresholds, gccs, and ncs</span></span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>populations <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
@@ -642,12 +515,12 @@ The sp package is now running under evolution status 2
 <p><img src="percolation_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-
-
 </section>
 </section>
+</section>
 
-</main> <!-- /main -->
+</main>
+<!-- /main column -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -881,15 +754,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
-<nav class="page-navigation">
-  <div class="nav-page nav-page-previous">
-      <a href="./african-network.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">The African road network</span></span>
-      </a>          
-  </div>
-  <div class="nav-page nav-page-next">
-  </div>
-</nav>
 </div> <!-- /content -->
 
 

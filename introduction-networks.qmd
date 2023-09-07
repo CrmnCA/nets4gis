@@ -3,6 +3,7 @@
 ## Dependencies
 
 We first install all the libraries required for this session.
+
 ```{r}
 #| include = FALSE
 rm(list=ls()) # clear working space
@@ -20,16 +21,13 @@ library(tidyverse)
 library(igraph)
 ```
 
-
 ## Creating networks
 
 We first consider the components of a network object. Generally, a network (or a graph) consists of nodes (a.k.a. vertices) and edges (a.k.a. links). Edges link nodes to form a network. Networks are used as a tool to conceptualise many real-life situations, such as the friendships among members of a school year group, airline flights between cities or hyperlinks between websites.
 
 ### Starting from the basics
 
-To understand the basic concepts and components of a network, we create a small example network in R using the igraph package. We create an undirected network of 5 nodes and 6 edges. 
-
-
+To understand the basic concepts and components of a network, we create a small example network in R using the igraph package. We create an undirected network of 5 nodes and 6 edges.
 
 ```{r}
 # create a graph object
@@ -51,6 +49,7 @@ plot(network,
 ```
 
 If the connections between the nodes of a network are non-reciprocal, the network is called directed.
+
 ```{r}
 # create a graph object
 network <- graph( 
@@ -69,6 +68,7 @@ plot(network,
      layout = layout.circle(network), # set layout
      vertex.label = 1:5)
 ```
+
 The network can also be defined as a list containing pairs of nodes with labels. In that case we do not need tospecify the number of nodes. We only specify the isolated nodes to be included.
 
 ::: callout-note
@@ -117,16 +117,18 @@ V(network_isolated)$name
 ```
 
 Additional node attributes can be added, such as population size:
+
 ```{r}
 V(network_isolated)$population <- c(92000, 549000, 1786000, 74000, 8000, 21000)
 ```
 
 We can access the edges:
+
 ```{r}
 E(network_isolated)
 ```
 
-We can add edge attributes, such as the number of people moving from an origin to a destination city. We call this attribute edge weight. The size of the connection between two places often represent their importance or “weight” in the network.
+We can add edge attributes, such as the number of people moving from an origin to a destination city. We call this attribute edge weight. The size of the connection between two places often represent their importance or "weight" in the network.
 
 ```{r}
 E(network_isolated)$weight <- c(2000, 5000, 1000, 1000, 4000, 3500, 7000)
@@ -137,11 +139,15 @@ We can examine the adjacency matrix of the network. The adjacency represents the
 ```{r}
 network_isolated[]
 ```
+
 We can also look at the existing node and edge attributes.
+
 ```{r}
 vertex_attr(network_isolated)
 ```
+
 We can also add a network attribute:
+
 ```{r}
 network_isolated$title <- "Network of human mobility between cities"
 ```
@@ -170,7 +176,7 @@ plot(network_isolated,
 
 ## Network metrics
 
-Next we will provide a brief description of commonly used metrics to analyse the basic structure of networks. 
+Next we will provide a brief description of commonly used metrics to analyse the basic structure of networks.
 
 ### Density
 
@@ -181,7 +187,6 @@ edge_density(network_isolated,
              loops=FALSE)
 ```
 
-
 ### Reciprocity
 
 The reciprocity in a directed network is the proportion of reciprocated connections between nodes (i.e. number of pairs of nodes with edges in both directions) from all the existing edges.
@@ -189,7 +194,6 @@ The reciprocity in a directed network is the proportion of reciprocated connecti
 ```{r}
 reciprocity(network_isolated)
 ```
-
 
 ### Degree
 
@@ -213,7 +217,7 @@ A path in a network between node $A$ and node $B$ is a sequence of edges joining
 
 The path length between nodes $A$ and $B$ is generally defined as the number of edges forming a path. The shortest path is the minimum count of edges present to travel from $A$ to $B$.
 
-The path length can be defined in alternative ways. For example, the path length can be defined as the sum of the weights of the edges forming a path if the edges are weighted. 
+The path length can be defined in alternative ways. For example, the path length can be defined as the sum of the weights of the edges forming a path if the edges are weighted.
 
 We can use the function `shortest_paths()` to find the shortest path between a given pair of nodes:
 
@@ -227,7 +231,7 @@ shortest_paths(network_isolated,
 
 ```
 
-Of all shortest paths in a network, the longest path length is the network diameter. 
+Of all shortest paths in a network, the longest path length is the network diameter.
 
 ```{r}
 diameter(network_isolated, 
@@ -242,7 +246,6 @@ mean_distance(network_isolated,
               directed=TRUE, 
               weights=NA)
 ```
-
 
 ### Centrality
 
@@ -292,7 +295,7 @@ hist(between_centr,
 
 ### Hubs and authorities
 
-We call hubs or authorities nodes with a higher-than-average degree. Normally, the name hub is used to nodes with high out-degree. Authority is used to nodes with high in-degree. Jon Kleinberg developed an algorithm to detect hubs and authorities. 
+We call hubs or authorities nodes with a higher-than-average degree. Normally, the name hub is used to nodes with high out-degree. Authority is used to nodes with high in-degree. Jon Kleinberg developed an algorithm to detect hubs and authorities.
 
 ```{r}
 net_hub <- hub_score(network_isolated, 
@@ -302,6 +305,7 @@ hist(net_hub,
      breaks = 50, 
      main = "Histogram of hub score")
 ```
+
 We can also explore the authority score for each node:
 
 ```{r}
@@ -312,4 +316,3 @@ hist(net_aut,
      breaks = 50, 
      main = "Histogram of authority score")
 ```
-
