@@ -2,6 +2,8 @@
 
 ## Dependencies
 
+We first load all the libraries required for this section.
+
 ```{r}
 #| warning: false
 # An R package for network manipulation and analysis
@@ -10,13 +12,13 @@ library(igraph)
 
 ## Data
 
-Here, we work with a network of African roads constructed by considering all continental cities with more than 100,000 inhabitants as the nodes, obtained from [@Moriconi16]. The edges of the network were created based on the road infrastructure from OpenStreetMap [@openstreetmapOpenStreetMap], using all primary roads, highways and trunk roads. Each edge was constructed by measuring the physical distance of consecutive points that describe the intricate patterns of the roads. Thus, a reasonably good estimate of its road length is available for each edge. Additional nodes besides cities are needed to fully describe the road infrastructure, such as some road intersections. These nodes are labelled as "transport nodes" and help define possible routes between cities. Some transport nodes correspond to towns with less than 100,000 inhabitants, so they are labelled as attached to nearby cities. The urban network enables us to consider the existing roads in the continent and measure the travelling distance rather than the physical distance between cities. The constructed network is formed by 7,361 nodes (2,162 cities and 5,199 transport nodes) and 9,159 edges. For more details on how the network was built, see [@PRIETOCURIELmethodsX].
+Here, we work with a network of African roads constructed by considering all continental cities with more than 100,000 inhabitants as the nodes, obtained from [@Moriconi16]. The edges of the network were created based on the road infrastructure from OpenStreetMap [@openstreetmapOpenStreetMap], using all primary roads, highways and trunk roads. Each edge was constructed by measuring the physical distance of consecutive points that describe the intricate patterns of the roads. Thus, a reasonably good estimate of its road length is available for each edge. Additional nodes besides cities are needed to describe the road infrastructure, such as some road intersections. These nodes are labelled as "transport nodes" and help define possible routes between cities. Some transport nodes correspond to towns with less than 100,000 inhabitants, so they are labelled as attached to nearby cities. The urban network enables us to consider the existing roads in the continent and measure the travelling distance rather than the physical distance between cities. The constructed network is formed by 7,361 nodes (2,162 cities and 5,199 transport nodes) and 9,159 edges. For more details on how the network was built, see [@PRIETOCURIELmethodsX].
 
 The network is connected, meaning that it is possible to find a sequence of nodes and existing roads linking any pair of cities, and therefore, it is also possible to find the shortest road distance between any two cities and define it as the network distance. The network consists of 361,000 km of road infrastructure and connects 461 million people living in African cities, representing roughly 39% of the continent's population [@PrietoCurielBeyond].
 
-## Creating a network from data frame
+## Creating a network from a data frame
 
-The data that specifies the nodes and edges of the African road network is stored in two csv files, one for nodes and one for edges. This data can be loaded in two dataframes:
+The data that specifies the nodes and edges of the African road network is stored in two csv files, one for nodes and one for edges. This data can be loaded in two data frames:
 
 ```{r}
 # Read the CSV file containing network nodes data from a URL
@@ -45,11 +47,11 @@ vertex_attr_names(g_africa)
 
 where "name" is the ID of each node in the network, "agglosName" is the name of the city represented by the node, it is set to "road" if the node is a transport node. "x" and "y" represent the coordinates of each node, "Pop2015" is the population of the city nodes, "ISO3" is the code for the country that each node is situated in, "Region" represents the region within the African continent that each node is situated in, and "Between" and "degree" represent the betweenness centrality and the degree of each node in the network, which we will also compute below.
 
-In particular, we can look at the first few values of the attribute "name":
+In particular, we can look at the first few values of any node attribute, for examples "Pop2015":
 
 ```{r}
 # Retrieve the first few vertex names from the 'g_africa' graph
-head(V(g_africa)$name)
+head(V(g_africa)$Pop2015)
 ```
 
 We can also obtain the names of the edge attributes, which are taken from the columns in the `df_edges` data frame:

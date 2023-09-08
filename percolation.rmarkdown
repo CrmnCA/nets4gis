@@ -4,6 +4,7 @@
 
 We first load all the libraries required for this section.
 
+
 ```{r}
 #| warning: false
 # Load required packages
@@ -18,6 +19,7 @@ library(sf)
 ```
 
 
+
 ## Introduction
 
 The term percolation normally refers to the process whereby a fluid moves slowly through a porous material, for example, the percolation of rain water through rocks gives rise to aquifers. The study and modelling of this infiltration process in physics, chemistry and material science is known as percolation theory. If you think about it, a rock can be modelled as a three-dimensional lattice (if the rock was cube-shaped, this lattice would be like a Rubik cube but instead of being $3 \times 3\times 3$, it is $n\times n \times n$). Then, the pores in the rock would be represented by "open sites" in this lattice (this would correspond to missing pieces in the Rubik cube) and the bits of the rock where there is material and therefore, no chance for the water to go through, would be represented by "closed sites" (this would correspond to pieces in the Rubik cube that are actually present). A typical question in percolation theory would then be as follows. If sites may be open with probability $p$ or closed with probability $1-p$ and these probabilities are assumed to be independent for each site, what is the probability that the water can go through the top to the bottom of the rock for a given value of $p$?
@@ -28,22 +30,27 @@ Percolation theory can therefore be used in a variety of contexts to better unde
 
 As before, we start by loading the data corresponding to the nodes and edges of the African road network:
 
+
 ```{r}
 # Read edge and node data from URLs
 df_edges <- read.csv("https://raw.githubusercontent.com/rafaelprietocuriel/AfricanUrbanNetwork/main/AfricaNetworkEdges.csv")
 df_nodes <- read.csv("https://raw.githubusercontent.com/rafaelprietocuriel/AfricanUrbanNetwork/main/AfricaNetworkNodes.csv", encoding='UTF-8')
 ```
 
+
 In order to ensure timely completion of this workshop, we have decided to utilise a subset of the African network, specifically focusing on nodes from the South region. This adjustment is necessary as running the code on the entire network would exceed the allocated time frame. However, you are encouraged to explore running the code on the complete network at your own convenience.
 
 We start by selecting the nodes belonging to the South region. This can be easily done with the `subset()` function.
+
 
 ```{r}
 # Filter the data frame df_nodes to only include rows where the 'Region' column is equal to "South"
 df_nodes <- subset(df_nodes, Region == "South")
 ```
 
+
 Similarly, we can select the only the edges where both extrema are nodes belongin to the South region.
+
 
 ```{r}
 # Filter the data frame df_edges to only include rows where the 'from' column is in the list of Agglomeration_ID values from df_nodes
@@ -53,7 +60,9 @@ df_edges <- subset(df_edges, from %in% df_nodes$Agglomeration_ID)
 df_edges <- subset(df_edges, to %in% df_nodes$Agglomeration_ID)
 ```
 
+
 Like before, we can create an undirected graph from the redefined data frames of nodes and edges.
+
 
 ```{r}
 # Create an undirected graph 'G' from a data frame 'df_edges' representing edges and a data frame 'df_nodes' representing vertices
@@ -62,7 +71,9 @@ G <- graph_from_data_frame(d = df_edges,
                            directed = FALSE)
 ```
 
+
 We can visualise this sub network by running the code below. Note that instead of using the base R function `plot()`, we are now using `ggraph`, which is an R package used for creating and visualising graphs and networks. It is built on top of the popular `ggplot2` package, which is used for creating a wide range of statistical graphics in R.
+
 
 ```{r}
 V(G)$size <- 0.5*(V(G)$Pop2015/10000)^0.4
@@ -83,7 +94,9 @@ plotG <- ggraph(as_tbl_graph(G), custom_layout) +
 plotG
 ```
 
+
 The countries belonging to the South region are Botswana, Eswatini, Lesotho, Namibia, South Africa. To give more geographical context to the above visualisation, we will add the outlines of these countries as a base layer for this plot. The shapes for the world countries can be downloaded as simple feature objects (similar to a data frame but it also includes geographic information) using the `ne_download` function from the `rnaturalearth` package. We store the simple feature in the variable `world`, which we then filter to include only the countries of interest.
+
 
 ```{r}
 
@@ -91,7 +104,9 @@ world <- ne_download(scale = "small", category = "cultural", type = "admin_0_cou
 target_countries <- c("Botswana", "eSwatini", "Lesotho", "Namibia", "South Africa")
 world_subset <- world[world$SOVEREIGNT %in% target_countries, ]
 ```
+
 The plot from above can be modified to also include the base layer
+
 
 ```{r}
 # Plot the graph 'G_' with specific visual attributes
@@ -105,11 +120,13 @@ plotG <- ggraph(as_tbl_graph(G), custom_layout) +
 plotG
 ```
 
+
 ## Modelling community formation in the African road network
 
 At the end of the previous session, we used the fast greedy algorithm to detect communities based on the topology of the African road network. We used an R implementation of the fast greedy algorithm through the built-in function `cluter_fast_greedy()`. While a built-in function gives us results in a very straightforward way, it also makes the process less transparent. In this section, we implement a percolation theory approach to model the formation of communities of nodes (cities) as the connectivity properties of the network are varied.
 
 In this approach, we start with the original network representing the cities and roads of Southern Africa, but with no edges. Then, we add back edges according to whether they satisfy certain criterion. In this case, an edge is added back if the time to travel from one end to the other considering the presence of a border is below a critical value (i.e. if the attribute `timeUCB` is below a certain critical travel time $t_c$). Below, we perform this process for three different values of $t_c$ which are 60, 120 and 180 minutes.
+
 
 ```{r}
 
@@ -144,7 +161,9 @@ G_perco_180 <- graph_from_data_frame(d = df_edges_perco_180,
 
 ```
 
+
 We also obtain visualisations for the three critical travel times. In these visualisations, we color the nodes so that nodes belonging to the same connected component share the same color. A connected component is a group of nodes where you can travel from any node to any other node by following the edges. We store the visualisations for each of the three critical travel times in the variables `plot_60`, `plot_120` and `plot_180`. Then, we plot them together using the `patchwork` package, which allows to create figures with several plots simply by running `plot_60 + plot_120 + plot_180`.
+
 
 ```{r}
 
@@ -270,9 +289,11 @@ plot_60 + plot_120 + plot_180
 ```
 
 
+
 ## Analysing network robustness
 
 ### Changes in the size of the giant connected component as edges are removed
+
 
 ```{r}
 # Create an empty data frame to store component information
@@ -331,7 +352,9 @@ plot(thresholds, gccs)
 plot(thresholds, ncs)
 ```
 
+
 ### Changes in the average distance as nodes are removed
+
 
 ```{r}
 # Create empty lists to store thresholds, gccs, and ncs
@@ -364,3 +387,4 @@ for (node_id in V(G)) {
 ```{r}
 plot(populations, average_distances)
 ```
+

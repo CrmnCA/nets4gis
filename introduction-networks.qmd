@@ -2,7 +2,7 @@
 
 ## Dependencies
 
-We first install all the libraries required for this session.
+We first load all the libraries required for this section.
 
 ```{r}
 #| include = FALSE
@@ -23,7 +23,7 @@ library(igraph)
 
 ## Creating networks
 
-Networks are used as a tool to conceptualise many real-life situations where a group of items display connections among themselves, such as the friendships among members of a school year group, airline flights between cities or hyperlinks between websites. Generally, a network (or a graph) consists of nodes (a.k.a. vertices) and edges (a.k.a. links) which represent the connections between the nodes of the network. 
+Networks are used as a tool to conceptualise many real-life situations where a group of items display connections among themselves, such as the friendships among members of a school year group, airline flights between cities or hyperlinks between websites. Generally, a network (or a graph) consists of nodes (a.k.a. vertices) and edges (a.k.a. links) which represent the connections between the nodes of the network.
 
 ### Starting from the basics
 
@@ -293,4 +293,3 @@ hist(between_centr,
      breaks = 50, 
      main = "Histogram of betweenness centrality")
 ```
-

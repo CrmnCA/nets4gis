@@ -199,7 +199,7 @@ div.csl-indent {
   <ul>
   <li><a href="#dependencies" id="toc-dependencies" class="nav-link active" data-scroll-target="#dependencies"><span class="header-section-number">3.1</span> Dependencies</a></li>
   <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data"><span class="header-section-number">3.2</span> Data</a></li>
-  <li><a href="#creating-a-network-from-data-frame" id="toc-creating-a-network-from-data-frame" class="nav-link" data-scroll-target="#creating-a-network-from-data-frame"><span class="header-section-number">3.3</span> Creating a network from data frame</a>
+  <li><a href="#creating-a-network-from-a-data-frame" id="toc-creating-a-network-from-a-data-frame" class="nav-link" data-scroll-target="#creating-a-network-from-a-data-frame"><span class="header-section-number">3.3</span> Creating a network from a data frame</a>
   <ul class="collapse">
   <li><a href="#visualising-the-african-road-network-as-a-spatial-network" id="toc-visualising-the-african-road-network-as-a-spatial-network" class="nav-link" data-scroll-target="#visualising-the-african-road-network-as-a-spatial-network"><span class="header-section-number">3.3.1</span> Visualising the African road network as a spatial network</a></li>
   </ul></li>
@@ -237,6 +237,7 @@ div.csl-indent {
 
 <section id="dependencies" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="dependencies"><span class="header-section-number">3.1</span> Dependencies</h2>
+<p>We first load all the libraries required for this section.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># An R package for network manipulation and analysis</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(igraph)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -244,12 +245,12 @@ div.csl-indent {
 </section>
 <section id="data" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="data"><span class="header-section-number">3.2</span> Data</h2>
-<p>Here, we work with a network of African roads constructed by considering all continental cities with more than 100,000 inhabitants as the nodes, obtained from <span class="citation" data-cites="Moriconi16">(<a href="#ref-Moriconi16" role="doc-biblioref">Moriconi-Ebrard, Harre, and Heinrigs 2016</a>)</span>. The edges of the network were created based on the road infrastructure from OpenStreetMap <span class="citation" data-cites="openstreetmapOpenStreetMap">(<a href="#ref-openstreetmapOpenStreetMap" role="doc-biblioref"><span>“Openstreetmap.org”</span></a>)</span>, using all primary roads, highways and trunk roads. Each edge was constructed by measuring the physical distance of consecutive points that describe the intricate patterns of the roads. Thus, a reasonably good estimate of its road length is available for each edge. Additional nodes besides cities are needed to fully describe the road infrastructure, such as some road intersections. These nodes are labelled as “transport nodes” and help define possible routes between cities. Some transport nodes correspond to towns with less than 100,000 inhabitants, so they are labelled as attached to nearby cities. The urban network enables us to consider the existing roads in the continent and measure the travelling distance rather than the physical distance between cities. The constructed network is formed by 7,361 nodes (2,162 cities and 5,199 transport nodes) and 9,159 edges. For more details on how the network was built, see <span class="citation" data-cites="PRIETOCURIELmethodsX">(<a href="#ref-PRIETOCURIELmethodsX" role="doc-biblioref">Prieto-Curiel et al. 2022</a>)</span>.</p>
+<p>Here, we work with a network of African roads constructed by considering all continental cities with more than 100,000 inhabitants as the nodes, obtained from <span class="citation" data-cites="Moriconi16">(<a href="#ref-Moriconi16" role="doc-biblioref">Moriconi-Ebrard, Harre, and Heinrigs 2016</a>)</span>. The edges of the network were created based on the road infrastructure from OpenStreetMap <span class="citation" data-cites="openstreetmapOpenStreetMap">(<a href="#ref-openstreetmapOpenStreetMap" role="doc-biblioref"><span>“Openstreetmap.org”</span></a>)</span>, using all primary roads, highways and trunk roads. Each edge was constructed by measuring the physical distance of consecutive points that describe the intricate patterns of the roads. Thus, a reasonably good estimate of its road length is available for each edge. Additional nodes besides cities are needed to describe the road infrastructure, such as some road intersections. These nodes are labelled as “transport nodes” and help define possible routes between cities. Some transport nodes correspond to towns with less than 100,000 inhabitants, so they are labelled as attached to nearby cities. The urban network enables us to consider the existing roads in the continent and measure the travelling distance rather than the physical distance between cities. The constructed network is formed by 7,361 nodes (2,162 cities and 5,199 transport nodes) and 9,159 edges. For more details on how the network was built, see <span class="citation" data-cites="PRIETOCURIELmethodsX">(<a href="#ref-PRIETOCURIELmethodsX" role="doc-biblioref">Prieto-Curiel et al. 2022</a>)</span>.</p>
 <p>The network is connected, meaning that it is possible to find a sequence of nodes and existing roads linking any pair of cities, and therefore, it is also possible to find the shortest road distance between any two cities and define it as the network distance. The network consists of 361,000 km of road infrastructure and connects 461 million people living in African cities, representing roughly 39% of the continent’s population <span class="citation" data-cites="PrietoCurielBeyond">(<a href="#ref-PrietoCurielBeyond" role="doc-biblioref">Prieto Curiel, Cabrera-Arnau, and Bishop 2022</a>)</span>.</p>
 </section>
-<section id="creating-a-network-from-data-frame" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="creating-a-network-from-data-frame"><span class="header-section-number">3.3</span> Creating a network from data frame</h2>
-<p>The data that specifies the nodes and edges of the African road network is stored in two csv files, one for nodes and one for edges. This data can be loaded in two dataframes:</p>
+<section id="creating-a-network-from-a-data-frame" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="creating-a-network-from-a-data-frame"><span class="header-section-number">3.3</span> Creating a network from a data frame</h2>
+<p>The data that specifies the nodes and edges of the African road network is stored in two csv files, one for nodes and one for edges. This data can be loaded in two data frames:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the CSV file containing network nodes data from a URL</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>df_nodes <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://raw.githubusercontent.com/rafaelprietocuriel/AfricanUrbanNetwork/main/AfricaNetworkNodes.csv"</span>)</span>
@@ -275,12 +276,12 @@ div.csl-indent {
 </div>
 </div>
 <p>where “name” is the ID of each node in the network, “agglosName” is the name of the city represented by the node, it is set to “road” if the node is a transport node. “x” and “y” represent the coordinates of each node, “Pop2015” is the population of the city nodes, “ISO3” is the code for the country that each node is situated in, “Region” represents the region within the African continent that each node is situated in, and “Between” and “degree” represent the betweenness centrality and the degree of each node in the network, which we will also compute below.</p>
-<p>In particular, we can look at the first few values of the attribute “name”:</p>
+<p>In particular, we can look at the first few values of any node attribute, for examples “Pop2015”:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Retrieve the first few vertex names from the 'g_africa' graph</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">V</span>(g_africa)<span class="sc">$</span>name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">V</span>(g_africa)<span class="sc">$</span>Pop2015)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2320" "5199" "7098" "4220" "4858" "5331"</code></pre>
+<pre><code>[1] 22995802 11847635  8530514  8314220  7270000  6979211</code></pre>
 </div>
 </div>
 <p>We can also obtain the names of the edge attributes, which are taken from the columns in the <code>df_edges</code> data frame:</p>
