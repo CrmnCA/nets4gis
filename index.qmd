@@ -1,6 +1,6 @@
 # Welcome {.unnumbered}
 
-This website hosts the materials for the workshop "An Introduction to Network Analysis for GIS". The training workshop was designed by Dr Carmen Cabrera-Arnau, Prof Francisco Rowe, Andrew Renninger, Valentina Marin Maureira and Dr Rafael Prieto Curiel.
+This website hosts the materials for the workshop "An Introduction to Network Analysis for GIS". The training workshop was designed by Dr Carmen Cabrera-Arnau, with contributions from Prof Francisco Rowe, Andrew Renninger, Valentina Marin Maureira and Dr Rafael Prieto Curiel.
 
 The website is free to use and is licensed under the Attribution-NonCommercial-NoDerivatives 4.0 International.
 

@@ -3,6 +3,7 @@
 ## Dependencies
 
 ```{r}
+#| warning: false
 # Load required packages
 library(igraph)    # for network analysis
 library(ggplot2)
@@ -15,7 +16,6 @@ library(sf)
 ```
 
 ## Introduction
-
 
 The term percolation normally refers to the process whereby a fluid moves slowly through a porous material, for example, the percolation of rain water through rocks gives rise to aquifers. The study and modelling of this infiltration process in physics, chemistry and material science is known as percolation theory. If you think about it, a rock can be modelled as a three-dimensional lattice (if the rock was cube-shaped, this lattice would be like a Rubik cube but instead of being $3 \times 3\times 3$, it is $n\times n \times n$). Then, the pores in the rock would be represented by "open sites" in this lattice (this would correspond to missing pieces in the Rubik cube) and the bits of the rock where there is material and therefore, no chance for the water to go through, would be represented by "closed sites" (this would correspond to pieces in the Rubik cube that are actually present). A typical question in percolation theory would then be as follows. If sites may be open with probability $p$ or closed with probability $1-p$ and these probabilities are assumed to be independent for each site, what is the probability that the water can go through the top to the bottom of the rock for a given value of $p$?
 
@@ -30,7 +30,6 @@ As before, we start by loading the data corresonding to the nodes and edges of t
 df_edges <- read.csv("https://raw.githubusercontent.com/rafaelprietocuriel/AfricanUrbanNetwork/main/AfricaNetworkEdges.csv")
 df_nodes <- read.csv("https://raw.githubusercontent.com/rafaelprietocuriel/AfricanUrbanNetwork/main/AfricaNetworkNodes.csv", encoding='UTF-8')
 ```
-
 
 ```{r}
 # Filter the data frame df_nodes to only include rows where the 'Region' column is equal to "South"
@@ -78,8 +77,7 @@ plot(G,
 
 ## Modelling community formation in the African road network
 
-At the end of the previous session, we used the fast greedy algorithm to detect communities based on the topology of the African road network. We used an R implementation of the fast greedy algorithm through the built-in function `cluter_fast_greedy()`. While a built-in function gives us results in a very straightforward way, it also makes the process less transparent. In this section, we implement a percolation theory approach to model the formation of communities of nodes (cities) as the connectivity properties of the network are varied. 
-
+At the end of the previous session, we used the fast greedy algorithm to detect communities based on the topology of the African road network. We used an R implementation of the fast greedy algorithm through the built-in function `cluter_fast_greedy()`. While a built-in function gives us results in a very straightforward way, it also makes the process less transparent. In this section, we implement a percolation theory approach to model the formation of communities of nodes (cities) as the connectivity properties of the network are varied.
 
 ```{r}
 
@@ -137,8 +135,6 @@ for (j in seq(60, 180, 60)) {
   i <- i+1
 }
 ```
-
-
 
 ```{r}
 plots_list %>%
@@ -203,8 +199,6 @@ plot_60 <- ggraph(as_tbl_graph(G_perco_60), custom_layout) +
 
 ```
 
-
-
 ```{r}
 
 df_nodes_perco_120 <- df_nodes
@@ -253,7 +247,6 @@ plot_120 <- ggraph(as_tbl_graph(G_perco_120), custom_layout) +
   geom_sf(data = world_subset, fill = NA, color = "black")
 
 ```
-
 
 ```{r}
 
@@ -304,7 +297,6 @@ plot_180 <- ggraph(as_tbl_graph(G_perco_180), custom_layout) +
 
 ```
 
-
 ```{r}
 plot_60 + plot_120 + plot_180
 ```
@@ -322,8 +314,6 @@ thresholds <- list()
 gccs <- list()
 ncs <- list()
 ```
-
-
 
 ```{r}
 
@@ -361,8 +351,6 @@ for (i in seq(0, max(df_edges$l))) {
 # Display the first few rows of the 'components' data frame
 head(components)
 ```
-
-
 
 ```{r}
 # Plot the threshold values on the x-axis and the maximum connected component sizes (gccs) on the y-axis

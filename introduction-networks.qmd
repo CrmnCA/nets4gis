@@ -23,7 +23,7 @@ library(igraph)
 
 ## Creating networks
 
-We first consider the components of a network object. Generally, a network (or a graph) consists of nodes (a.k.a. vertices) and edges (a.k.a. links). Edges link nodes to form a network. Networks are used as a tool to conceptualise many real-life situations, such as the friendships among members of a school year group, airline flights between cities or hyperlinks between websites.
+Networks are used as a tool to conceptualise many real-life situations where a group of items display connections among themselves, such as the friendships among members of a school year group, airline flights between cities or hyperlinks between websites. Generally, a network (or a graph) consists of nodes (a.k.a. vertices) and edges (a.k.a. links) which represent the connections between the nodes of the network. 
 
 ### Starting from the basics
 
@@ -69,7 +69,7 @@ plot(network,
      vertex.label = 1:5)
 ```
 
-The network can also be defined as a list containing pairs of nodes with labels. In that case we do not need tospecify the number of nodes. We only specify the isolated nodes to be included.
+The network can also be defined as a list containing pairs of nodes with labels. In that case we do not need to specify the number of nodes. We only specify the isolated nodes to be included.
 
 ::: callout-note
 We will describe the various arguments within plot which can be used to style your data visualisation
@@ -90,16 +90,17 @@ network_isolated <- graph(
 
 # plot
 plot(network_isolated, 
-      layout = layout.circle(network_isolated),
-     vertex.frame.color="red",  
+    layout = layout.circle(network_isolated),
+     vertex.frame.color="red",
+     vertex.color="yellow", 
+     vertex.size=15,
      vertex.label.color="black",
      vertex.label.cex=0.9, 
      vertex.label.dist=2.3, 
      edge.curved=0.3, 
      edge.arrow.size=.5, 
-     edge.color = "blue", 
-     vertex.color="yellow", 
-     vertex.size=15) 
+     edge.color = "blue"
+     ) 
 ```
 
 ### Adding attributes
@@ -122,7 +123,7 @@ Additional node attributes can be added, such as population size:
 V(network_isolated)$population <- c(92000, 549000, 1786000, 74000, 8000, 21000)
 ```
 
-We can access the edges:
+We can also access the edges:
 
 ```{r}
 E(network_isolated)
@@ -146,7 +147,7 @@ We can also look at the existing node and edge attributes.
 vertex_attr(network_isolated)
 ```
 
-We can also add a network attribute:
+And we can add network attributes:
 
 ```{r}
 network_isolated$title <- "Network of human mobility between cities"
@@ -154,13 +155,13 @@ network_isolated$title <- "Network of human mobility between cities"
 
 ### Basic visualisation
 
-You have already seen how we can visualise networks using the base R function **plot**. We will now elaborate on how individual components of the network can be visually adjusted using specific parameters in the plot function. More sophisticated data visualisations can be produced integrating geographic information, see Chapter 5 in @roweetal2023-rps.
+You have already seen how we can visualise networks using the base R function `plot()`. We will now elaborate on how individual components of the network can be visually adjusted using specific parameters in the plot function. More sophisticated data visualisations can be produced integrating geographic information, see Chapter 5 in @roweetal2023-rps, or using other packages such as `ggraph` in conjunction with `ggplot2` as we will see in the section on Percolation.
 
 ```{r}
 plot(network_isolated,
      layout = layout.circle(network_isolated),
      # adjust nodes
-     vertex.frame.color = "gray90",    # line colour
+     vertex.frame.color = "gray90",   # line colour
      vertex.label.color = "black",    # label colour 
      vertex.label.cex = 1,            # label font size
      vertex.label.dist = 3,           # label distance
@@ -170,7 +171,7 @@ plot(network_isolated,
      edge.curved=0.3,     # curvature
      edge.arrow.size=0.5,  # size
      edge.arrow.width=.5,
-     edge.width=E(network_isolated)$weight,
+     edge.width=E(network_isolated)$weight/1000,
      edge.color = "gray") # colour
 ```
 
@@ -213,7 +214,7 @@ hist(net_degree,
 
 ### Distance
 
-A path in a network between node $A$ and node $B$ is a sequence of edges joining distinct nodes, starting at node $A$ and ending at node $B$. In a **directed path** edges are all directed at the same direction.
+A path in a network between node $A$ and node $B$ is a sequence of edges joining distinct nodes, starting at node $A$ and ending at node $B$. In a **directed path** all edges follow the same direction.
 
 The path length between nodes $A$ and $B$ is generally defined as the number of edges forming a path. The shortest path is the minimum count of edges present to travel from $A$ to $B$.
 
@@ -251,7 +252,7 @@ mean_distance(network_isolated,
 
 Centrality metrics assign scores to nodes (and sometimes also edges) according to their position within a network. These metrics can be used to identify the most influential nodes.
 
-We can measure the degree of a node, or the weighted degree of a node. This is known as the strength of a node. It is the sum of edge weights linked to adjacent nodes, or also known as in-flow or out-flow associated with each node.
+We can measure the degree of a node as we did before, but we can also measure its weighted degree. This is known as the strength of a node and it is computed as the sum of edge weights linked to adjacent nodes. Both degree and strength are considered to be centrality metrics.
 
 ```{r}
 # compute strength of network nodes
@@ -268,7 +269,7 @@ hist(net_strength,
      main="Histogram of node strength")
 ```
 
-Two important centrality metrics are (1) closeness centrality, and (2) betweenness centrality. Closeness centrality is a measure of the shortest path length between a node and all the other nodes. For a given node, it is computed as the inverse of the average shortest paths between that node and every other node in the network. A node with closeness centrality close to 1 indicates that on average the node is very close to the other nodes in the network. A closeness centrality of 0 represents an isolated node.
+Another two important centrality metrics are (1) closeness centrality, and (2) betweenness centrality. Closeness centrality is a measure of the shortest path length between a node and all the other nodes. For a given node, it is computed as the inverse of the average shortest paths between that node and every other node in the network. A node with closeness centrality close to 1 indicates that on average the node is very close to the other nodes in the network. A closeness centrality of 0 represents an isolated node.
 
 ```{r}
 close_centr <- closeness(network_isolated, 
@@ -293,26 +294,3 @@ hist(between_centr,
      main = "Histogram of betweenness centrality")
 ```
 
-### Hubs and authorities
-
-We call hubs or authorities nodes with a higher-than-average degree. Normally, the name hub is used to nodes with high out-degree. Authority is used to nodes with high in-degree. Jon Kleinberg developed an algorithm to detect hubs and authorities.
-
-```{r}
-net_hub <- hub_score(network_isolated, 
-                weights=NULL)$vector #  use the weighted edges
-
-hist(net_hub, 
-     breaks = 50, 
-     main = "Histogram of hub score")
-```
-
-We can also explore the authority score for each node:
-
-```{r}
-net_aut <- authority_score(network_isolated, 
-                           weights=NULL)$vector
-
-hist(net_aut, 
-     breaks = 50, 
-     main = "Histogram of authority score")
-```
