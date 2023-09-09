@@ -6,15 +6,16 @@ We first load all the libraries required for this section.
 
 ```{r}
 #| warning: false
+
 # Load required packages
 library(igraph)    # for network analysis
-library(ggplot2)
-library(ggraph)
-library(patchwork)
-library(tidygraph)
-library(RColorBrewer)
-library(rnaturalearth)
-library(sf)
+library(ggplot2)   # for data visualization
+library(ggraph)    # for graph visualization
+library(patchwork) # for arranging plots
+library(tidygraph) # for tidy data handling with graphs
+library(RColorBrewer) # for color palettes
+library(rnaturalearth) # for natural earth map data
+library(sf)        # for spatial data manipulation
 ```
 
 
@@ -29,8 +30,10 @@ Percolation theory can therefore be used in a variety of contexts to better unde
 As before, we start by loading the data corresponding to the nodes and edges of the African road network:
 
 ```{r}
-# Read edge and node data from URLs
+# Read CSV data for edges from a specified URL
 df_edges <- read.csv("https://raw.githubusercontent.com/rafaelprietocuriel/AfricanUrbanNetwork/main/AfricaNetworkEdges.csv")
+
+# Read CSV data for nodes from a specified URL, specifying UTF-8 encoding for special characters
 df_nodes <- read.csv("https://raw.githubusercontent.com/rafaelprietocuriel/AfricanUrbanNetwork/main/AfricaNetworkNodes.csv", encoding='UTF-8')
 ```
 
@@ -39,24 +42,24 @@ In order to ensure timely completion of this workshop, we will use a subset of t
 We start by selecting the nodes belonging to the South region. This can be easily done with the `subset()` function.
 
 ```{r}
-# Filter the data frame df_nodes to only include rows where the 'Region' column is equal to "South"
+# Subset the df_nodes data frame to include only rows where Region is "South"
 df_nodes <- subset(df_nodes, Region == "South")
 ```
 
 Similarly, we can select the only the edges where both extrema are nodes belongin to the South region.
 
 ```{r}
-# Filter the data frame df_edges to only include rows where the 'from' column is in the list of Agglomeration_ID values from df_nodes
+# Subset df_edges to include only rows where 'from' column values are in df_nodes$Agglomeration_ID
 df_edges <- subset(df_edges, from %in% df_nodes$Agglomeration_ID)
 
-# Filter the data frame df_edges to only include rows where the 'to' column is in the list of Agglomeration_ID values from df_nodes
+# Subset df_edges to include only rows where 'to' column values are in df_nodes$Agglomeration_ID
 df_edges <- subset(df_edges, to %in% df_nodes$Agglomeration_ID)
 ```
 
 Like before, we can create an undirected graph from the redefined data frames of nodes and edges.
 
 ```{r}
-# Create an undirected graph 'G' from a data frame 'df_edges' representing edges and a data frame 'df_nodes' representing vertices
+# Create an igraph graph 'G' from data frames 'df_edges' and 'df_nodes'
 G <- graph_from_data_frame(d = df_edges,
                            vertices = df_nodes,
                            directed = FALSE)
@@ -65,30 +68,37 @@ G <- graph_from_data_frame(d = df_edges,
 We can visualise this sub-network by running the code below. Note that instead of using the base R function `plot()`, we are now using `ggraph`, which is an R package used for creating and visualising graphs and networks. It is built on top of the popular `ggplot2` package, which is used for creating a wider range of statistical graphics in R.
 
 ```{r}
+# Set node sizes in the graph 'G' based on a function of population size
 V(G)$size <- 0.5*(V(G)$Pop2015/10000)^0.4
 
+# Create a custom layout data frame with node names, x-coordinates, and y-coordinates
 custom_layout <- data.frame(
-name = V(G)$name,  # Node names from the graph
-x = df_nodes$x,  # Custom x-coordinates
-y = df_nodes$y   # Custom y-coordinates
+  name = V(G)$name,  # Node names from the graph
+  x = df_nodes$x,    # Custom x-coordinates
+  y = df_nodes$y    # Custom y-coordinates
 )
 
-# Plot the graph 'G_' with specific visual attributes
+# Plot the graph 'G' with specific visual attributes
 plotG <- ggraph(as_tbl_graph(G), custom_layout) +
   geom_edge_link() +
   geom_node_point(aes(colour="red", size=V(G)$size)) +
   theme(legend.position = "none") +
   coord_fixed()
 
+# Display the graph plotG
 plotG
 ```
 
 The countries belonging to the South region are Botswana, Eswatini, Lesotho, Namibia, South Africa. To give more geographical context to the above visualisation, we will add the outlines of these countries as a base layer for this plot. The shapes for the world countries can be downloaded as simple feature objects (similar to a data frame but it also includes geographic information) using the `ne_download` function from the `rnaturalearth` package. We store the simple feature in the variable `world`, which we then filter to include only the countries of interest.
 
 ```{r}
-
+# Download world map data with specified parameters
 world <- ne_download(scale = "small", category = "cultural", type = "admin_0_countries", returnclass = "sf")
+
+# Define a vector of target countries
 target_countries <- c("Botswana", "eSwatini", "Lesotho", "Namibia", "South Africa")
+
+# Subset the world map data to include only the target countries
 world_subset <- world[world$SOVEREIGNT %in% target_countries, ]
 ```
 The plot from above can be modified to also include the base layer
@@ -101,6 +111,7 @@ plotG <- ggraph(as_tbl_graph(G), custom_layout) +
   theme(legend.position = "none") +
   geom_sf(data = world_subset, fill = NA, color = "black") 
 
+# Display the graph plotG
 plotG
 ```
 
@@ -113,36 +124,42 @@ At the end of the previous session, we used the fast greedy algorithm to detect 
 Following a percolation approach, we start with the original network representing the cities and roads of Southern Africa, but with no edges. Then, we add back edges according to whether they satisfy certain criterion. In this case, an edge is added back if the time to travel from one end to the other considering the presence of a border is below a critical value (i.e. if the attribute `timeUCB` is below a certain threshold value). Below, we perform this process for three different values of the threshold value, which are 60, 120 and 180 minutes.
 
 ```{r}
-
+# Create a copy of df_nodes named df_nodes_perco_60
 df_nodes_perco_60 <- df_nodes
+
+# Subset df_edges to include only rows where timeUCB is less than 60
 df_edges_perco_60 <- subset(df_edges, timeUCB < 60)
 
+# Create a graph G_perco_60 from the modified data frames
 G_perco_60 <- graph_from_data_frame(d = df_edges_perco_60,
-                         vertices = df_nodes_perco_60,
-                         directed = FALSE)
-
+                                    vertices = df_nodes_perco_60,
+                                    directed = FALSE)
 ```
 
 ```{r}
-
+# Create a copy of df_nodes named df_nodes_perco_120
 df_nodes_perco_120 <- df_nodes
+
+# Subset df_edges to include only rows where timeUCB is less than 120
 df_edges_perco_120 <- subset(df_edges, timeUCB < 120)
 
+# Create a graph G_perco_120 from the modified data frames
 G_perco_120 <- graph_from_data_frame(d = df_edges_perco_120,
-                         vertices = df_nodes_perco_120,
-                         directed = FALSE)
-
+                                    vertices = df_nodes_perco_120,
+                                    directed = FALSE)
 ```
 
 ```{r}
-
+# Create a copy of df_nodes named df_nodes_perco_180
 df_nodes_perco_180 <- df_nodes
+
+# Subset df_edges to include only rows where timeUCB is less than 180
 df_edges_perco_180 <- subset(df_edges, timeUCB < 180)
 
+# Create a graph G_perco_180 from the modified data frames
 G_perco_180 <- graph_from_data_frame(d = df_edges_perco_180,
-                         vertices = df_nodes_perco_180,
-                         directed = FALSE)
-
+                                    vertices = df_nodes_perco_180,
+                                    directed = FALSE)
 ```
 
 
@@ -151,125 +168,138 @@ G_perco_180 <- graph_from_data_frame(d = df_edges_perco_180,
 We also obtain visualisations for the three critical travel times. In these visualisations, we color the nodes so that nodes belonging to the same connected component share the same color. A connected component is a group of nodes where you can travel from any node to any other node by following the edges. We store the visualisations for each of the three critical travel times in the variables `plot_60`, `plot_120` and `plot_180`. Then, we plot them together using the `patchwork` package, which allows to create figures with several plots simply by running `plot_60 + plot_120 + plot_180`.
 
 ```{r}
-
-# Find connected components
+# Find connected components in G_perco_60
 component_info_60 <- components(G_perco_60)
 
-# Create a data frame with node names and corresponding colors
-df_nodes_perco_60$component_ID = component_info_60$membership
+# Create a data frame with node names and their corresponding connected component IDs
+df_nodes_perco_60$component_ID <- component_info_60$membership
 
-# Define a color palette for connected components (replace with your own colors)
+# Define a color palette for connected components (replace with your own colors if desired)
 component_colors_60 <- sample(rainbow(component_info_60$no), replace=FALSE)
 
-# Assign colors to nodes based on connected component
+# Assign colors to nodes based on their connected component
 node_colors_60 <- component_colors_60[component_info_60$membership]
 
-# Create a data frame with node names and corresponding colors
-df_nodes_perco_60$color = node_colors_60
+# Add color information to the df_nodes_perco_60 data frame
+df_nodes_perco_60$color <- node_colors_60
 
-df_nodes_perco_60$degree = degree(G_perco_60)
+# Calculate and add degree information to the df_nodes_perco_60 data frame
+df_nodes_perco_60$degree <- degree(G_perco_60)
 
+# Set nodes with degree 0 to gray color
 df_nodes_perco_60$color[df_nodes_perco_60$degree == 0] <- "gray"
 
+# Set node sizes in G_perco_60 based on a function of population size
 V(G_perco_60)$size <- 0.5*(V(G_perco_60)$Pop2015/10000)^0.4
 
+# Create a custom layout data frame with node names, x-coordinates, and y-coordinates
 custom_layout <- data.frame(
-name = V(G_perco_60)$name,  # Node names from the graph
-x = df_nodes_perco_60$x,  # Custom x-coordinates
-y = df_nodes_perco_60$y   # Custom y-coordinates
+  name = V(G_perco_60)$name,  # Node names from the graph
+  x = df_nodes_perco_60$x,    # Custom x-coordinates
+  y = df_nodes_perco_60$y     # Custom y-coordinates
 )
 
-# Plot the graph 'G_' with specific visual attributes
+# Plot the graph 'G_perco_60' with specific visual attributes
 plot_60 <- ggraph(as_tbl_graph(G_perco_60), custom_layout) +
   geom_edge_link() +
   geom_node_point(aes(color = factor(df_nodes_perco_60$color), 
                       size = V(G_perco_60)$size)) +
-                  scale_color_identity() +
-                  theme(legend.position = "none") +
+  scale_color_identity() +
+  theme(legend.position = "none") +
   geom_sf(data = world_subset, fill = NA, color = "black")
 
 ```
 
+
 ```{r}
 
-# Find connected components
+# Find connected components in G_perco_120
 component_info_120 <- components(G_perco_120)
 
-# Create a data frame with node names and corresponding colors
-df_nodes_perco_120$component_ID = component_info_120$membership
+# Create a data frame with node names and their corresponding connected component IDs
+df_nodes_perco_120$component_ID <- component_info_120$membership
 
-# Define a color palette for connected components (replace with your own colors)
+# Define a color palette for connected components (replace with your own colors if desired)
 component_colors_120 <- sample(rainbow(component_info_120$no), replace=FALSE)
 
-# Assign colors to nodes based on connected component
+# Assign colors to nodes based on their connected component
 node_colors_120 <- component_colors_120[component_info_120$membership]
 
-# Create a data frame with node names and corresponding colors
-df_nodes_perco_120$color = node_colors_120
+# Add color information to the df_nodes_perco_120 data frame
+df_nodes_perco_120$color <- node_colors_120
 
-df_nodes_perco_120$degree = degree(G_perco_120)
+# Calculate and add degree information to the df_nodes_perco_120 data frame
+df_nodes_perco_120$degree <- degree(G_perco_120)
 
+# Set nodes with degree 0 to gray color
 df_nodes_perco_120$color[df_nodes_perco_120$degree == 0] <- "gray"
 
+# Set node sizes in G_perco_120 based on a function of population size
 V(G_perco_120)$size <- 0.5*(V(G_perco_120)$Pop2015/10000)^0.4
 
+# Create a custom layout data frame with node names, x-coordinates, and y-coordinates
 custom_layout <- data.frame(
-name = V(G_perco_120)$name,  # Node names from the graph
-x = df_nodes_perco_120$x,  # Custom x-coordinates
-y = df_nodes_perco_120$y   # Custom y-coordinates
+  name = V(G_perco_120)$name,  # Node names from the graph
+  x = df_nodes_perco_120$x,    # Custom x-coordinates
+  y = df_nodes_perco_120$y     # Custom y-coordinates
 )
 
-# Plot the graph 'G_' with specific visual attributes
+# Plot the graph 'G_perco_120' with specific visual attributes
 plot_120 <- ggraph(as_tbl_graph(G_perco_120), custom_layout) +
   geom_edge_link() +
   geom_node_point(aes(color = factor(df_nodes_perco_120$color), 
                       size = V(G_perco_120)$size)) +
-                  scale_color_identity() +
-                  theme(legend.position = "none") +
+  scale_color_identity() +
+  theme(legend.position = "none") +
   geom_sf(data = world_subset, fill = NA, color = "black")
 
 ```
 
+
 ```{r}
-# Find connected components
+# Find connected components in G_perco_180
 component_info_180 <- components(G_perco_180)
 
-# Create a data frame with node names and corresponding colors
-df_nodes_perco_180$component_ID = component_info_180$membership
+# Create a data frame with node names and their corresponding connected component IDs
+df_nodes_perco_180$component_ID <- component_info_180$membership
 
-# Define a color palette for connected components (replace with your own colors)
+# Define a color palette for connected components (replace with your own colors if desired)
 component_colors_180 <- sample(rainbow(component_info_180$no), replace=FALSE)
 
-# Assign colors to nodes based on connected component
+# Assign colors to nodes based on their connected component
 node_colors_180 <- component_colors_180[component_info_180$membership]
 
-# Create a data frame with node names and corresponding colors
-df_nodes_perco_180$color = node_colors_180
+# Add color information to the df_nodes_perco_180 data frame
+df_nodes_perco_180$color <- node_colors_180
 
-df_nodes_perco_180$degree = degree(G_perco_180)
+# Calculate and add degree information to the df_nodes_perco_180 data frame
+df_nodes_perco_180$degree <- degree(G_perco_180)
 
+# Set nodes with degree 0 to gray color
 df_nodes_perco_180$color[df_nodes_perco_180$degree == 0] <- "gray"
 
+# Set node sizes in G_perco_180 based on a function of population size
 V(G_perco_180)$size <- 0.5*(V(G_perco_180)$Pop2015/10000)^0.4
 
+# Create a custom layout data frame with node names, x-coordinates, and y-coordinates
 custom_layout <- data.frame(
-name = V(G_perco_180)$name,  # Node names from the graph
-x = df_nodes_perco_180$x,  # Custom x-coordinates
-y = df_nodes_perco_180$y   # Custom y-coordinates
+  name = V(G_perco_180)$name,  # Node names from the graph
+  x = df_nodes_perco_180$x,    # Custom x-coordinates
+  y = df_nodes_perco_180$y     # Custom y-coordinates
 )
 
-# Plot the graph 'G_' with specific visual attributes
+# Plot the graph 'G_perco_180' with specific visual attributes
 plot_180 <- ggraph(as_tbl_graph(G_perco_180), custom_layout) +
   geom_edge_link() +
   geom_node_point(aes(color = factor(df_nodes_perco_180$color), 
                       size = V(G_perco_180)$size)) +
-                  scale_color_identity() +
-                  theme(legend.position = "none") +
+  scale_color_identity() +
+  theme(legend.position = "none") +
   geom_sf(data = world_subset, fill = NA, color = "black")
-
 ```
 
 ```{r}
+# Combine the plots for G_perco_60, G_perco_120, and G_perco_180
 plot_60 + plot_120 + plot_180
 ```
 
@@ -285,11 +315,11 @@ Below we demonstrate this type of analysis. Our percolation parameter of choice 
 We start by creating some empty data structures where we will be storing information about the network and the percolation parameter in each iteration of our percolation algorithm. This will help us analyse the results later on. To do this we create four empty lists, where we will store the value of the percolation parameter in each iteration, the size of the GCC, the number of connected components and the average time to travel between any pair of nodes. By the end of the percolation process, these lists will contain $n_{iterations}$ elements each.
 
 ```{r}
-# Create empty lists to store thresholds, gccs, and ncs
-thresholds <- list()
-gccs <- list()
-ncs <- list()
-times <- list()
+# Create empty vectors to store thresholds, gccs, ncs, and times
+thresholds <- c()
+gccs <- c()
+ncs <- c()
+times <- c()
 ```
 
 Then, we are ready to perform the percolation algorithm. Look at the comments in each line of code to understand what we do at each step.
@@ -299,30 +329,32 @@ Then, we are ready to perform the percolation algorithm. Look at the comments in
 # Iterate over thresholds
 for (i in seq(0, max(df_edges$timeUCB))) {
   
+  # Create modified data frames based on the current threshold
   df_nodes_perco <- df_nodes
   df_edges_perco <- subset(df_edges, timeUCB < i)
 
+  # Create a graph G_perco from the modified data frames
   G_perco <- graph_from_data_frame(d = df_edges_perco,
                          vertices = df_nodes_perco,
                          directed = FALSE)
   
-  # Get connected components of the modified graph G_
+  # Get connected components of the modified graph G_perco
   connected_components <- components(G_perco)
 
   # Append the current threshold value to the 'thresholds' list
   thresholds <- append(thresholds, i)
   
   # Append the maximum connected component size to the 'gccs' list
-  gccs <- append(gccs, max(connected_components$csize))
+  gccs <- c(gccs, max(connected_components$csize))
   
   # Append the number of connected components to the 'ncs' list
-  ncs <- append(ncs, connected_components$no)
+  ncs <- c(ncs, connected_components$no)
   
-  times <- append(times, mean_distance(G_perco, directed=FALSE, weights=df_edges_perco$timeUCB))
+  # Calculate and append the mean distance weighted by timeUCB in G_perco to 'times' list
+  times <- c(times, mean_distance(G_perco, directed=FALSE, weights=df_edges_perco$timeUCB, unconnected=TRUE))
 }
 
-# Display the first few rows of the 'components' data frame
-head(components)
+
 ```
 
 ### Changes in the size of the giant connected component as edges are removed
@@ -330,27 +362,57 @@ head(components)
 Once the algorithm is done running, we can plot the size of the GCC as the value of the percolation parameter is varied.
 
 ```{r}
-# Plot the threshold values on the x-axis and the maximum connected component sizes (gccs) on the y-axis
-plot(thresholds, gccs)
+# Create a data frame for the plot with thresholds and gccs
+df <- data.frame(x = thresholds, y = gccs)
+
+# Create a ggplot2 plot
+ggplot(data = df, aes(x = x, y = y)) +
+  geom_line(color = "blue") +
+  labs(x = "Travel time with border effect (minutes)", y = "Size of GCC") +
+  theme_minimal()
+
 ```
 
-We observe that for small values of `timeUCB` rapid changes occur in the size of the GCC. When `timeUCB` takes approximately the values X, y ,z, there are sudden changes in the size of the GCC, showing that there has been a significant alteration in the network's topology. For example, when eges are removed, nodes that act like hubs may lose connections and as a result, the GCC may experience a significant drop in size.
+We observe that for small values of the percolation parameter rapid changes occur in the size of the GCC. When the percolation parameter takes approximately the values 150, 650, 1000, there are sudden changes in the size of the GCC, showing that there has been a significant alteration in the network's topology. For example, when edges with associated travel times above 1000 minutes are removed, nodes that act like hubs may lose connections and as a result, the GCC may experience a significant drop in size.
 
 ### Changes in the number of connected components as edges are removed
 
 We can also plot the number of connected components as the value of the percolation parameter is varied.
 
 ```{r}
-# Plot the threshold values on the x-axis and the number of connected components (ncs) on the y-axis
-plot(thresholds, ncs)
-```
+# Create a data frame for the plot with thresholds and ncs
+df <- data.frame(x = thresholds, y = ncs)
 
+# Create a ggplot2 plot
+ggplot(data = df, aes(x = x, y = y)) +
+  geom_line(color = "blue") +
+  labs(x = "Travel time with border effect (minutes)", y = "No. of connected components") +
+  theme_minimal()
+```
+We observe that for small values of the percolation threshold, nearly all the edges in the network are removed, so there are as many components as there are nodes. We also see that if we increase the percolation threshold above 250 minutes, the number of connected components is reduced, showing that the connectivity of the network is restored as we add additional edges.  
 
 ### Changes in the average travel time as edges are removed
 
-Finally, we plot the average time to travel between any pair of nodes as the value of the percolation parameter is varied.
+Finally, we plot the average travel time between any pair of nodes as the value of the percolation parameter is varied.
 
 ```{r}
-# Plot the threshold values on the x-axis and the number of connected components (ncs) on the y-axis
-plot(thresholds, times)
+# Create a data frame for the plot with thresholds and times
+df <- data.frame(x = thresholds, y = times)
+
+# Create a ggplot2 plot
+ggplot(data = df, aes(x = x, y = y)) +
+  geom_line(color = "blue") +
+  labs(x = "Travel time with border effect (minutes)", y = "Average travel time (minutes)") +
+  theme_minimal()
 ```
+
+Note that when the percolation parameter is 0, all the edges are removed, so the corresponding value of the average travel time is NA. As we increase the percolation parameter, edges are added and more possible paths arise in the network. Note that the average travel time is only computed for existing paths (hence the `unconnected=TRUE` parameter in the `mean_distance()` function). The sudden changes in the average travel time and the sudden changes in the size of the GCC happen for the same values of the percolation parameter. For example, when the percolation parameter is approximately equal to 650 minutes, we see a large increase in the average travel time. This suggests that two parts of the network that were unconnected for lower values of the percolation parameter, become connected for values above 650 minutes approximately and as a result, the average travel time increases since there are possibilities to travel further. 
+
+::: callout-note
+Can you think of other possible applications of percolation theory in the context of geographical netowrks?
+:::
+
+::: callout-note
+You can check an application of network theory to detect te sensitive spots of the African interurban transport network in [@detecting2023].
+:::
+------------------------------------------------------------------------
