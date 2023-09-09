@@ -34,7 +34,7 @@ df_edges <- read.csv("https://raw.githubusercontent.com/rafaelprietocuriel/Afric
 df_nodes <- read.csv("https://raw.githubusercontent.com/rafaelprietocuriel/AfricanUrbanNetwork/main/AfricaNetworkNodes.csv", encoding='UTF-8')
 ```
 
-In order to ensure timely completion of this workshop, we have decided to utilise a subset of the African network, specifically focusing on nodes from the South region. This adjustment is necessary as running the code on the entire network would exceed the allocated time frame. However, you are encouraged to explore running the code on the complete network at your own convenience.
+In order to ensure timely completion of this workshop, we will use a subset of the African network, specifically focusing on nodes from the South region. This adjustment is necessary as running the code on the entire network would exceed the allocated time frame. However, you are encouraged to explore running the code on the complete network at your own convenience.
 
 We start by selecting the nodes belonging to the South region. This can be easily done with the `subset()` function.
 
@@ -62,7 +62,7 @@ G <- graph_from_data_frame(d = df_edges,
                            directed = FALSE)
 ```
 
-We can visualise this sub network by running the code below. Note that instead of using the base R function `plot()`, we are now using `ggraph`, which is an R package used for creating and visualising graphs and networks. It is built on top of the popular `ggplot2` package, which is used for creating a wide range of statistical graphics in R.
+We can visualise this sub-network by running the code below. Note that instead of using the base R function `plot()`, we are now using `ggraph`, which is an R package used for creating and visualising graphs and networks. It is built on top of the popular `ggplot2` package, which is used for creating a wider range of statistical graphics in R.
 
 ```{r}
 V(G)$size <- 0.5*(V(G)$Pop2015/10000)^0.4
@@ -76,9 +76,9 @@ y = df_nodes$y   # Custom y-coordinates
 # Plot the graph 'G_' with specific visual attributes
 plotG <- ggraph(as_tbl_graph(G), custom_layout) +
   geom_edge_link() +
-  geom_node_point(aes(size = V(G)$size), color = "red") +
-                  scale_color_identity() +
-                  theme(legend.position = "none") 
+  geom_node_point(aes(colour="red", size=V(G)$size)) +
+  theme(legend.position = "none") +
+  coord_fixed()
 
 plotG
 ```
@@ -94,13 +94,12 @@ world_subset <- world[world$SOVEREIGNT %in% target_countries, ]
 The plot from above can be modified to also include the base layer
 
 ```{r}
-# Plot the graph 'G_' with specific visual attributes
+# Plot the graph 'G' with specific visual attributes
 plotG <- ggraph(as_tbl_graph(G), custom_layout) +
   geom_edge_link() +
-  geom_node_point(aes(size = V(G)$size), color = "red") +
-                  scale_color_identity() +
-                  theme(legend.position = "none") +
-  geom_sf(data = world_subset, fill = NA, color = "black")
+  geom_node_point(aes(colour="red", size=V(G)$size)) +
+  theme(legend.position = "none") +
+  geom_sf(data = world_subset, fill = NA, color = "black") 
 
 plotG
 ```
@@ -109,7 +108,9 @@ plotG
 
 At the end of the previous session, we used the fast greedy algorithm to detect communities based on the topology of the African road network. We used an R implementation of the fast greedy algorithm through the built-in function `cluter_fast_greedy()`. While a built-in function gives us results in a very straightforward way, it also makes the process less transparent. In this section, we implement a percolation theory approach to model the formation of communities of nodes (cities) as the connectivity properties of the network are varied.
 
-In this approach, we start with the original network representing the cities and roads of Southern Africa, but with no edges. Then, we add back edges according to whether they satisfy certain criterion. In this case, an edge is added back if the time to travel from one end to the other considering the presence of a border is below a critical value (i.e. if the attribute `timeUCB` is below a certain critical travel time $t_c$). Below, we perform this process for three different values of $t_c$ which are 60, 120 and 180 minutes.
+### Percolation at three threshold values
+
+Following a percolation approach, we start with the original network representing the cities and roads of Southern Africa, but with no edges. Then, we add back edges according to whether they satisfy certain criterion. In this case, an edge is added back if the time to travel from one end to the other considering the presence of a border is below a critical value (i.e. if the attribute `timeUCB` is below a certain threshold value). Below, we perform this process for three different values of the threshold value, which are 60, 120 and 180 minutes.
 
 ```{r}
 
@@ -143,6 +144,9 @@ G_perco_180 <- graph_from_data_frame(d = df_edges_perco_180,
                          directed = FALSE)
 
 ```
+
+
+### Visualising the results
 
 We also obtain visualisations for the three critical travel times. In these visualisations, we color the nodes so that nodes belonging to the same connected component share the same color. A connected component is a group of nodes where you can travel from any node to any other node by following the edges. We store the visualisations for each of the three critical travel times in the variables `plot_60`, `plot_120` and `plot_180`. Then, we plot them together using the `patchwork` package, which allows to create figures with several plots simply by running `plot_60 + plot_120 + plot_180`.
 
@@ -178,8 +182,8 @@ y = df_nodes_perco_60$y   # Custom y-coordinates
 # Plot the graph 'G_' with specific visual attributes
 plot_60 <- ggraph(as_tbl_graph(G_perco_60), custom_layout) +
   geom_edge_link() +
-  geom_node_point(aes(color = factor(df_nodes_perco_60$color)), 
-                  size = V(G_perco_60)$size) +
+  geom_node_point(aes(color = factor(df_nodes_perco_60$color), 
+                      size = V(G_perco_60)$size)) +
                   scale_color_identity() +
                   theme(legend.position = "none") +
   geom_sf(data = world_subset, fill = NA, color = "black")
@@ -218,8 +222,8 @@ y = df_nodes_perco_120$y   # Custom y-coordinates
 # Plot the graph 'G_' with specific visual attributes
 plot_120 <- ggraph(as_tbl_graph(G_perco_120), custom_layout) +
   geom_edge_link() +
-  geom_node_point(aes(color = factor(df_nodes_perco_120$color)), 
-                  size = V(G_perco_120)$size) +
+  geom_node_point(aes(color = factor(df_nodes_perco_120$color), 
+                      size = V(G_perco_120)$size)) +
                   scale_color_identity() +
                   theme(legend.position = "none") +
   geom_sf(data = world_subset, fill = NA, color = "black")
@@ -257,8 +261,8 @@ y = df_nodes_perco_180$y   # Custom y-coordinates
 # Plot the graph 'G_' with specific visual attributes
 plot_180 <- ggraph(as_tbl_graph(G_perco_180), custom_layout) +
   geom_edge_link() +
-  geom_node_point(aes(color = factor(df_nodes_perco_180$color)), 
-                  size = V(G_perco_180)$size) +
+  geom_node_point(aes(color = factor(df_nodes_perco_180$color), 
+                      size = V(G_perco_180)$size)) +
                   scale_color_identity() +
                   theme(legend.position = "none") +
   geom_sf(data = world_subset, fill = NA, color = "black")
@@ -270,43 +274,41 @@ plot_60 + plot_120 + plot_180
 ```
 
 
-## Analysing network robustness
+## Analysing network resilience
 
-### Changes in the size of the giant connected component as edges are removed
+A percolation theory approach can help us understand how a network responds to the removal of its components. Typically, a percolation algorithm or process is run where in each iteration, the value of a percolation parameter that controls the removal of nodes or edges is updated, and nodes or edges are removed accordingly. In each iteration, key resilience metrics are measured. One of the most used resilience metrics is the number of nodes in the largest connected component after the removal of nodes or edges. This metric is known as the size of the giant connected component (GCC). In many cases, we observe that for certain values of the percolation parameter, abrupt changes occur in the size of the GCC, showing that some sort of failure occurs in the network that qualitatively changes its connectivity structure. 
+
+Below we demonstrate this type of analysis. Our percolation parameter of choice is the time of travel through each edge taking into account the presence of borders. Remember, this variable is encoded by the `timeUCB` field in the `df_edges` data frame. In each iteration of the percolation process, edges with `timeUCB` above the value of the percolation parameter are removed from the network.
+
+### The percolation algorithm
+
+We start by creating some empty data structures where we will be storing information about the network and the percolation parameter in each iteration of our percolation algorithm. This will help us analyse the results later on. To do this we create four empty lists, where we will store the value of the percolation parameter in each iteration, the size of the GCC, the number of connected components and the average time to travel between any pair of nodes. By the end of the percolation process, these lists will contain $n_{iterations}$ elements each.
 
 ```{r}
-# Create an empty data frame to store component information
-components <- data.frame(nodeID = integer(0), component = integer(0), threshold = integer(0), gcc = integer(0))
-
 # Create empty lists to store thresholds, gccs, and ncs
 thresholds <- list()
 gccs <- list()
 ncs <- list()
+times <- list()
 ```
+
+Then, we are ready to perform the percolation algorithm. Look at the comments in each line of code to understand what we do at each step.
 
 ```{r}
 
 # Iterate over thresholds
-for (i in seq(0, max(df_edges$l))) {
-  # Create a copy of the graph G
-  G_ <- G 
+for (i in seq(0, max(df_edges$timeUCB))) {
   
-  # Find indices of edges with lengths greater than the current threshold (i)
-  edges_to_remove <- which(E(G_)$l > i)
-  
-  # Delete edges from G_ based on their indices
-  G_ <- delete_edges(G_, edges_to_remove)
+  df_nodes_perco <- df_nodes
+  df_edges_perco <- subset(df_edges, timeUCB < i)
+
+  G_perco <- graph_from_data_frame(d = df_edges_perco,
+                         vertices = df_nodes_perco,
+                         directed = FALSE)
   
   # Get connected components of the modified graph G_
-  connected_components <- components(G_)
-  
-  # Create a data frame 'df_threshold' containing node IDs, component indices,
-  # threshold values, and sizes of connected components
-  df_threshold <- data.frame(nodeID = df_nodes$Agglomeration_ID, component = connected_components$membership, threshold = rep(i, times= nrow(df_nodes)), gcc = rep(max(connected_components$csize), times= nrow(df_nodes)))
-  
-  # Append 'df_threshold' to the 'components' data frame
-  components <- rbind(components, df_threshold)
-  
+  connected_components <- components(G_perco)
+
   # Append the current threshold value to the 'thresholds' list
   thresholds <- append(thresholds, i)
   
@@ -315,52 +317,40 @@ for (i in seq(0, max(df_edges$l))) {
   
   # Append the number of connected components to the 'ncs' list
   ncs <- append(ncs, connected_components$no)
+  
+  times <- append(times, mean_distance(G_perco, directed=FALSE, weights=df_edges_perco$timeUCB))
 }
 
 # Display the first few rows of the 'components' data frame
 head(components)
 ```
 
+### Changes in the size of the giant connected component as edges are removed
+
+Once the algorithm is done running, we can plot the size of the GCC as the value of the percolation parameter is varied.
+
 ```{r}
 # Plot the threshold values on the x-axis and the maximum connected component sizes (gccs) on the y-axis
 plot(thresholds, gccs)
 ```
+
+We observe that for small values of `timeUCB` rapid changes occur in the size of the GCC. When `timeUCB` takes approximately the values X, y ,z, there are sudden changes in the size of the GCC, showing that there has been a significant alteration in the network's topology. For example, when eges are removed, nodes that act like hubs may lose connections and as a result, the GCC may experience a significant drop in size.
+
+### Changes in the number of connected components as edges are removed
+
+We can also plot the number of connected components as the value of the percolation parameter is varied.
 
 ```{r}
 # Plot the threshold values on the x-axis and the number of connected components (ncs) on the y-axis
 plot(thresholds, ncs)
 ```
 
-### Changes in the average distance as nodes are removed
+
+### Changes in the average travel time as edges are removed
+
+Finally, we plot the average time to travel between any pair of nodes as the value of the percolation parameter is varied.
 
 ```{r}
-# Create empty lists to store thresholds, gccs, and ncs
-populations <- list()
-average_distances <- list()
-```
-
-```{r}
-
-# Iterate over thresholds
-for (node_id in V(G)) {
-  
-  # Retrieve the population attribute for the current node
-  populations <- append(populations, V(G)[node_id]$Pop2015)
-  
-  # Create a copy of the graph G
-  G_ <- G 
-  
-  # Find indices of edges with lengths greater than the current threshold (i)
-  G_ <- delete_vertices(G_, node_id)
-  
-  average_distance <- mean_distance(G_)
-  
-  average_distances <- append(average_distances, average_distance)
-  
-}
-
-```
-
-```{r}
-plot(populations, average_distances)
+# Plot the threshold values on the x-axis and the number of connected components (ncs) on the y-axis
+plot(thresholds, times)
 ```
