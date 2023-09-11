@@ -2,7 +2,13 @@
 
 ## Dependencies
 
-We first load all the libraries required for this section.
+We first clean the environment and load all the libraries required for this section.
+
+```{r}
+#| include = FALSE
+rm(list=ls()) # clear working space
+```
+
 
 ```{r}
 #| warning: false
@@ -117,11 +123,11 @@ plotG
 
 ## Modelling community formation in the African road network
 
-At the end of the previous session, we used the fast greedy algorithm to detect communities based on the topology of the African road network. We used an R implementation of the fast greedy algorithm through the built-in function `cluter_fast_greedy()`. While a built-in function gives us results in a very straightforward way, it also makes the process less transparent. In this section, we implement a percolation theory approach to model the formation of communities of nodes (cities) as the connectivity properties of the network are varied.
+In this section, we implement a percolation theory approach to model the formation of communities of nodes (cities) as the connectivity properties of the network are varied.
 
 ### Percolation at three threshold values
 
-Following a percolation approach, we start with the original network representing the cities and roads of Southern Africa, but with no edges. Then, we add back edges according to whether they satisfy certain criterion. In this case, an edge is added back if the time to travel from one end to the other considering the presence of a border is below a critical value (i.e. if the attribute `timeUCB` is below a certain threshold value). Below, we perform this process for three different values of the threshold value, which are 60, 120 and 180 minutes.
+Following a percolation approach, we start with the original network representing the cities and roads of the Southern African region, but with no edges. Then, we add back edges according to whether they satisfy a certain criterion. In this case, an edge is added back if the time to travel from one end to the other considering the presence of a border is below a threshold value (i.e. if the attribute `timeUCB` is below a certain threshold value). Below, we perform this process for three different values of the percolation parameter given by `timeUCB`, which are 60, 120 and 180 minutes.
 
 ```{r}
 # Create a copy of df_nodes named df_nodes_perco_60
@@ -165,7 +171,7 @@ G_perco_180 <- graph_from_data_frame(d = df_edges_perco_180,
 
 ### Visualising the results
 
-We also obtain visualisations for the three critical travel times. In these visualisations, we color the nodes so that nodes belonging to the same connected component share the same color. A connected component is a group of nodes where you can travel from any node to any other node by following the edges. We store the visualisations for each of the three critical travel times in the variables `plot_60`, `plot_120` and `plot_180`. Then, we plot them together using the `patchwork` package, which allows to create figures with several plots simply by running `plot_60 + plot_120 + plot_180`.
+We also obtain visualisations for the three threshold travel times. In these visualisations, we color the nodes so that nodes belonging to the same connected component share the same color. A connected component is a group of nodes where you can travel from any node to any other node by following the edges. We store the visualisations for each of the three critical travel times in the variables `plot_60`, `plot_120` and `plot_180`. Then, we plot them together using the `patchwork` package, which allows to create figures with several plots simply by running `plot_60 + plot_120 + plot_180`.
 
 ```{r}
 # Find connected components in G_perco_60
@@ -202,11 +208,12 @@ custom_layout <- data.frame(
 # Plot the graph 'G_perco_60' with specific visual attributes
 plot_60 <- ggraph(as_tbl_graph(G_perco_60), custom_layout) +
   geom_edge_link() +
-  geom_node_point(aes(color = factor(df_nodes_perco_60$color), 
+  geom_node_point(aes(color = df_nodes_perco_60$color, 
                       size = V(G_perco_60)$size)) +
   scale_color_identity() +
   theme(legend.position = "none") +
-  geom_sf(data = world_subset, fill = NA, color = "black")
+  geom_sf(data = world_subset, fill = NA, color = "black") +
+  labs(title = "timeUCB < 60")
 
 ```
 
@@ -247,11 +254,12 @@ custom_layout <- data.frame(
 # Plot the graph 'G_perco_120' with specific visual attributes
 plot_120 <- ggraph(as_tbl_graph(G_perco_120), custom_layout) +
   geom_edge_link() +
-  geom_node_point(aes(color = factor(df_nodes_perco_120$color), 
+  geom_node_point(aes(color = df_nodes_perco_120$color, 
                       size = V(G_perco_120)$size)) +
   scale_color_identity() +
   theme(legend.position = "none") +
-  geom_sf(data = world_subset, fill = NA, color = "black")
+  geom_sf(data = world_subset, fill = NA, color = "black") +
+  labs(title = "timeUCB < 120")
 
 ```
 
@@ -291,11 +299,12 @@ custom_layout <- data.frame(
 # Plot the graph 'G_perco_180' with specific visual attributes
 plot_180 <- ggraph(as_tbl_graph(G_perco_180), custom_layout) +
   geom_edge_link() +
-  geom_node_point(aes(color = factor(df_nodes_perco_180$color), 
+  geom_node_point(aes(color = df_nodes_perco_180$color, 
                       size = V(G_perco_180)$size)) +
   scale_color_identity() +
   theme(legend.position = "none") +
-  geom_sf(data = world_subset, fill = NA, color = "black")
+  geom_sf(data = world_subset, fill = NA, color = "black") +
+  labs(title = "timeUCB < 180")
 ```
 
 ```{r}
@@ -306,7 +315,7 @@ plot_60 + plot_120 + plot_180
 
 ## Analysing network resilience
 
-A percolation theory approach can help us understand how a network responds to the removal of its components. Typically, a percolation algorithm or process is run where in each iteration, the value of a percolation parameter that controls the removal of nodes or edges is updated, and nodes or edges are removed accordingly. In each iteration, key resilience metrics are measured. One of the most used resilience metrics is the number of nodes in the largest connected component after the removal of nodes or edges. This metric is known as the size of the giant connected component (GCC). In many cases, we observe that for certain values of the percolation parameter, abrupt changes occur in the size of the GCC, showing that some sort of failure occurs in the network that qualitatively changes its connectivity structure. 
+A percolation theory approach can also help us understand how a network responds to the removal of its components. Typically, a full percolation algorithm or process is run so that in each iteration, the value of a percolation parameter that controls the removal of nodes or edges is updated, and nodes or edges are removed accordingly. In each iteration, key resilience metrics are measured. One of the most used resilience metrics is the number of nodes in the largest connected component after the removal of nodes or edges. This metric is known as the size of the giant connected component (GCC). In many cases, we observe that for certain values of the percolation parameter, abrupt changes occur in the size of the GCC, showing that some sort of failure occurs in the network that qualitatively changes its connectivity structure. 
 
 Below we demonstrate this type of analysis. Our percolation parameter of choice is the time of travel through each edge taking into account the presence of borders. Remember, this variable is encoded by the `timeUCB` field in the `df_edges` data frame. In each iteration of the percolation process, edges with `timeUCB` above the value of the percolation parameter are removed from the network.
 
@@ -342,7 +351,7 @@ for (i in seq(0, max(df_edges$timeUCB))) {
   connected_components <- components(G_perco)
 
   # Append the current threshold value to the 'thresholds' list
-  thresholds <- append(thresholds, i)
+  thresholds <- c(thresholds, i)
   
   # Append the maximum connected component size to the 'gccs' list
   gccs <- c(gccs, max(connected_components$csize))
@@ -413,6 +422,6 @@ Can you think of other possible applications of percolation theory in the contex
 :::
 
 ::: callout-note
-You can check an application of network theory to detect te sensitive spots of the African interurban transport network in [@detecting2023].
+You can check an application of network theory to detect the sensitive spots of the African interurban transport network in [@detecting2023].
 :::
 ------------------------------------------------------------------------

@@ -210,7 +210,6 @@ div.csl-indent {
   <li><a href="#degree" id="toc-degree" class="nav-link" data-scroll-target="#degree"><span class="header-section-number">3.4.3</span> Degree</a></li>
   <li><a href="#distances" id="toc-distances" class="nav-link" data-scroll-target="#distances"><span class="header-section-number">3.4.4</span> Distances</a></li>
   <li><a href="#centrality" id="toc-centrality" class="nav-link" data-scroll-target="#centrality"><span class="header-section-number">3.4.5</span> Centrality</a></li>
-  <li><a href="#communities" id="toc-communities" class="nav-link" data-scroll-target="#communities"><span class="header-section-number">3.4.6</span> Communities</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -237,7 +236,7 @@ div.csl-indent {
 
 <section id="dependencies" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="dependencies"><span class="header-section-number">3.1</span> Dependencies</h2>
-<p>We first load all the libraries required for this section.</p>
+<p>We first clean the environment and load all the libraries required for this section.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># An R package for network manipulation and analysis</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(igraph)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -292,7 +291,7 @@ div.csl-indent {
 <pre><code>[1] "l"       "h"       "time"    "timeU"   "timeUCB" "border" </code></pre>
 </div>
 </div>
-<p>where “l” represents the length in kilometres by road segment and it considers curves, “h” is the type of edge (primary, highway, etc.), “time” is the estimated minutes to travel through the edge, considering different speeds for distinc types of road, “timeU” is also the estimated minutes to travel throgh the edge, but allowing extra time if the extrema of the edge are urban nodes, “timeUCB” allows extra time for edges that cross a border, “border” is a binary variable taking value 1 is it crosses a border and 0 otherwise and “added” is also a binary variable taking value 1 if an edge was artificially added to ensure the connectedness of the network and 0 otherwise.</p>
+<p>where “l” represents the length in kilometres by road segment and it considers curves, “h” is the type of edge (primary, highway, etc.), “time” is the estimated minutes to travel through the edge, considering different speeds for distinc types of road, “timeU” is also the estimated minutes to travel through the edge, but allowing extra time if the extrema of the edge are urban nodes, “timeUCB” allows extra time for edges that cross a border, “border” is a binary variable taking value 1 is it crosses a border and 0 otherwise and “added” is also a binary variable taking value 1 if an edge was artificially added to ensure the connectedness of the network and 0 otherwise.</p>
 <section id="visualising-the-african-road-network-as-a-spatial-network" class="level3" data-number="3.3.1">
 <h3 data-number="3.3.1" class="anchored" data-anchor-id="visualising-the-african-road-network-as-a-spatial-network"><span class="header-section-number">3.3.1</span> Visualising the African road network as a spatial network</h3>
 <p>What does the African road network that we just built look like? We can find out very easily using the <code>plot</code> function. But in order to achieve a nice-looking graph, we need to play a bit with the values of the arguments of this function. For example, we will plot the size of the nodes according to the population of the cities that they represent. But some cities are orders of magnitude larger than others, which would relut in some gigantic nodes for a few cities and tiny ones for the majority. In order to weaken this effect, we first apply a scaling function that redefines the size of the nodes:</p>
@@ -308,7 +307,7 @@ div.csl-indent {
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="at">vertex.label=</span><span class="st">" "</span>, <span class="at">vertex.label.color=</span><span class="st">"black"</span>,</span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="at">vertex.label.cex=</span>.<span class="dv">65</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="african-network_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+<p><img src="african-network_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -350,7 +349,7 @@ div.csl-indent {
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Produces histogram of the frequency of nodes with a certain in-degree</span></span>
 <span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(deg, <span class="at">breaks =</span> <span class="dv">50</span>, <span class="at">main=</span><span class="st">"Histogram of node degree"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="african-network_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+<p><img src="african-network_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>We observe that most nodes have degree 3. Nodes of degree 1 are terminal nodes. Nodes of degree 2 are relatively less common than those of degree 1 and 3. This is likely due to the method used to build the network, where all the transport nodes of degree 2 are eliminated in order to simplify the network. Beyond degree 4, it is relatively rare to find any nodes. From the histogram, we see the maximum degree observed in the network is 13. Below, we obtain the name of the node with the maximum degree as well as the value of the degree (13).</p>
@@ -398,14 +397,14 @@ div.csl-indent {
 <p>We obtain that the shortest path is 6,084.359 km long. You can check for example on Google Maps what the distance by road is between the two cities. What do you obtain? What is the relative error between our estimation and the value from Google Maps?</p>
 <p>The diameter of the African road network is the length of the longest shortest path between any pair of nodes:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">diameter</span>(g_africa, <span class="at">directed=</span><span class="cn">TRUE</span>, <span class="at">weights=</span><span class="cn">NA</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">diameter</span>(g_africa, <span class="at">directed=</span><span class="cn">FALSE</span>, <span class="at">weights=</span><span class="cn">NA</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 138</code></pre>
 </div>
 </div>
 <p>And the mean distance computed over all the pairs of nodes is:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean_distance</span>(g_africa, <span class="at">directed=</span><span class="cn">TRUE</span>, <span class="at">weights=</span><span class="cn">NA</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean_distance</span>(g_africa, <span class="at">directed=</span><span class="cn">FALSE</span>, <span class="at">weights=</span><span class="cn">NA</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 55.8602</code></pre>
 </div>
@@ -413,7 +412,7 @@ div.csl-indent {
 </section>
 <section id="centrality" class="level3" data-number="3.4.5">
 <h3 data-number="3.4.5" class="anchored" data-anchor-id="centrality"><span class="header-section-number">3.4.5</span> Centrality</h3>
-<p>Below we compute the closeness centrality using unweighted edges and represent the results in a histogram. The distribution looks bimodal. From the visualisation of the network that we obtained above, why do you think this is the case?</p>
+<p>Below we compute the closeness centrality using unweighted edges and represent the results in a histogram. The distribution looks bimodal.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the closeness centrality for each vertex in the 'g_africa' graph, using unweighted edges (weights = NA)</span></span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>close_centr <span class="ot">&lt;-</span> <span class="fu">closeness</span>(g_africa, <span class="at">weights =</span> <span class="cn">NA</span>)</span>
@@ -421,7 +420,7 @@ div.csl-indent {
 <span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a histogram of closeness centrality values with 50 breaks and set the main title</span></span>
 <span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(close_centr, <span class="at">breaks =</span> <span class="dv">50</span>, <span class="at">main =</span> <span class="st">"Histogram of closeness centrality"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="african-network_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
+<p><img src="african-network_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Similarly, we also compute the betweenness centrality for all nodes and represent it as a histogram.</p>
@@ -431,34 +430,6 @@ div.csl-indent {
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a histogram of betweenness centrality values with 30 breaks and set the main title</span></span>
 <span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(between_centr, <span class="at">breaks =</span> <span class="dv">30</span>, <span class="at">main =</span> <span class="st">"Histogram of betweenness centrality"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="african-network_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-</section>
-<section id="communities" class="level3" data-number="3.4.6">
-<h3 data-number="3.4.6" class="anchored" data-anchor-id="communities"><span class="header-section-number">3.4.6</span> Communities</h3>
-<p>One way of detecting communities in networks is by using modularity-based methods. Modularity measures the concentration of edges between groups of nodes compared to what we would expect if the edges were placed at random.</p>
-<p>An example of a modularity-based method is the fast greedy algorithm <span class="citation" data-cites="NewmanPRE04">(<a href="#ref-NewmanPRE04" role="doc-biblioref">Newman 2004</a>)</span>, which starts with the original network but with no edges, so there are as many communities as nodes. Then, in each iteration of the algorithm a randomly chosen edge from the original network is placed back. The selected quality measure, in this case modularity, is evaluated. The added edge is retained if it increases the value of the modularity, or discarded otherwise. The process is repeated until the modularity function is maximised.</p>
-<p>We can test this algorithm for the African road network and plot the result to see how the nodes are assigned to different communities (note that a node can belong to more than one community):</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Detect clusters using the fast greedy algorithm on the 'g_africa' graph</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>clusters <span class="ot">&lt;-</span> <span class="fu">cluster_fast_greedy</span>(g_africa)</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a plot of the 'g_africa' graph with specific visual attributes</span></span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(g_africa, </span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.size =</span> <span class="fu">V</span>(g_africa)<span class="sc">$</span>size,          <span class="co"># Set vertex size based on the 'size' attribute</span></span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">edge.arrow.size =</span> <span class="fl">0.15</span>,                 <span class="co"># Set arrow size for directed edges</span></span>
-<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">edge.arrow.width =</span> <span class="fl">0.2</span>,                <span class="co"># Set arrow width for directed edges</span></span>
-<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">edge.curved =</span> <span class="fl">0.1</span>,                     <span class="co"># Set edge curvature</span></span>
-<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>     <span class="at">edge.width =</span> <span class="dv">1</span>,                        <span class="co"># Set edge width</span></span>
-<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>     <span class="at">edge.color =</span> <span class="st">"gray90"</span>,                 <span class="co"># Set edge color</span></span>
-<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.color =</span> <span class="fu">membership</span>(clusters),   <span class="co"># Set vertex color based on cluster membership</span></span>
-<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.frame.color =</span> <span class="st">"black"</span>,          <span class="co"># Set vertex frame (border) color</span></span>
-<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.frame.width =</span> <span class="fl">0.2</span>,              <span class="co"># Set vertex frame (border) width</span></span>
-<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label =</span> <span class="st">" "</span>,                    <span class="co"># Set vertex labels to empty</span></span>
-<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label.color =</span> <span class="st">"black"</span>,          <span class="co"># Set vertex label color</span></span>
-<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label.cex =</span> <span class="fl">0.65</span>)               <span class="co"># Set vertex label size</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="african-network_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -473,7 +444,7 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Can you find some interesting patterns in these communities?</p>
+<p>How would you interpret the patterns observed in the histograms for closeness centrality and betweenness centrality?</p>
 </div>
 </div>
 <hr>
@@ -482,9 +453,6 @@ Note
 <div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-Moriconi16" class="csl-entry" role="listitem">
 Moriconi-Ebrard, François, Dominique Harre, and Philipp Heinrigs. 2016. <em>Urbanisation Dynamics in West Africa 1950–2010</em>. https://doi.org/<a href="https://doi.org/https://doi.org/10.1787/9789264252233-en">https://doi.org/https://doi.org/10.1787/9789264252233-en</a>.
-</div>
-<div id="ref-NewmanPRE04" class="csl-entry" role="listitem">
-Newman, M. E. J. 2004. <span>“Fast Algorithm for Detecting Community Structure in Networks.”</span> <em>Phys. Rev. E</em> 69 (June): 066133. <a href="https://doi.org/10.1103/PhysRevE.69.066133">https://doi.org/10.1103/PhysRevE.69.066133</a>.
 </div>
 <div id="ref-openstreetmapOpenStreetMap" class="csl-entry" role="listitem">
 <span>“Openstreetmap.org.”</span> <a href="https://www.openstreetmap.org/" class="uri">https://www.openstreetmap.org/</a>.

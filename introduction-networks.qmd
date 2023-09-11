@@ -2,7 +2,7 @@
 
 ## Dependencies
 
-We first load all the libraries required for this section.
+We first clean the environment and load all the libraries required for this section.
 
 ```{r}
 #| include = FALSE
@@ -169,7 +169,7 @@ plot(network_isolated,
      vertex.size=10,                  # size
      # adjust edges
      edge.curved=0.3,     # curvature
-     edge.arrow.size=0.5,  # size
+     edge.arrow.size=1.5,  # size
      edge.arrow.width=.5,
      edge.width=E(network_isolated)$weight/1000,
      edge.color = "gray") # colour
@@ -181,7 +181,7 @@ Next we will provide a brief description of commonly used metrics to analyse the
 
 ### Density
 
-The density of a network refers to the proportion of existing edges over all possible edges. In a network with $n$ nodes, the total number of possible edges is $x \times (n-1)$. A density equal to $1$ corresponds to a situation where $x \times (n-1)$ edges are present. A network with no edges at all would have density equal to 0. We can obtain the density of a network by running the following code:
+The density of a network refers to the proportion of existing edges over all possible edges. In a network with $n$ nodes, the total number of possible edges is $n \times (n-1)$. A density equal to $1$ corresponds to a situation where $n \times (n-1)$ edges are present. A network with no edges at all would have density equal to 0. We can obtain the density of a network by running the following code:
 
 ```{r}
 edge_density(network_isolated, 
@@ -198,7 +198,7 @@ reciprocity(network_isolated)
 
 ### Degree
 
-The degree of a node is the number of edges connecting a given node i.e. starting or ending at a given node. The in-degree of a node in a directed network is the number of edges ending in a given node. The out-degree is the number of edges starting from a given node. The degree() function allows computing the degree of one or more nodes, and specifying the measures of interest i.e. the total degree, in-degree or out-degree.
+The degree of a node is the number of edges connected to it. The in-degree of a node in a directed network is the number of edges ending in a given node. The out-degree is the number of edges starting from a given node. The `degree()` function allows computing the degree of one or more nodes, and specifying the measures of interest i.e. the total degree, in-degree or out-degree.
 
 ```{r}
 # compute in-degree
@@ -216,7 +216,7 @@ hist(net_degree,
 
 A path in a network between node $A$ and node $B$ is a sequence of edges joining distinct nodes, starting at node $A$ and ending at node $B$. In a **directed path** all edges follow the same direction.
 
-The path length between nodes $A$ and $B$ is generally defined as the number of edges forming a path. The shortest path is the minimum count of edges present to travel from $A$ to $B$.
+The path length of a path between nodes $A$ and $B$ is generally defined as the number of edges forming this path. The shortest path is the minimum count of edges present to travel from $A$ to $B$.
 
 The path length can be defined in alternative ways. For example, the path length can be defined as the sum of the weights of the edges forming a path if the edges are weighted.
 
@@ -227,7 +227,10 @@ shortest_paths(network_isolated,
                from = V(network_isolated)$name == "City 1",
                to = V(network_isolated)$name == "City 5",
                weights=NA, # if weights = NULL and a weight edge attribute is present, this is used.
-               output = "both") # outputs are produced for both path nodes and edges
+               output = "both",  # outputs are produced for both path nodes and edges
+               predecessors = FALSE,
+               inbound.edges = FALSE,
+               )
 
 
 ```

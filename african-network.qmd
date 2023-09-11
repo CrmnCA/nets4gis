@@ -2,7 +2,12 @@
 
 ## Dependencies
 
-We first load all the libraries required for this section.
+We first clean the environment and load all the libraries required for this section.
+
+```{r}
+#| include = FALSE
+rm(list=ls()) # clear working space
+```
 
 ```{r}
 #| warning: false
@@ -61,7 +66,7 @@ We can also obtain the names of the edge attributes, which are taken from the co
 edge_attr_names(g_africa)
 ```
 
-where "l" represents the length in kilometres by road segment and it considers curves, "h" is the type of edge (primary, highway, etc.), "time" is the estimated minutes to travel through the edge, considering different speeds for distinc types of road, "timeU" is also the estimated minutes to travel throgh the edge, but allowing extra time if the extrema of the edge are urban nodes, "timeUCB" allows extra time for edges that cross a border, "border" is a binary variable taking value 1 is it crosses a border and 0 otherwise and "added" is also a binary variable taking value 1 if an edge was artificially added to ensure the connectedness of the network and 0 otherwise.
+where "l" represents the length in kilometres by road segment and it considers curves, "h" is the type of edge (primary, highway, etc.), "time" is the estimated minutes to travel through the edge, considering different speeds for distinc types of road, "timeU" is also the estimated minutes to travel through the edge, but allowing extra time if the extrema of the edge are urban nodes, "timeUCB" allows extra time for edges that cross a border, "border" is a binary variable taking value 1 is it crosses a border and 0 otherwise and "added" is also a binary variable taking value 1 if an edge was artificially added to ensure the connectedness of the network and 0 otherwise.
 
 ### Visualising the African road network as a spatial network
 
@@ -161,18 +166,18 @@ We obtain that the shortest path is 6,084.359 km long. You can check for example
 The diameter of the African road network is the length of the longest shortest path between any pair of nodes:
 
 ```{r}
-diameter(g_africa, directed=TRUE, weights=NA)
+diameter(g_africa, directed=FALSE, weights=NA)
 ```
 
 And the mean distance computed over all the pairs of nodes is:
 
 ```{r}
-mean_distance(g_africa, directed=TRUE, weights=NA)
+mean_distance(g_africa, directed=FALSE, weights=NA)
 ```
 
 ### Centrality
 
-Below we compute the closeness centrality using unweighted edges and represent the results in a histogram. The distribution looks bimodal. From the visualisation of the network that we obtained above, why do you think this is the case?
+Below we compute the closeness centrality using unweighted edges and represent the results in a histogram. The distribution looks bimodal.
 
 ```{r}
 # Calculate the closeness centrality for each vertex in the 'g_africa' graph, using unweighted edges (weights = NA)
@@ -192,35 +197,7 @@ between_centr <- betweenness(g_africa, v = V(g_africa), directed = TRUE, weights
 hist(between_centr, breaks = 30, main = "Histogram of betweenness centrality")
 ```
 
-### Communities
-
-One way of detecting communities in networks is by using modularity-based methods. Modularity measures the concentration of edges between groups of nodes compared to what we would expect if the edges were placed at random.
-
-An example of a modularity-based method is the fast greedy algorithm [@NewmanPRE04], which starts with the original network but with no edges, so there are as many communities as nodes. Then, in each iteration of the algorithm a randomly chosen edge from the original network is placed back. The selected quality measure, in this case modularity, is evaluated. The added edge is retained if it increases the value of the modularity, or discarded otherwise. The process is repeated until the modularity function is maximised.
-
-We can test this algorithm for the African road network and plot the result to see how the nodes are assigned to different communities (note that a node can belong to more than one community):
-
-```{r}
-# Detect clusters using the fast greedy algorithm on the 'g_africa' graph
-clusters <- cluster_fast_greedy(g_africa)
-
-# Create a plot of the 'g_africa' graph with specific visual attributes
-plot(g_africa, 
-     vertex.size = V(g_africa)$size,          # Set vertex size based on the 'size' attribute
-     edge.arrow.size = 0.15,                 # Set arrow size for directed edges
-     edge.arrow.width = 0.2,                # Set arrow width for directed edges
-     edge.curved = 0.1,                     # Set edge curvature
-     edge.width = 1,                        # Set edge width
-     edge.color = "gray90",                 # Set edge color
-     vertex.color = membership(clusters),   # Set vertex color based on cluster membership
-     vertex.frame.color = "black",          # Set vertex frame (border) color
-     vertex.frame.width = 0.2,              # Set vertex frame (border) width
-     vertex.label = " ",                    # Set vertex labels to empty
-     vertex.label.color = "black",          # Set vertex label color
-     vertex.label.cex = 0.65)               # Set vertex label size
-```
-
 ::: callout-note
-Can you find some interesting patterns in these communities?
+How would you interpret the patterns observed in the histograms for closeness centrality and betweenness centrality?
 :::
 ------------------------------------------------------------------------

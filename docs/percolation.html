@@ -237,7 +237,7 @@ div.csl-indent {
 
 <section id="dependencies" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="dependencies"><span class="header-section-number">4.1</span> Dependencies</h2>
-<p>We first load all the libraries required for this section.</p>
+<p>We first clean the environment and load all the libraries required for this section.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load required packages</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(igraph)    <span class="co"># for network analysis</span></span>
@@ -310,7 +310,7 @@ div.csl-indent {
 ℹ Please use `linewidth` in the `default_aes` field and elsewhere instead.</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="percolation_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+<p><img src="percolation_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>The countries belonging to the South region are Botswana, Eswatini, Lesotho, Namibia, South Africa. To give more geographical context to the above visualisation, we will add the outlines of these countries as a base layer for this plot. The shapes for the world countries can be downloaded as simple feature objects (similar to a data frame but it also includes geographic information) using the <code>ne_download</code> function from the <code>rnaturalearth</code> package. We store the simple feature in the variable <code>world</code>, which we then filter to include only the countries of interest.</p>
@@ -336,16 +336,16 @@ div.csl-indent {
 <span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the graph plotG</span></span>
 <span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>plotG</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="percolation_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+<p><img src="percolation_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
 <section id="modelling-community-formation-in-the-african-road-network" class="level2" data-number="4.3">
 <h2 data-number="4.3" class="anchored" data-anchor-id="modelling-community-formation-in-the-african-road-network"><span class="header-section-number">4.3</span> Modelling community formation in the African road network</h2>
-<p>At the end of the previous session, we used the fast greedy algorithm to detect communities based on the topology of the African road network. We used an R implementation of the fast greedy algorithm through the built-in function <code>cluter_fast_greedy()</code>. While a built-in function gives us results in a very straightforward way, it also makes the process less transparent. In this section, we implement a percolation theory approach to model the formation of communities of nodes (cities) as the connectivity properties of the network are varied.</p>
+<p>In this section, we implement a percolation theory approach to model the formation of communities of nodes (cities) as the connectivity properties of the network are varied.</p>
 <section id="percolation-at-three-threshold-values" class="level3" data-number="4.3.1">
 <h3 data-number="4.3.1" class="anchored" data-anchor-id="percolation-at-three-threshold-values"><span class="header-section-number">4.3.1</span> Percolation at three threshold values</h3>
-<p>Following a percolation approach, we start with the original network representing the cities and roads of Southern Africa, but with no edges. Then, we add back edges according to whether they satisfy certain criterion. In this case, an edge is added back if the time to travel from one end to the other considering the presence of a border is below a critical value (i.e.&nbsp;if the attribute <code>timeUCB</code> is below a certain threshold value). Below, we perform this process for three different values of the threshold value, which are 60, 120 and 180 minutes.</p>
+<p>Following a percolation approach, we start with the original network representing the cities and roads of the Southern African region, but with no edges. Then, we add back edges according to whether they satisfy a certain criterion. In this case, an edge is added back if the time to travel from one end to the other considering the presence of a border is below a threshold value (i.e.&nbsp;if the attribute <code>timeUCB</code> is below a certain threshold value). Below, we perform this process for three different values of the percolation parameter given by <code>timeUCB</code>, which are 60, 120 and 180 minutes.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a copy of df_nodes named df_nodes_perco_60</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>df_nodes_perco_60 <span class="ot">&lt;-</span> df_nodes</span>
@@ -385,7 +385,7 @@ div.csl-indent {
 </section>
 <section id="visualising-the-results" class="level3" data-number="4.3.2">
 <h3 data-number="4.3.2" class="anchored" data-anchor-id="visualising-the-results"><span class="header-section-number">4.3.2</span> Visualising the results</h3>
-<p>We also obtain visualisations for the three critical travel times. In these visualisations, we color the nodes so that nodes belonging to the same connected component share the same color. A connected component is a group of nodes where you can travel from any node to any other node by following the edges. We store the visualisations for each of the three critical travel times in the variables <code>plot_60</code>, <code>plot_120</code> and <code>plot_180</code>. Then, we plot them together using the <code>patchwork</code> package, which allows to create figures with several plots simply by running <code>plot_60 + plot_120 + plot_180</code>.</p>
+<p>We also obtain visualisations for the three threshold travel times. In these visualisations, we color the nodes so that nodes belonging to the same connected component share the same color. A connected component is a group of nodes where you can travel from any node to any other node by following the edges. We store the visualisations for each of the three critical travel times in the variables <code>plot_60</code>, <code>plot_120</code> and <code>plot_180</code>. Then, we plot them together using the <code>patchwork</code> package, which allows to create figures with several plots simply by running <code>plot_60 + plot_120 + plot_180</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find connected components in G_perco_60</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>component_info_60 <span class="ot">&lt;-</span> <span class="fu">components</span>(G_perco_60)</span>
@@ -421,11 +421,12 @@ div.csl-indent {
 <span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the graph 'G_perco_60' with specific visual attributes</span></span>
 <span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a>plot_60 <span class="ot">&lt;-</span> <span class="fu">ggraph</span>(<span class="fu">as_tbl_graph</span>(G_perco_60), custom_layout) <span class="sc">+</span></span>
 <span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_edge_link</span>() <span class="sc">+</span></span>
-<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_node_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> <span class="fu">factor</span>(df_nodes_perco_60<span class="sc">$</span>color), </span>
+<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_node_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> df_nodes_perco_60<span class="sc">$</span>color, </span>
 <span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a>                      <span class="at">size =</span> <span class="fu">V</span>(G_perco_60)<span class="sc">$</span>size)) <span class="sc">+</span></span>
 <span id="cb13-37"><a href="#cb13-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_identity</span>() <span class="sc">+</span></span>
 <span id="cb13-38"><a href="#cb13-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
-<span id="cb13-39"><a href="#cb13-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> world_subset, <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">color =</span> <span class="st">"black"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-39"><a href="#cb13-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> world_subset, <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb13-40"><a href="#cb13-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"timeUCB &lt; 60"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find connected components in G_perco_120</span></span>
@@ -462,11 +463,12 @@ div.csl-indent {
 <span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the graph 'G_perco_120' with specific visual attributes</span></span>
 <span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a>plot_120 <span class="ot">&lt;-</span> <span class="fu">ggraph</span>(<span class="fu">as_tbl_graph</span>(G_perco_120), custom_layout) <span class="sc">+</span></span>
 <span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_edge_link</span>() <span class="sc">+</span></span>
-<span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_node_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> <span class="fu">factor</span>(df_nodes_perco_120<span class="sc">$</span>color), </span>
+<span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_node_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> df_nodes_perco_120<span class="sc">$</span>color, </span>
 <span id="cb14-36"><a href="#cb14-36" aria-hidden="true" tabindex="-1"></a>                      <span class="at">size =</span> <span class="fu">V</span>(G_perco_120)<span class="sc">$</span>size)) <span class="sc">+</span></span>
 <span id="cb14-37"><a href="#cb14-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_identity</span>() <span class="sc">+</span></span>
 <span id="cb14-38"><a href="#cb14-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
-<span id="cb14-39"><a href="#cb14-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> world_subset, <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">color =</span> <span class="st">"black"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-39"><a href="#cb14-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> world_subset, <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb14-40"><a href="#cb14-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"timeUCB &lt; 120"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find connected components in G_perco_180</span></span>
@@ -503,24 +505,25 @@ div.csl-indent {
 <span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the graph 'G_perco_180' with specific visual attributes</span></span>
 <span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a>plot_180 <span class="ot">&lt;-</span> <span class="fu">ggraph</span>(<span class="fu">as_tbl_graph</span>(G_perco_180), custom_layout) <span class="sc">+</span></span>
 <span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_edge_link</span>() <span class="sc">+</span></span>
-<span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_node_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> <span class="fu">factor</span>(df_nodes_perco_180<span class="sc">$</span>color), </span>
+<span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_node_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> df_nodes_perco_180<span class="sc">$</span>color, </span>
 <span id="cb15-36"><a href="#cb15-36" aria-hidden="true" tabindex="-1"></a>                      <span class="at">size =</span> <span class="fu">V</span>(G_perco_180)<span class="sc">$</span>size)) <span class="sc">+</span></span>
 <span id="cb15-37"><a href="#cb15-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_identity</span>() <span class="sc">+</span></span>
 <span id="cb15-38"><a href="#cb15-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
-<span id="cb15-39"><a href="#cb15-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> world_subset, <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">color =</span> <span class="st">"black"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb15-39"><a href="#cb15-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> world_subset, <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb15-40"><a href="#cb15-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"timeUCB &lt; 180"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine the plots for G_perco_60, G_perco_120, and G_perco_180</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>plot_60 <span class="sc">+</span> plot_120 <span class="sc">+</span> plot_180</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="percolation_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+<p><img src="percolation_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
 </section>
 <section id="analysing-network-resilience" class="level2" data-number="4.4">
 <h2 data-number="4.4" class="anchored" data-anchor-id="analysing-network-resilience"><span class="header-section-number">4.4</span> Analysing network resilience</h2>
-<p>A percolation theory approach can help us understand how a network responds to the removal of its components. Typically, a percolation algorithm or process is run where in each iteration, the value of a percolation parameter that controls the removal of nodes or edges is updated, and nodes or edges are removed accordingly. In each iteration, key resilience metrics are measured. One of the most used resilience metrics is the number of nodes in the largest connected component after the removal of nodes or edges. This metric is known as the size of the giant connected component (GCC). In many cases, we observe that for certain values of the percolation parameter, abrupt changes occur in the size of the GCC, showing that some sort of failure occurs in the network that qualitatively changes its connectivity structure.</p>
+<p>A percolation theory approach can also help us understand how a network responds to the removal of its components. Typically, a full percolation algorithm or process is run so that in each iteration, the value of a percolation parameter that controls the removal of nodes or edges is updated, and nodes or edges are removed accordingly. In each iteration, key resilience metrics are measured. One of the most used resilience metrics is the number of nodes in the largest connected component after the removal of nodes or edges. This metric is known as the size of the giant connected component (GCC). In many cases, we observe that for certain values of the percolation parameter, abrupt changes occur in the size of the GCC, showing that some sort of failure occurs in the network that qualitatively changes its connectivity structure.</p>
 <p>Below we demonstrate this type of analysis. Our percolation parameter of choice is the time of travel through each edge taking into account the presence of borders. Remember, this variable is encoded by the <code>timeUCB</code> field in the <code>df_edges</code> data frame. In each iteration of the percolation process, edges with <code>timeUCB</code> above the value of the percolation parameter are removed from the network.</p>
 <section id="the-percolation-algorithm" class="level3" data-number="4.4.1">
 <h3 data-number="4.4.1" class="anchored" data-anchor-id="the-percolation-algorithm"><span class="header-section-number">4.4.1</span> The percolation algorithm</h3>
@@ -550,7 +553,7 @@ div.csl-indent {
 <span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>  connected_components <span class="ot">&lt;-</span> <span class="fu">components</span>(G_perco)</span>
 <span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Append the current threshold value to the 'thresholds' list</span></span>
-<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>  thresholds <span class="ot">&lt;-</span> <span class="fu">append</span>(thresholds, i)</span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>  thresholds <span class="ot">&lt;-</span> <span class="fu">c</span>(thresholds, i)</span>
 <span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Append the maximum connected component size to the 'gccs' list</span></span>
 <span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>  gccs <span class="ot">&lt;-</span> <span class="fu">c</span>(gccs, <span class="fu">max</span>(connected_components<span class="sc">$</span>csize))</span>
@@ -576,7 +579,7 @@ div.csl-indent {
 <span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Travel time with border effect (minutes)"</span>, <span class="at">y =</span> <span class="st">"Size of GCC"</span>) <span class="sc">+</span></span>
 <span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="percolation_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
+<p><img src="percolation_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>We observe that for small values of the percolation parameter rapid changes occur in the size of the GCC. When the percolation parameter takes approximately the values 150, 650, 1000, there are sudden changes in the size of the GCC, showing that there has been a significant alteration in the network’s topology. For example, when edges with associated travel times above 1000 minutes are removed, nodes that act like hubs may lose connections and as a result, the GCC may experience a significant drop in size.</p>
@@ -594,7 +597,7 @@ div.csl-indent {
 <span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Travel time with border effect (minutes)"</span>, <span class="at">y =</span> <span class="st">"No. of connected components"</span>) <span class="sc">+</span></span>
 <span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="percolation_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
+<p><img src="percolation_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>We observe that for small values of the percolation threshold, nearly all the edges in the network are removed, so there are as many components as there are nodes. We also see that if we increase the percolation threshold above 250 minutes, the number of connected components is reduced, showing that the connectivity of the network is restored as we add additional edges.</p>
@@ -615,7 +618,7 @@ div.csl-indent {
 <pre><code>Warning: Removed 1 row containing missing values (`geom_line()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="percolation_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
+<p><img src="percolation_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Note that when the percolation parameter is 0, all the edges are removed, so the corresponding value of the average travel time is NA. As we increase the percolation parameter, edges are added and more possible paths arise in the network. Note that the average travel time is only computed for existing paths (hence the <code>unconnected=TRUE</code> parameter in the <code>mean_distance()</code> function). The sudden changes in the average travel time and the sudden changes in the size of the GCC happen for the same values of the percolation parameter. For example, when the percolation parameter is approximately equal to 650 minutes, we see a large increase in the average travel time. This suggests that two parts of the network that were unconnected for lower values of the percolation parameter, become connected for values above 650 minutes approximately and as a result, the average travel time increases since there are possibilities to travel further.</p>
@@ -642,7 +645,7 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>You can check an application of network theory to detect te sensitive spots of the African interurban transport network in <span class="citation" data-cites="detecting2023">(<a href="#ref-detecting2023" role="doc-biblioref">Renninger et al. 2023</a>)</span>.</p>
+<p>You can check an application of network theory to detect the sensitive spots of the African interurban transport network in <span class="citation" data-cites="detecting2023">(<a href="#ref-detecting2023" role="doc-biblioref">Renninger et al. 2023</a>)</span>.</p>
 </div>
 </div>
 <hr>
