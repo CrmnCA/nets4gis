@@ -9,7 +9,6 @@ We first clean the environment and load all the libraries required for this sect
 rm(list=ls()) # clear working space
 ```
 
-
 ```{r}
 #| warning: false
 
@@ -23,7 +22,6 @@ library(RColorBrewer) # for color palettes
 library(rnaturalearth) # for natural earth map data
 library(sf)        # for spatial data manipulation
 ```
-
 
 ## Introduction
 
@@ -52,7 +50,7 @@ We start by selecting the nodes belonging to the South region. This can be easil
 df_nodes <- subset(df_nodes, Region == "South")
 ```
 
-Similarly, we can select the only the edges where both extrema are nodes belongin to the South region.
+Similarly, we can select the only the edges where both extrema are nodes belonging to the South region.
 
 ```{r}
 # Subset df_edges to include only rows where 'from' column values are in df_nodes$Agglomeration_ID
@@ -107,6 +105,7 @@ target_countries <- c("Botswana", "eSwatini", "Lesotho", "Namibia", "South Afric
 # Subset the world map data to include only the target countries
 world_subset <- world[world$SOVEREIGNT %in% target_countries, ]
 ```
+
 The plot from above can be modified to also include the base layer
 
 ```{r}
@@ -168,7 +167,6 @@ G_perco_180 <- graph_from_data_frame(d = df_edges_perco_180,
                                     directed = FALSE)
 ```
 
-
 ### Visualising the results
 
 We also obtain visualisations for the three threshold travel times. In these visualisations, we color the nodes so that nodes belonging to the same connected component share the same color. A connected component is a group of nodes where you can travel from any node to any other node by following the edges. We store the visualisations for each of the three critical travel times in the variables `plot_60`, `plot_120` and `plot_180`. Then, we plot them together using the `patchwork` package, which allows to create figures with several plots simply by running `plot_60 + plot_120 + plot_180`.
@@ -217,7 +215,6 @@ plot_60 <- ggraph(as_tbl_graph(G_perco_60), custom_layout) +
 
 ```
 
-
 ```{r}
 
 # Find connected components in G_perco_120
@@ -262,7 +259,6 @@ plot_120 <- ggraph(as_tbl_graph(G_perco_120), custom_layout) +
   labs(title = "timeUCB < 120")
 
 ```
-
 
 ```{r}
 # Find connected components in G_perco_180
@@ -312,10 +308,9 @@ plot_180 <- ggraph(as_tbl_graph(G_perco_180), custom_layout) +
 plot_60 + plot_120 + plot_180
 ```
 
-
 ## Analysing network resilience
 
-A percolation theory approach can also help us understand how a network responds to the removal of its components. Typically, a full percolation algorithm or process is run so that in each iteration, the value of a percolation parameter that controls the removal of nodes or edges is updated, and nodes or edges are removed accordingly. In each iteration, key resilience metrics are measured. One of the most used resilience metrics is the number of nodes in the largest connected component after the removal of nodes or edges. This metric is known as the size of the giant connected component (GCC). In many cases, we observe that for certain values of the percolation parameter, abrupt changes occur in the size of the GCC, showing that some sort of failure occurs in the network that qualitatively changes its connectivity structure. 
+A percolation theory approach can also help us understand how a network responds to the removal of its components. Typically, a full percolation algorithm or process is run so that in each iteration, the value of a percolation parameter that controls the removal of nodes or edges is updated, and nodes or edges are removed accordingly. In each iteration, key resilience metrics are measured. One of the most used resilience metrics is the number of nodes in the largest connected component after the removal of nodes or edges. This metric is known as the size of the giant connected component (GCC). In many cases, we observe that for certain values of the percolation parameter, abrupt changes occur in the size of the GCC, showing that some sort of failure occurs in the network that qualitatively changes its connectivity structure.
 
 Below we demonstrate this type of analysis. Our percolation parameter of choice is the time of travel through each edge taking into account the presence of borders. Remember, this variable is encoded by the `timeUCB` field in the `df_edges` data frame. In each iteration of the percolation process, edges with `timeUCB` above the value of the percolation parameter are removed from the network.
 
@@ -398,7 +393,8 @@ ggplot(data = df, aes(x = x, y = y)) +
   labs(x = "Travel time with border effect (minutes)", y = "No. of connected components") +
   theme_minimal()
 ```
-We observe that for small values of the percolation threshold, nearly all the edges in the network are removed, so there are as many components as there are nodes. We also see that if we increase the percolation threshold above 250 minutes, the number of connected components is reduced, showing that the connectivity of the network is restored as we add additional edges.  
+
+We observe that for small values of the percolation threshold, nearly all the edges in the network are removed, so there are as many components as there are nodes. We also see that if we increase the percolation threshold above 250 minutes, the number of connected components is reduced, showing that the connectivity of the network is restored as we add additional edges.
 
 ### Changes in the average travel time as edges are removed
 
@@ -415,7 +411,7 @@ ggplot(data = df, aes(x = x, y = y)) +
   theme_minimal()
 ```
 
-Note that when the percolation parameter is 0, all the edges are removed, so the corresponding value of the average travel time is NA. As we increase the percolation parameter, edges are added and more possible paths arise in the network. Note that the average travel time is only computed for existing paths (hence the `unconnected=TRUE` parameter in the `mean_distance()` function). The sudden changes in the average travel time and the sudden changes in the size of the GCC happen for the same values of the percolation parameter. For example, when the percolation parameter is approximately equal to 650 minutes, we see a large increase in the average travel time. This suggests that two parts of the network that were unconnected for lower values of the percolation parameter, become connected for values above 650 minutes approximately and as a result, the average travel time increases since there are possibilities to travel further. 
+Note that when the percolation parameter is 0, all the edges are removed, so the corresponding value of the average travel time is NA. As we increase the percolation parameter, edges are added and more possible paths arise in the network. Note that the average travel time is only computed for existing paths (hence the `unconnected=TRUE` parameter in the `mean_distance()` function). The sudden changes in the average travel time and the sudden changes in the size of the GCC happen for the same values of the percolation parameter. For example, when the percolation parameter is approximately equal to 650 minutes, we see a large increase in the average travel time. This suggests that two parts of the network that were unconnected for lower values of the percolation parameter, become connected for values above 650 minutes approximately and as a result, the average travel time increases since there are possibilities to travel further.
 
 ::: callout-note
 Can you think of other possible applications of percolation theory in the context of geographical netowrks?
@@ -424,4 +420,5 @@ Can you think of other possible applications of percolation theory in the contex
 ::: callout-note
 You can check an application of network theory to detect the sensitive spots of the African interurban transport network in [@detecting2023].
 :::
+
 ------------------------------------------------------------------------
