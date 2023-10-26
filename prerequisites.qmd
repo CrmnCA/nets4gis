@@ -1,4 +1,9 @@
+# Prerequisites
+
+<!--
+
 # Come prepared
+
 
 ## Workshop structure
 
@@ -13,6 +18,8 @@
 | 10 min | Wrap-up                                        |
 
 ## Before the workshop
+
+!-->
 
 ::: callout-important
 Please make sure you download and install the most recent version of R, RStudio and Quarto on the computer that you will be using during the workshop, and install the indicated R packages -- see detailed instructions below.

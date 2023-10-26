@@ -269,7 +269,7 @@ div.csl-indent {
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Subset the df_nodes data frame to include only rows where Region is "South"</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>df_nodes <span class="ot">&lt;-</span> <span class="fu">subset</span>(df_nodes, Region <span class="sc">==</span> <span class="st">"South"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Similarly, we can select the only the edges where both extrema are nodes belongin to the South region.</p>
+<p>Similarly, we can select the only the edges where both extrema are nodes belonging to the South region.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Subset df_edges to include only rows where 'from' column values are in df_nodes$Agglomeration_ID</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>df_edges <span class="ot">&lt;-</span> <span class="fu">subset</span>(df_edges, from <span class="sc">%in%</span> df_nodes<span class="sc">$</span>Agglomeration_ID)</span>
