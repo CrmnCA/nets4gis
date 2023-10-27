@@ -35,10 +35,10 @@ As before, we start by loading the data corresponding to the nodes and edges of 
 
 ```{r}
 # Read CSV data for edges from a specified URL
-df_edges <- read.csv("https://raw.githubusercontent.com/rafaelprietocuriel/AfricanUrbanNetwork/main/AfricaNetworkEdges.csv")
+df_edges <- read.csv("./data/AfricaNetworkEdges.csv")
 
 # Read CSV data for nodes from a specified URL, specifying UTF-8 encoding for special characters
-df_nodes <- read.csv("https://raw.githubusercontent.com/rafaelprietocuriel/AfricanUrbanNetwork/main/AfricaNetworkNodes.csv", encoding='UTF-8')
+df_nodes <- read.csv("./data/AfricaNetworkNodes.csv", encoding='UTF-8')
 ```
 
 In order to ensure timely completion of this workshop, we will use a subset of the African network, specifically focusing on nodes from the South region. This adjustment is necessary as running the code on the entire network would exceed the allocated time frame. However, you are encouraged to explore running the code on the complete network at your own convenience.
