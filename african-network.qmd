@@ -23,14 +23,14 @@ The network is connected, meaning that it is possible to find a sequence of node
 
 ## Creating a network from a data frame
 
-The data that specifies the nodes and edges of the African road network is stored in two csv files, one for nodes and one for edges. This data can be loaded in two data frames:
+The data that specifies the nodes and edges of the African road network is stored in two csv files, one for nodes and one for edges. The dataframes can be found at https://github.com/CrmnCA/nets4gis within the data folder. This data can be loaded in two data frames:
 
 ```{r}
 # Read the CSV file containing network nodes data from a URL
-df_nodes <- read.csv("https://raw.githubusercontent.com/rafaelprietocuriel/AfricanUrbanNetwork/main/AfricaNetworkNodes.csv")
+df_nodes <- read.csv("./data/AfricaNetworkNodes.csv")
 
 # Read the CSV file containing network edges data from a URL
-df_edges <- read.csv("https://raw.githubusercontent.com/rafaelprietocuriel/AfricanUrbanNetwork/main/AfricaNetworkEdges.csv")
+df_edges <- read.csv("./data/AfricaNetworkEdges.csv")
 ```
 
 We can then create an undirected graph as an igraph object from the data frames corresponding to the nodes and edges:

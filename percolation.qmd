@@ -23,15 +23,15 @@ library(rnaturalearth) # for natural earth map data
 library(sf)        # for spatial data manipulation
 ```
 
-Like before, we define the network of African roads from dataframes containing nodes and edges data.
+Like before, we define the network of African roads from dataframes containing nodes and edges data. The dataframes can be found at https://github.com/CrmnCA/nets4gis within the data folder.
 
 ```{r}
 
 # Read the CSV file containing network nodes data
-df_nodes <- read.csv("https://raw.githubusercontent.com/CrmnCA/nets4gis/main/data/AfricaNetworkNodes.csv")
+df_nodes <- read.csv("./data/AfricaNetworkNodes.csv")
 
 # Read the CSV file containing network edges data
-df_edges <- read.csv("https://raw.githubusercontent.com/CrmnCA/nets4gis/main/data/AfricaNetworkEdges.csv")
+df_edges <- read.csv("./data/AfricaNetworkEdges.csv")
 
 # Create a network called 'g' from data frames 'df_edges' and 'df_nodes'
 # Make the netwrok is undirected (directed = FALSE)
