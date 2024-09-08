@@ -200,4 +200,5 @@ hist(between_centr, breaks = 30, main = "Histogram of betweenness centrality")
 ::: callout-note
 How would you interpret the patterns observed in the histograms for closeness centrality and betweenness centrality?
 :::
+
 ------------------------------------------------------------------------

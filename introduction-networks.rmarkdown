@@ -1,0 +1,234 @@
+# Introduction to the basics of network analysis
+
+## Dependencies
+
+
+```{r}
+#| include = FALSE
+rm(list=ls()) # clear working space
+```
+
+```{r}
+#| warning: false
+#| message: false
+#| 
+# working with spatial data
+library(sf)
+# data manipulation and visualisation
+library(tidyverse)
+# network manipulation and analysis
+library(igraph)
+```
+
+
+
+## Creating networks
+
+We first consider the components of a network object. Generally, a network (or a graph) consists of nodes (a.k.a. vertices) and edges (a.k.a. links). Edges link nodes to form a network. Networks are used as a tool to conceptualise many real-life situations, such as the friendships among members of a school year group, airline flights between cities or hyperlinks between websites.
+
+### Starting from the basics
+
+To understand the basic concepts and components of a network, we create a small example network in R using the igraph package. We create an undirected network of 5 nodes and 6 edges. 
+
+
+
+
+```{r}
+# create a graph object
+network <- graph( 
+  n = 5, # add number of nodes
+  edges = c(1,2, 
+            2,3, 
+            2,5, 
+            3,1, 
+            3,4, 
+            4,5, 
+            5,1), # add edges
+  directed = FALSE )
+
+# plot
+plot(network, 
+     layout = layout.circle(network), # set layout
+     vertex.label = 1:5)
+```
+
+
+If the connections between the nodes of a network are non-reciprocal, the network is called directed.
+
+```{r}
+# create a graph object
+network <- graph( 
+  n = 5, # add number of nodes
+  edges = c(1,2, 
+            2,3, 
+            2,5, 
+            3,1, 
+            3,4, 
+            4,5, 
+            5,1), # add edges
+  directed = TRUE )
+
+# plot
+plot(network, 
+     layout = layout.circle(network), # set layout
+     vertex.label = 1:5)
+```
+
+The network can also be defined as a list containing pairs of nodes with labels. In that case we do not need tospecify the number of nodes. We only specify the isolated nodes to be included.
+
+::: callout-note
+We will describe the various arguments within plot which can be used to style your data visualisation
+:::
+
+
+```{r}
+# create a graph object
+network_isolated <- graph( 
+  c("City 1","City 2", 
+    "City 2","City 3", 
+    "City 2","City 5", 
+    "City 3","City 1", 
+    "City 3","City 4", 
+    "City 4","City 5", 
+    "City 5","City 1"),
+  isolates=c("City 6") # isolated node
+  )
+
+# plot
+plot(network_isolated, 
+      layout = layout.circle(network_isolated),
+     vertex.frame.color="red",  
+     vertex.label.color="black",
+     vertex.label.cex=0.9, 
+     vertex.label.dist=2.3, 
+     edge.curved=0.3, 
+     edge.arrow.size=.5, 
+     edge.color = "blue", 
+     vertex.color="yellow", 
+     vertex.size=15) 
+```
+
+
+### Adding attributes
+
+We can add attributes to individual components of the network. To add attributes to nodes, we need to access them:
+
+
+```{r}
+V(network_isolated)
+```
+
+
+Node attribute names are automatically generated from the node labels we assigned.
+
+
+```{r}
+V(network_isolated)$name
+```
+
+
+Additional node attributes can be added, such as population size:
+
+```{r}
+V(network_isolated)$population <- c(92000, 549000, 1786000, 74000, 8000, 21000)
+```
+
+
+We can access the edges:
+
+```{r}
+E(network_isolated)
+```
+
+
+We can add edge attributes, such as the number of people moving from an origin to a destination city. We call this attribute edge weight. The size of the connection between two places often represent their importance or “weight” in the network.
+
+
+```{r}
+E(network_isolated)$weight <- c(2000, 5000, 1000, 1000, 4000, 3500, 7000)
+```
+
+
+We can examine the adjacency matrix of the network. The adjacency represents the presence of edges between different pairs of nodes. In our example, each row corresponds to an origin city and each column to a destination:
+
+
+```{r}
+network_isolated[]
+```
+
+We can also look at the existing node and edge attributes.
+
+```{r}
+vertex_attr(network_isolated)
+```
+
+We can also add a network attribute:
+
+```{r}
+network_isolated$title <- "Network of human mobility between cities"
+```
+
+
+### Basic visualisation
+
+You have already seen how we can visualise networks using the base R function **plot**. We will now elaborate on how individual components of the network can be visually adjusted using specific parameters in the plot function. More sophisticated data visualisations can be produced integrating geographic information, see Chapter 5 in @roweetal2023-rps.
+
+
+```{r}
+plot(network_isolated,
+     layout = layout.circle(network_isolated),
+     # adjust nodes
+     vertex.frame.color = "gray90",    # line colour
+     vertex.label.color = "black",    # label colour 
+     vertex.label.cex = 1,            # label font size
+     vertex.label.dist = 3,           # label distance
+     vertex.color = "yellow",         # colour 
+     vertex.size=10,                  # size
+     # adjust edges
+     edge.curved=0.3,     # curvature
+     edge.arrow.size=0.5,  # size
+     edge.arrow.width=.5,
+     edge.width=E(network_isolated)$weight,
+     edge.color = "gray") # colour
+```
+
+
+## Network metrics
+
+Next we will provide a brief description of commonly used metrics to analyse the basic structure of networks. 
+
+### Density
+
+The density of a network refers to the proportion of existing edges over all possible edges. In a network with $n$ nodes, the total number of possible edges is $x \times (n-1)$. A density equal to $1$ corresponds to a situation where $x \times (n-1)$ edges are present. A network with no edges at all would have density equal to 0. We can obtain the density of a network by running the following code:
+
+
+```{r}
+edge_density(network_isolated, 
+             loops=FALSE)
+```
+
+
+
+### Reciprocity
+
+The reciprocity in a directed network is the proportion of reciprocated connections between nodes (i.e. number of pairs of nodes with edges in both directions) from all the existing edges.
+
+
+```{r}
+reciprocity(network_isolated)
+```
+
+
+
+### Degree
+
+The degree of a node is the number of edges connecting a given node i.e. starting or ending at a given node. The in-degree of a node in a directed network is the number of edges ending in a given node. The out-degree is the number of edges starting from a given node. The degree() function allows computing the degree of one or more nodes, and specifying the measures of interest i.e. the total degree, in-degree or out-degree.
+
+
+
+### Distances
+
+### Centrality
+
+### Hubs and authorities
+

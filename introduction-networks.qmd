@@ -27,7 +27,7 @@ Networks are used as a tool to conceptualise many real-life situations where a g
 
 ### Starting from the basics
 
-To understand the basic concepts and components of a network, we create a small example network in R using the igraph package. We create an undirected network of 5 nodes and 6 edges.
+To understand the basic concepts and components of a network, we create a small example network in R using the igraph package. We create an undirected network of 5 nodes and 7 edges.
 
 ```{r}
 # create a graph object
