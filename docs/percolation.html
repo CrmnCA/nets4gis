@@ -234,19 +234,18 @@ window.Quarto = {
    
   <ul>
   <li><a href="#dependencies" id="toc-dependencies" class="nav-link active" data-scroll-target="#dependencies"><span class="header-section-number">4.1</span> Dependencies</a></li>
-  <li><a href="#community-detection" id="toc-community-detection" class="nav-link" data-scroll-target="#community-detection"><span class="header-section-number">5</span> Community detection</a>
+  <li><a href="#community-detection" id="toc-community-detection" class="nav-link" data-scroll-target="#community-detection"><span class="header-section-number">4.2</span> Community detection</a>
   <ul class="collapse">
-  <li><a href="#walktrap" id="toc-walktrap" class="nav-link" data-scroll-target="#walktrap"><span class="header-section-number">5.1</span> Walktrap</a></li>
-  <li><a href="#edge-betweenness-community-detection" id="toc-edge-betweenness-community-detection" class="nav-link" data-scroll-target="#edge-betweenness-community-detection"><span class="header-section-number">5.2</span> Edge betweenness community detection</a></li>
-  <li><a href="#louvain-method" id="toc-louvain-method" class="nav-link" data-scroll-target="#louvain-method"><span class="header-section-number">5.3</span> Louvain method</a></li>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction"><span class="header-section-number">5.4</span> Introduction</a></li>
+  <li><a href="#walktrap" id="toc-walktrap" class="nav-link" data-scroll-target="#walktrap"><span class="header-section-number">4.2.1</span> Walktrap</a></li>
+  <li><a href="#edge-betweenness-community-detection" id="toc-edge-betweenness-community-detection" class="nav-link" data-scroll-target="#edge-betweenness-community-detection"><span class="header-section-number">4.2.2</span> Edge betweenness community detection</a></li>
+  <li><a href="#louvain-method" id="toc-louvain-method" class="nav-link" data-scroll-target="#louvain-method"><span class="header-section-number">4.2.3</span> Louvain method</a></li>
   </ul></li>
-  <li><a href="#analysing-network-resilience" id="toc-analysing-network-resilience" class="nav-link" data-scroll-target="#analysing-network-resilience"><span class="header-section-number">6</span> Analysing network resilience</a>
+  <li><a href="#analysing-network-resilience" id="toc-analysing-network-resilience" class="nav-link" data-scroll-target="#analysing-network-resilience"><span class="header-section-number">4.3</span> Analysing network resilience</a>
   <ul class="collapse">
-  <li><a href="#the-percolation-algorithm" id="toc-the-percolation-algorithm" class="nav-link" data-scroll-target="#the-percolation-algorithm"><span class="header-section-number">6.1</span> The percolation algorithm</a></li>
-  <li><a href="#changes-in-the-size-of-the-giant-connected-component-as-edges-are-removed" id="toc-changes-in-the-size-of-the-giant-connected-component-as-edges-are-removed" class="nav-link" data-scroll-target="#changes-in-the-size-of-the-giant-connected-component-as-edges-are-removed"><span class="header-section-number">6.2</span> Changes in the size of the giant connected component as edges are removed</a></li>
-  <li><a href="#changes-in-the-number-of-connected-components-as-edges-are-removed" id="toc-changes-in-the-number-of-connected-components-as-edges-are-removed" class="nav-link" data-scroll-target="#changes-in-the-number-of-connected-components-as-edges-are-removed"><span class="header-section-number">6.3</span> Changes in the number of connected components as edges are removed</a></li>
-  <li><a href="#changes-in-the-average-travel-time-as-edges-are-removed" id="toc-changes-in-the-average-travel-time-as-edges-are-removed" class="nav-link" data-scroll-target="#changes-in-the-average-travel-time-as-edges-are-removed"><span class="header-section-number">6.4</span> Changes in the average travel time as edges are removed</a></li>
+  <li><a href="#the-percolation-algorithm" id="toc-the-percolation-algorithm" class="nav-link" data-scroll-target="#the-percolation-algorithm"><span class="header-section-number">4.3.1</span> The percolation algorithm</a></li>
+  <li><a href="#changes-in-the-size-of-the-giant-connected-component-as-edges-are-removed" id="toc-changes-in-the-size-of-the-giant-connected-component-as-edges-are-removed" class="nav-link" data-scroll-target="#changes-in-the-size-of-the-giant-connected-component-as-edges-are-removed"><span class="header-section-number">4.3.2</span> Changes in the size of the giant connected component as edges are removed</a></li>
+  <li><a href="#changes-in-the-number-of-connected-components-as-edges-are-removed" id="toc-changes-in-the-number-of-connected-components-as-edges-are-removed" class="nav-link" data-scroll-target="#changes-in-the-number-of-connected-components-as-edges-are-removed"><span class="header-section-number">4.3.3</span> Changes in the number of connected components as edges are removed</a></li>
+  <li><a href="#changes-in-the-average-travel-time-as-edges-are-removed" id="toc-changes-in-the-average-travel-time-as-edges-are-removed" class="nav-link" data-scroll-target="#changes-in-the-average-travel-time-as-edges-are-removed"><span class="header-section-number">4.3.4</span> Changes in the average travel time as edges are removed</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -287,13 +286,13 @@ window.Quarto = {
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rnaturalearth) <span class="co"># for natural earth map data</span></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)        <span class="co"># for spatial data manipulation</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Like before, we define the network of African roads from dataframes containing nodes and edges data.</p>
+<p>Like before, we define the network of African roads from dataframes containing nodes and edges data. The dataframes can be found at https://github.com/CrmnCA/nets4gis within the data folder.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the CSV file containing network nodes data</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>df_nodes <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://raw.githubusercontent.com/CrmnCA/nets4gis/main/data/AfricaNetworkNodes.csv"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>df_nodes <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"./data/AfricaNetworkNodes.csv"</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the CSV file containing network edges data</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>df_edges <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://raw.githubusercontent.com/CrmnCA/nets4gis/main/data/AfricaNetworkEdges.csv"</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>df_edges <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"./data/AfricaNetworkEdges.csv"</span>)</span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a network called 'g' from data frames 'df_edges' and 'df_nodes'</span></span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Make the netwrok is undirected (directed = FALSE)</span></span>
@@ -307,7 +306,7 @@ window.Quarto = {
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>world <span class="ot">&lt;-</span> <span class="fu">ne_download</span>(<span class="at">scale =</span> <span class="st">"small"</span>, <span class="at">category =</span> <span class="st">"cultural"</span>, <span class="at">type =</span> <span class="st">"admin_0_countries"</span>, <span class="at">returnclass =</span> <span class="st">"sf"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Reading layer `ne_110m_admin_0_countries' from data source 
-  `/private/var/folders/79/65l52xsj7vq_4_t_l6k5bl2c0000gn/T/Rtmpt88c2l/ne_110m_admin_0_countries.shp' 
+  `/private/var/folders/79/65l52xsj7vq_4_t_l6k5bl2c0000gn/T/RtmpWSgY3a/ne_110m_admin_0_countries.shp' 
   using driver `ESRI Shapefile'
 Simple feature collection with 177 features and 168 fields
 Geometry type: MULTIPOLYGON
@@ -322,11 +321,11 @@ Geodetic CRS:  WGS 84</code></pre>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>world_subset <span class="ot">&lt;-</span> world[world<span class="sc">$</span>SOV_A3 <span class="sc">%in%</span> target_countries, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="community-detection" class="level1" data-number="5">
-<h1 data-number="5"><span class="header-section-number">5</span> Community detection</h1>
+<section id="community-detection" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="community-detection"><span class="header-section-number">4.2</span> Community detection</h2>
 <p>A network displays community structure if the nodes can be grouped into sets such that the nodes within each set are densely connected. For example, in the case of a social network formed by the students in a classroom, we would expect that small groups of friends form within the overall network, where relationships among members of a group are stronger than to everyone else in the classroom. Detecting or searching communities within in a network is a fundamental problem in network analysis, which has attracted much attention in the past decades <span class="citation" data-cites="fortunato2022">(<a href="#ref-fortunato2022" role="doc-biblioref">Fortunato and Newman 2022</a>)</span>. While there are different methods to detect communities, below we review four of them which have been widely used and studied. These are walktrap <span class="citation" data-cites="pons2005">(<a href="#ref-pons2005" role="doc-biblioref">Pons and Latapy 2005</a>)</span>, edge-betweenness <span class="citation" data-cites="girvan2002">(<a href="#ref-girvan2002" role="doc-biblioref">Girvan and Newman 2002</a>)</span> and hierarchical clustering <span class="citation" data-cites="blondel2008">(<a href="#ref-blondel2008" role="doc-biblioref">Blondel et al. 2008</a>)</span>. Each method defines communities differently, and the choice of method depends on which aspect of communities is emphasised in a particular application.</p>
-<section id="walktrap" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="walktrap"><span class="header-section-number">5.1</span> Walktrap</h2>
+<section id="walktrap" class="level3" data-number="4.2.1">
+<h3 data-number="4.2.1" class="anchored" data-anchor-id="walktrap"><span class="header-section-number">4.2.1</span> Walktrap</h3>
 <p>This algorithm relies on the concept of random walks on networks. Random walks are sequences of nodes, chosen by following a randomly chosen path. The underlying assumption of the walktrap method is that nodes encountered in a given random walk are more likely to be part of the same community.</p>
 <p>The algorithm starts by treating each node as its own community. Then, it performs a series of short random walks on the network, where the length of these walks has to be specified by the user. After performing the random walks, the algorithm calculates a similarity measure between each pair of nodes. This measure is based on the idea that if two nodes are often encountered together during random walks, they are likely part of the same community. Nodes that have high similarity are merged into larger communities. This merging process is hierarchical and agglomerative, starting with individual nodes and progressively combining them. As communities are merged, the algorithm often aims to maximise a measure called modularity, which quantifies the strength of the division of the network into communities. High modularity indicates a good community structure, where more edges fall within communities than between communities. The process continues until the entire network is merged into a single community or until a stopping criterion, like a modularity threshold, is met. Depending on the implementation, the algorithm may return a hierarchical structure of communities, allowing the user to explore different levels of granularity in the community structure.</p>
 <p>In R, the walktrap method is implemented via the <code>igraph</code> function <code>cluster_walktrap()</code>, with key parameters including the network of interest as an igraph object, the length of the random walks, and a membership parameter, which is a boolean variable indicating whether to calculate membership based on the highest modularity score, with True as the default. Below, we apply the walktrap method to the African road network and save the result in the variable <code>g_wt</code>:</p>
@@ -356,8 +355,8 @@ Geodetic CRS:  WGS 84</code></pre>
 <span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Walktrap method"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="edge-betweenness-community-detection" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="edge-betweenness-community-detection"><span class="header-section-number">5.2</span> Edge betweenness community detection</h2>
+<section id="edge-betweenness-community-detection" class="level3" data-number="4.2.2">
+<h3 data-number="4.2.2" class="anchored" data-anchor-id="edge-betweenness-community-detection"><span class="header-section-number">4.2.2</span> Edge betweenness community detection</h3>
 <p>The edge-betweenness community detection method identifies communities within a network by focusing on the edges that connect different communities. It works by progressively removing edges that act as bridges between groups of nodes, from higher to lower betweenness centrality. As high-betweenness edges are removed, the network breaks down into smaller, more cohesive subgroups or communities. This method is particularly useful for finding natural divisions within a network, though it can be computationally intensive for large networks.</p>
 <p>The algorithm starts by computing the betweenness centrality for all edges in the network. Edges with high betweenness are likely to be those that connect different communities. Then, the edge with the highest betweenness centrality is removed from the network. This step effectively “cuts” the bridge between communities. After removing the edge, the betweenness centrality for the remaining edges is recomputed since the removal of one edge may change the shortest paths in the network, affecting the betweenness centrality of other edges. Edges with the highest betweenness centrality keep being removed until all edges have been removed or until the network breaks down into the desired number of communities.</p>
 <p>In R, the edge betweenness community detection method is implemented via the <code>igraph</code> function <code>cluster_edge_betweenness()</code>. The key parameters are the network of interest as an igraph object and a membership parameter, a boolean variable indicating whether to calculate membership based on the highest modularity score, with True as the default. Below, we apply the edge betweenness method to the African road network and save the result in the variable <code>g_eb</code>:</p>
@@ -368,7 +367,7 @@ Geodetic CRS:  WGS 84</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>member_g_eb <span class="ot">&lt;-</span> <span class="fu">membership</span>(g_eb)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Then, we generate a plot of the results. We include the plot in Figure <a href="#fig-community-search" class="quarto-xref">Figure&nbsp;<span>5.1</span></a>.</p>
+<p>Then, we generate a plot of the results. We include the plot in Figure <a href="#fig-community-search" class="quarto-xref">Figure&nbsp;<span>4.1</span></a>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>plot_eb <span class="ot">&lt;-</span> <span class="fu">ggraph</span>(<span class="fu">as_tbl_graph</span>(g), custom_layout) <span class="sc">+</span> <span class="co"># basic graph plot with custom layout</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_edge_link</span>(<span class="at">color =</span> <span class="st">"gray80"</span>, <span class="at">alpha=</span><span class="fl">0.9</span>, <span class="fu">aes</span>(<span class="at">width =</span> <span class="fu">E</span>(g)<span class="sc">$</span>l<span class="sc">*</span><span class="fl">0.1</span>)) <span class="sc">+</span> <span class="co"># custom edges</span></span>
@@ -381,8 +380,8 @@ Geodetic CRS:  WGS 84</code></pre>
 <span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Edge betweenness</span><span class="sc">\n</span><span class="st"> clustering"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="louvain-method" class="level2" data-number="5.3">
-<h2 data-number="5.3" class="anchored" data-anchor-id="louvain-method"><span class="header-section-number">5.3</span> Louvain method</h2>
+<section id="louvain-method" class="level3" data-number="4.2.3">
+<h3 data-number="4.2.3" class="anchored" data-anchor-id="louvain-method"><span class="header-section-number">4.2.3</span> Louvain method</h3>
 <p>The Louvain method of multi-level clustering works by finding communities in such a way that the modularity of the network is maximised. The algorithm works in two phases: first, each node starts in its own community, and nodes are iteratively moved to neighboring communities if the move increases modularity. This phase continues until no further improvement is possible. In the second phase, the network is compressed by treating each community found in the first phase as a single node, creating a new, smaller network. The two phases are then repeated on this simplified network, refining the community structure at each level. The process continues until modularity no longer increases, resulting in a hierarchical clustering that reflects the community structure within the network.</p>
 <p>On R, the Louvain method is implemented via the <code>cluster_louvain</code> function, where the arguments are the graph and the resolution. Higher resolution values will yield a larger number of smaller communities, while lower values will yield a smaller number of larger communities.</p>
 <div class="cell">
@@ -404,7 +403,7 @@ Geodetic CRS:  WGS 84</code></pre>
 <span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> world_subset, <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span> <span class="co"># basic map plot</span></span>
 <span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Louvain method"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>In Figure <a href="#fig-community-search" class="quarto-xref">Figure&nbsp;<span>5.1</span></a>, we visualise the results of the three community detection methods, i.e.&nbsp;walktrap, edge betweenness and the Louvain method. The results reflect the fact that nodes that are geographically close and are part of densely connected clusters, generally belong to the same community, regardless of the method used. There is some degree of correspondance between the detected communities and the African countries.</p>
+<p>In Figure <a href="#fig-community-search" class="quarto-xref">Figure&nbsp;<span>4.1</span></a>, we visualise the results of the three community detection methods, i.e.&nbsp;walktrap, edge betweenness and the Louvain method. The results reflect the fact that nodes that are geographically close and are part of densely connected clusters, generally belong to the same community, regardless of the method used. There is some degree of correspondance between the detected communities and the African countries.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>plot_wt <span class="sc">+</span> plot_eb <span class="sc">+</span> plot_mlc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -414,115 +413,82 @@ Geodetic CRS:  WGS 84</code></pre>
 <img src="percolation_files/figure-html/fig-community-search-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-community-search-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5.1: Results of three community detection algorithms: walktrap, edge betweenness and multi-level clustering or Louvain.
+Figure&nbsp;4.1: Results of three community detection algorithms: walktrap, edge betweenness and multi-level clustering or Louvain.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-</section>
-<section id="introduction" class="level2" data-number="5.4">
-<h2 data-number="5.4" class="anchored" data-anchor-id="introduction"><span class="header-section-number">5.4</span> Introduction</h2>
-<p>The term percolation normally refers to the process whereby a fluid moves slowly through a porous material, for example, the percolation of rain water through rocks gives rise to aquifers. The study and modelling of this infiltration process in physics, chemistry and material science is known as percolation theory. If you think about it, a rock can be modelled as a three-dimensional lattice (if the rock was cube-shaped, this lattice would be like a Rubik cube but instead of being <span class="math inline">\(3 \times 3\times 3\)</span>, it is <span class="math inline">\(n\times n \times n\)</span>). Then, the pores in the rock would be represented by “open sites” in this lattice (this would correspond to missing pieces in the Rubik cube) and the bits of the rock where there is material and therefore, no chance for the water to go through, would be represented by “closed sites” (this would correspond to pieces in the Rubik cube that are actually present). A typical question in percolation theory would then be as follows. If sites may be open with probability <span class="math inline">\(p\)</span> or closed with probability <span class="math inline">\(1-p\)</span> and these probabilities are assumed to be independent for each site, what is the probability that the water can go through the top to the bottom of the rock for a given value of <span class="math inline">\(p\)</span>?</p>
-<p>In recent decades, the mathematical study of percolation has been applied in a more general way, to understand the behavior of connected clusters or pathways in any system that can be modelled as a lattice or as a network. While the formulation of the percolation models varies slightly from lattices to networks, it follows the same principles. For example, let’s consider the spread of a certain pandemic, where contagion between two humans may take place with probability <span class="math inline">\(p\)</span> if an infected individual spends more than 10 minutes at less than 2 meters away from a healthy one. Then, we can think of the pandemic as a fluid moving slowly, but instead of going through a porous rock, it goes through a social network of people. The people can be modelled as the nodes of the social network, and edges are present between two individuals if they spend long enough in close physical contact. Then, each edge or connection has an associated probability of contagion <span class="math inline">\(p\)</span>. Applying percolation theory, we could answer the question of “what are the chances that the pandemic makes its way from city A to city B given the structure of the network and the fact that the probability of contagion is <span class="math inline">\(p\)</span>?”</p>
-<p>Percolation theory can therefore be used in a variety of contexts to better understand the properties of a system characterised by the connections between its components. Here, we use percolation models to improve our understanding of the structure and resilience of the African road network.</p>
-<p>As before, we start by loading the data corresponding to the nodes and edges of the African road network:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read CSV data for edges from a specified URL</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>df_edges <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"./data/AfricaNetworkEdges.csv"</span>)</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Read CSV data for nodes from a specified URL, specifying UTF-8 encoding for special characters</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>df_nodes <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"./data/AfricaNetworkNodes.csv"</span>, <span class="at">encoding=</span><span class="st">'UTF-8'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>In order to ensure timely completion of this workshop, we will use a subset of the African network, specifically focusing on nodes from the South region. This adjustment is necessary as running the code on the entire network would exceed the allocated time frame. However, you are encouraged to explore running the code on the complete network at your own convenience.</p>
-<p>We start by selecting the nodes belonging to the South region. This can be easily done with the <code>subset()</code> function.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Subset the df_nodes data frame to include only rows where Region is "South"</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>df_nodes <span class="ot">&lt;-</span> <span class="fu">subset</span>(df_nodes, Region <span class="sc">==</span> <span class="st">"South"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Similarly, we can select the only the edges where both extrema are nodes belonging to the South region.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Subset df_edges to include only rows where 'from' column values are in df_nodes$Agglomeration_ID</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>df_edges <span class="ot">&lt;-</span> <span class="fu">subset</span>(df_edges, from <span class="sc">%in%</span> df_nodes<span class="sc">$</span>Agglomeration_ID)</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Subset df_edges to include only rows where 'to' column values are in df_nodes$Agglomeration_ID</span></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>df_edges <span class="ot">&lt;-</span> <span class="fu">subset</span>(df_edges, to <span class="sc">%in%</span> df_nodes<span class="sc">$</span>Agglomeration_ID)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Like before, we can create an undirected graph from the redefined data frames of nodes and edges.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create an igraph graph 'G' from data frames 'df_edges' and 'df_nodes'</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>G <span class="ot">&lt;-</span> <span class="fu">graph_from_data_frame</span>(<span class="at">d =</span> df_edges,</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>                           <span class="at">vertices =</span> df_nodes,</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>                           <span class="at">directed =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>We can visualise this sub-network by running the code below. Note that instead of using the base R function <code>plot()</code>, we are now using <code>ggraph</code>, which is an R package used for creating and visualising graphs and networks. It is built on top of the popular <code>ggplot2</code> package, which is used for creating a wider range of statistical graphics in R.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set node sizes in the graph 'G' based on a function of population size</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">V</span>(G)<span class="sc">$</span>size <span class="ot">&lt;-</span> <span class="fl">0.5</span><span class="sc">*</span>(<span class="fu">V</span>(G)<span class="sc">$</span>Pop2015<span class="sc">/</span><span class="dv">10000</span>)<span class="sc">^</span><span class="fl">0.4</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a custom layout data frame with node names, x-coordinates, and y-coordinates</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>custom_layout <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">name =</span> <span class="fu">V</span>(G)<span class="sc">$</span>name,  <span class="co"># Node names from the graph</span></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> df_nodes<span class="sc">$</span>x,    <span class="co"># Custom x-coordinates</span></span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> df_nodes<span class="sc">$</span>y    <span class="co"># Custom y-coordinates</span></span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the graph 'G' with specific visual attributes</span></span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>plotG <span class="ot">&lt;-</span> <span class="fu">ggraph</span>(<span class="fu">as_tbl_graph</span>(G), custom_layout) <span class="sc">+</span></span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_edge_link</span>() <span class="sc">+</span></span>
-<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_node_point</span>(<span class="fu">aes</span>(<span class="at">colour=</span><span class="st">"red"</span>, <span class="at">size=</span><span class="fu">V</span>(G)<span class="sc">$</span>size)) <span class="sc">+</span></span>
-<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
-<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>()</span>
-<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the graph plotG</span></span>
-<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>plotG</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="percolation_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>The countries belonging to the South region are Botswana, Eswatini, Lesotho, Namibia, South Africa. To give more geographical context to the above visualisation, we will add the outlines of these countries as a base layer for this plot. The shapes for the world countries can be downloaded as simple feature objects (similar to a data frame but it also includes geographic information) using the <code>ne_download</code> function from the <code>rnaturalearth</code> package. We store the simple feature in the variable <code>world</code>, which we then filter to include only the countries of interest.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Download world map data with specified parameters</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>world <span class="ot">&lt;-</span> <span class="fu">ne_download</span>(<span class="at">scale =</span> <span class="st">"small"</span>, <span class="at">category =</span> <span class="st">"cultural"</span>, <span class="at">type =</span> <span class="st">"admin_0_countries"</span>, <span class="at">returnclass =</span> <span class="st">"sf"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Reading layer `ne_110m_admin_0_countries' from data source 
-  `/private/var/folders/79/65l52xsj7vq_4_t_l6k5bl2c0000gn/T/Rtmpt88c2l/ne_110m_admin_0_countries.shp' 
-  using driver `ESRI Shapefile'
-Simple feature collection with 177 features and 168 fields
-Geometry type: MULTIPOLYGON
-Dimension:     XY
-Bounding box:  xmin: -180 ymin: -90 xmax: 180 ymax: 83.64513
-Geodetic CRS:  WGS 84</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define a vector of target countries</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>target_countries <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Botswana"</span>, <span class="st">"eSwatini"</span>, <span class="st">"Lesotho"</span>, <span class="st">"Namibia"</span>, <span class="st">"South Africa"</span>)</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Subset the world map data to include only the target countries</span></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>world_subset <span class="ot">&lt;-</span> world[world<span class="sc">$</span>SOVEREIGNT <span class="sc">%in%</span> target_countries, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>The plot from above can be modified to also include the base layer</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the graph 'G' with specific visual attributes</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>plotG <span class="ot">&lt;-</span> <span class="fu">ggraph</span>(<span class="fu">as_tbl_graph</span>(G), custom_layout) <span class="sc">+</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_edge_link</span>() <span class="sc">+</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_node_point</span>(<span class="fu">aes</span>(<span class="at">colour=</span><span class="st">"red"</span>, <span class="at">size=</span><span class="fu">V</span>(G)<span class="sc">$</span>size)) <span class="sc">+</span></span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> world_subset, <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">color =</span> <span class="st">"black"</span>) </span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the graph plotG</span></span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>plotG</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="percolation_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
+<!-- ## Introduction -->
+<!-- The term percolation normally refers to the process whereby a fluid moves slowly through a porous material, for example, the percolation of rain water through rocks gives rise to aquifers. The study and modelling of this infiltration process in physics, chemistry and material science is known as percolation theory. If you think about it, a rock can be modelled as a three-dimensional lattice (if the rock was cube-shaped, this lattice would be like a Rubik cube but instead of being $3 \times 3\times 3$, it is $n\times n \times n$). Then, the pores in the rock would be represented by "open sites" in this lattice (this would correspond to missing pieces in the Rubik cube) and the bits of the rock where there is material and therefore, no chance for the water to go through, would be represented by "closed sites" (this would correspond to pieces in the Rubik cube that are actually present). A typical question in percolation theory would then be as follows. If sites may be open with probability $p$ or closed with probability $1-p$ and these probabilities are assumed to be independent for each site, what is the probability that the water can go through the top to the bottom of the rock for a given value of $p$? -->
+<!-- In recent decades, the mathematical study of percolation has been applied in a more general way, to understand the behavior of connected clusters or pathways in any system that can be modelled as a lattice or as a network. While the formulation of the percolation models varies slightly from lattices to networks, it follows the same principles. For example, let's consider the spread of a certain pandemic, where contagion between two humans may take place with probability $p$ if an infected individual spends more than 10 minutes at less than 2 meters away from a healthy one. Then, we can think of the pandemic as a fluid moving slowly, but instead of going through a porous rock, it goes through a social network of people. The people can be modelled as the nodes of the social network, and edges are present between two individuals if they spend long enough in close physical contact. Then, each edge or connection has an associated probability of contagion $p$. Applying percolation theory, we could answer the question of "what are the chances that the pandemic makes its way from city A to city B given the structure of the network and the fact that the probability of contagion is $p$?" -->
+<!-- Percolation theory can therefore be used in a variety of contexts to better understand the properties of a system characterised by the connections between its components. Here, we use percolation models to improve our understanding of the structure and resilience of the African road network. -->
+<!-- As before, we start by loading the data corresponding to the nodes and edges of the African road network: -->
+<!-- ```{r} -->
+<!-- # Read CSV data for edges from a specified URL -->
+<!-- df_edges <- read.csv("./data/AfricaNetworkEdges.csv") -->
+<!-- # Read CSV data for nodes from a specified URL, specifying UTF-8 encoding for special characters -->
+<!-- df_nodes <- read.csv("./data/AfricaNetworkNodes.csv", encoding='UTF-8') -->
+<!-- ``` -->
+<!-- In order to ensure timely completion of this workshop, we will use a subset of the African network, specifically focusing on nodes from the South region. This adjustment is necessary as running the code on the entire network would exceed the allocated time frame. However, you are encouraged to explore running the code on the complete network at your own convenience. -->
+<!-- We start by selecting the nodes belonging to the South region. This can be easily done with the `subset()` function. -->
+<!-- ```{r} -->
+<!-- # Subset the df_nodes data frame to include only rows where Region is "South" -->
+<!-- df_nodes <- subset(df_nodes, Region == "South") -->
+<!-- ``` -->
+<!-- Similarly, we can select the only the edges where both extrema are nodes belonging to the South region. -->
+<!-- ```{r} -->
+<!-- # Subset df_edges to include only rows where 'from' column values are in df_nodes$Agglomeration_ID -->
+<!-- df_edges <- subset(df_edges, from %in% df_nodes$Agglomeration_ID) -->
+<!-- # Subset df_edges to include only rows where 'to' column values are in df_nodes$Agglomeration_ID -->
+<!-- df_edges <- subset(df_edges, to %in% df_nodes$Agglomeration_ID) -->
+<!-- ``` -->
+<!-- Like before, we can create an undirected graph from the redefined data frames of nodes and edges. -->
+<!-- ```{r} -->
+<!-- # Create an igraph graph 'G' from data frames 'df_edges' and 'df_nodes' -->
+<!-- G <- graph_from_data_frame(d = df_edges, -->
+<!--                            vertices = df_nodes, -->
+<!--                            directed = FALSE) -->
+<!-- ``` -->
+<!-- We can visualise this sub-network by running the code below. Note that instead of using the base R function `plot()`, we are now using `ggraph`, which is an R package used for creating and visualising graphs and networks. It is built on top of the popular `ggplot2` package, which is used for creating a wider range of statistical graphics in R. -->
+<!-- ```{r} -->
+<!-- # Set node sizes in the graph 'G' based on a function of population size -->
+<!-- V(G)$size <- 0.5*(V(G)$Pop2015/10000)^0.4 -->
+<!-- # Create a custom layout data frame with node names, x-coordinates, and y-coordinates -->
+<!-- custom_layout <- data.frame( -->
+<!--   name = V(G)$name,  # Node names from the graph -->
+<!--   x = df_nodes$x,    # Custom x-coordinates -->
+<!--   y = df_nodes$y    # Custom y-coordinates -->
+<!-- ) -->
+<!-- # Plot the graph 'G' with specific visual attributes -->
+<!-- plotG <- ggraph(as_tbl_graph(G), custom_layout) + -->
+<!--   geom_edge_link() + -->
+<!--   geom_node_point(aes(colour="red", size=V(G)$size)) + -->
+<!--   theme(legend.position = "none") + -->
+<!--   coord_fixed() -->
+<!-- # Display the graph plotG -->
+<!-- plotG -->
+<!-- ``` -->
+<!-- The countries belonging to the South region are Botswana, Eswatini, Lesotho, Namibia, South Africa. To give more geographical context to the above visualisation, we will add the outlines of these countries as a base layer for this plot. The shapes for the world countries can be downloaded as simple feature objects (similar to a data frame but it also includes geographic information) using the `ne_download` function from the `rnaturalearth` package. We store the simple feature in the variable `world`, which we then filter to include only the countries of interest. -->
+<!-- ```{r} -->
+<!-- # Download world map data with specified parameters -->
+<!-- world <- ne_download(scale = "small", category = "cultural", type = "admin_0_countries", returnclass = "sf") -->
+<!-- # Define a vector of target countries -->
+<!-- target_countries <- c("Botswana", "eSwatini", "Lesotho", "Namibia", "South Africa") -->
+<!-- # Subset the world map data to include only the target countries -->
+<!-- world_subset <- world[world$SOVEREIGNT %in% target_countries, ] -->
+<!-- ``` -->
+<!-- The plot from above can be modified to also include the base layer -->
+<!-- ```{r} -->
+<!-- # Plot the graph 'G' with specific visual attributes -->
+<!-- plotG <- ggraph(as_tbl_graph(G), custom_layout) + -->
+<!--   geom_edge_link() + -->
+<!--   geom_node_point(aes(colour="red", size=V(G)$size)) + -->
+<!--   theme(legend.position = "none") + -->
+<!--   geom_sf(data = world_subset, fill = NA, color = "black")  -->
+<!-- # Display the graph plotG -->
+<!-- plotG -->
+<!-- ``` -->
 <!-- ## Modelling community formation in the African road network -->
 <!-- In this section, we implement a percolation theory approach to model the formation of communities of nodes (cities) as the connectivity properties of the network are varied. -->
 <!-- ### Percolation at three threshold values -->
@@ -664,57 +630,57 @@ Geodetic CRS:  WGS 84</code></pre>
 <!-- ``` -->
 </section>
 </section>
-<section id="analysing-network-resilience" class="level1" data-number="6">
-<h1 data-number="6"><span class="header-section-number">6</span> Analysing network resilience</h1>
+<section id="analysing-network-resilience" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="analysing-network-resilience"><span class="header-section-number">4.3</span> Analysing network resilience</h2>
 <p>Analysing network resilience through a percolation theory approach offers insights into how networks behave under failure or attack. Percolation theory was originally developed in statistical physics to study the behavior of connected clusters in a system as its elements are removed or fail. When applied to network analysis, it helps to quantify the threshold at which a network transitions from a well-connected state to one where large-scale connectivity is lost. This approach is particularly valuable in assessing the resilience of networks by determining their vulnerability to fragmentation and identifying critical points where network connectivity might collapse.</p>
 <p>Typically, a full percolation algorithm or process is run so that in each iteration, the value of a percolation parameter that controls the removal of nodes or edges is updated, and nodes or edges are removed accordingly. In each iteration, key resilience metrics are measured. One of the most used resilience metrics is the number of nodes in the largest connected component after the removal of nodes or edges. This metric is known as the size of the giant connected component (GCC). In many cases, we observe that for certain values of the percolation parameter, abrupt changes occur in the size of the GCC, showing that some sort of failure occurs in the network that qualitatively changes its connectivity structure.</p>
 <p>Below we demonstrate this type of analysis. Our percolation parameter of choice is the time of travel through each edge taking into account the presence of borders. This variable is encoded by the <code>timeUCB</code> field in the <code>df_edges</code> data frame. In each iteration of the percolation process, edges with <code>timeUCB</code> above the value of the percolation parameter are removed from the network. Furthemore, instead of considering the whole African road network, we will work with a subset, as this will facilitate timely execution of the algorithm. Particularly, we will use a subset fomed by nodes and edges from the South region.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Subset the df_nodes data frame to include only rows where Region is "South"</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>df_nodes_sub <span class="ot">&lt;-</span> <span class="fu">subset</span>(df_nodes, Region <span class="sc">==</span> <span class="st">"South"</span>)</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Subset df_edges to include only rows where 'from' column values are in df_nodes_sub$Agglomeration_ID</span></span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>df_edges_sub <span class="ot">&lt;-</span> <span class="fu">subset</span>(df_edges, from <span class="sc">%in%</span> df_nodes_sub<span class="sc">$</span>Agglomeration_ID)</span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Subset df_edges_sub to include only rows where 'to' column values are in df_nodes_sub$Agglomeration_ID</span></span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>df_edges_sub <span class="ot">&lt;-</span> <span class="fu">subset</span>(df_edges_sub, to <span class="sc">%in%</span> df_nodes_sub<span class="sc">$</span>Agglomeration_ID)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Subset the df_nodes data frame to include only rows where Region is "South"</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>df_nodes_sub <span class="ot">&lt;-</span> <span class="fu">subset</span>(df_nodes, Region <span class="sc">==</span> <span class="st">"South"</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Subset df_edges to include only rows where 'from' column values are in df_nodes_sub$Agglomeration_ID</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>df_edges_sub <span class="ot">&lt;-</span> <span class="fu">subset</span>(df_edges, from <span class="sc">%in%</span> df_nodes_sub<span class="sc">$</span>Agglomeration_ID)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Subset df_edges_sub to include only rows where 'to' column values are in df_nodes_sub$Agglomeration_ID</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>df_edges_sub <span class="ot">&lt;-</span> <span class="fu">subset</span>(df_edges_sub, to <span class="sc">%in%</span> df_nodes_sub<span class="sc">$</span>Agglomeration_ID)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We can create an undirected graph from the redefined data frames of nodes and edges.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create an igraph graph 'g_sub' from data frames 'df_edges_sub' and 'df_nodes_sub'</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>g_sub <span class="ot">&lt;-</span> <span class="fu">graph_from_data_frame</span>(<span class="at">d =</span> df_edges_sub,</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>                           <span class="at">vertices =</span> df_nodes_sub,</span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>                           <span class="at">directed =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create an igraph graph 'g_sub' from data frames 'df_edges_sub' and 'df_nodes_sub'</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>g_sub <span class="ot">&lt;-</span> <span class="fu">graph_from_data_frame</span>(<span class="at">d =</span> df_edges_sub,</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>                           <span class="at">vertices =</span> df_nodes_sub,</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>                           <span class="at">directed =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We can also visualise this subnetwork by running the code below. To give more geographical context to the above visualisation, we will add the outlines of the countries in the South region as a base layer for this plot. These are Botswana, Eswatini, Lesotho, Namibia, South Africa.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define a vector of target countries</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>south_countries <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Botswana"</span>, <span class="st">"eSwatini"</span>, <span class="st">"Lesotho"</span>, <span class="st">"Namibia"</span>, <span class="st">"South Africa"</span>)</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Subset the world map data to include only the target countries</span></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>world_south <span class="ot">&lt;-</span> world[world<span class="sc">$</span>SOVEREIGNT <span class="sc">%in%</span> south_countries, ]</span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Specify node layout</span></span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>custom_layout <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">name =</span> df_nodes_sub<span class="sc">$</span>agglosName,  <span class="co"># Node names from the graph</span></span>
-<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> df_nodes_sub<span class="sc">$</span>x ,    <span class="co"># Custom x-coordinates</span></span>
-<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> df_nodes_sub<span class="sc">$</span>y )   <span class="co"># Custom y-coordinates</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define a vector of target countries</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>south_countries <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Botswana"</span>, <span class="st">"eSwatini"</span>, <span class="st">"Lesotho"</span>, <span class="st">"Namibia"</span>, <span class="st">"South Africa"</span>)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Subset the world map data to include only the target countries</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>world_south <span class="ot">&lt;-</span> world[world<span class="sc">$</span>SOVEREIGNT <span class="sc">%in%</span> south_countries, ]</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Specify node layout</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>custom_layout <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">name =</span> df_nodes_sub<span class="sc">$</span>agglosName,  <span class="co"># Node names from the graph</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> df_nodes_sub<span class="sc">$</span>x ,    <span class="co"># Custom x-coordinates</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> df_nodes_sub<span class="sc">$</span>y )   <span class="co"># Custom y-coordinates</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create plot</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>plot_sub <span class="ot">&lt;-</span> <span class="fu">ggraph</span>(<span class="fu">as_tbl_graph</span>(g_sub), custom_layout) <span class="sc">+</span> <span class="co"># basic graph plot with custom layout</span></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_edge_link</span>(<span class="at">color =</span> <span class="st">"gray80"</span>, <span class="at">alpha=</span><span class="fl">0.9</span>, <span class="fu">aes</span>(<span class="at">width =</span> <span class="fu">E</span>(g_sub)<span class="sc">$</span>l<span class="sc">*</span><span class="fl">0.1</span>)) <span class="sc">+</span> <span class="co"># custom edges</span></span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_edge_width</span>(<span class="at">range =</span> <span class="fu">c</span>(.<span class="dv">1</span>, <span class="fl">0.7</span>)) <span class="sc">+</span> <span class="co"># scale edge size</span></span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_node_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="fu">V</span>(g_sub)<span class="sc">$</span>size)) <span class="sc">+</span> <span class="co"># custom nodes</span></span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_size_continuous</span>(<span class="at">range =</span> <span class="fu">c</span>(.<span class="dv">1</span>, <span class="dv">6</span>)) <span class="sc">+</span> <span class="co"># scale node size</span></span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_identity</span>() <span class="sc">+</span> <span class="co"># scale node color (not relevant for this plot, but could be for others)</span></span>
-<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>, <span class="at">panel.background=</span><span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">colour =</span> <span class="cn">NA</span>)) <span class="sc">+</span> <span class="co"># map legend and background color</span></span>
-<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> world_south , <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="co"># basic map plot</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create plot</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>plot_sub <span class="ot">&lt;-</span> <span class="fu">ggraph</span>(<span class="fu">as_tbl_graph</span>(g_sub), custom_layout) <span class="sc">+</span> <span class="co"># basic graph plot with custom layout</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_edge_link</span>(<span class="at">color =</span> <span class="st">"gray80"</span>, <span class="at">alpha=</span><span class="fl">0.9</span>, <span class="fu">aes</span>(<span class="at">width =</span> <span class="fu">E</span>(g_sub)<span class="sc">$</span>l<span class="sc">*</span><span class="fl">0.1</span>)) <span class="sc">+</span> <span class="co"># custom edges</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_edge_width</span>(<span class="at">range =</span> <span class="fu">c</span>(.<span class="dv">1</span>, <span class="fl">0.7</span>)) <span class="sc">+</span> <span class="co"># scale edge size</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_node_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="fu">V</span>(g_sub)<span class="sc">$</span>size)) <span class="sc">+</span> <span class="co"># custom nodes</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_size_continuous</span>(<span class="at">range =</span> <span class="fu">c</span>(.<span class="dv">1</span>, <span class="dv">6</span>)) <span class="sc">+</span> <span class="co"># scale node size</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_identity</span>() <span class="sc">+</span> <span class="co"># scale node color (not relevant for this plot, but could be for others)</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>, <span class="at">panel.background=</span><span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">colour =</span> <span class="cn">NA</span>)) <span class="sc">+</span> <span class="co"># map legend and background color</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> world_south , <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="co"># basic map plot</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Existing variables `name`, `x`, and `y` overwritten by layout
 variables</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>plot_sub</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>plot_sub</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-subnetwork" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -722,67 +688,67 @@ variables</code></pre>
 <img src="percolation_files/figure-html/fig-subnetwork-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-subnetwork-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;6.1: Visualisation of road network in the South region of the African continent.
+Figure&nbsp;4.2: Visualisation of road network in the South region of the African continent.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<section id="the-percolation-algorithm" class="level2" data-number="6.1">
-<h2 data-number="6.1" class="anchored" data-anchor-id="the-percolation-algorithm"><span class="header-section-number">6.1</span> The percolation algorithm</h2>
+<section id="the-percolation-algorithm" class="level3" data-number="4.3.1">
+<h3 data-number="4.3.1" class="anchored" data-anchor-id="the-percolation-algorithm"><span class="header-section-number">4.3.1</span> The percolation algorithm</h3>
 <p>We start by creating some empty data structures where we will be storing information about the network and the percolation parameter in each iteration of our percolation algorithm. This will help us analyse the results later on. To do this we create four empty lists, where we will store the value of the percolation parameter in each iteration, the size of the GCC, the number of connected components and the average time to travel between any pair of nodes. By the end of the percolation process, these lists will contain <span class="math inline">\(n_{iterations}\)</span> elements each.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create empty vectors to store thresholds, gccs, ncs, and times</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>thresholds <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>gccs <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>ncs <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>times <span class="ot">&lt;-</span> <span class="fu">c</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create empty vectors to store thresholds, gccs, ncs, and times</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>thresholds <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>gccs <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>ncs <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>times <span class="ot">&lt;-</span> <span class="fu">c</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We are ready to perform the percolation algorithm. Each line of code has been commented to describe what the algorithm does at each step:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Iterate over thresholds</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="fu">max</span>(df_edges_sub<span class="sc">$</span>timeUCB))) {</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Create modified data frames based on the current threshold</span></span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  df_nodes_perco <span class="ot">&lt;-</span> df_nodes_sub</span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>  df_edges_perco <span class="ot">&lt;-</span> <span class="fu">subset</span>(df_edges_sub, timeUCB <span class="sc">&lt;</span> i)</span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Create a graph g_perco from the modified data frames</span></span>
-<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>  g_perco <span class="ot">&lt;-</span> <span class="fu">graph_from_data_frame</span>(<span class="at">d =</span> df_edges_perco,</span>
-<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>                         <span class="at">vertices =</span> df_nodes_perco,</span>
-<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>                         <span class="at">directed =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Get connected components of the modified graph g_perco</span></span>
-<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>  connected_components <span class="ot">&lt;-</span> <span class="fu">components</span>(g_perco)</span>
-<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Append the current threshold value to the 'thresholds' list</span></span>
-<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>  thresholds <span class="ot">&lt;-</span> <span class="fu">c</span>(thresholds, i)</span>
-<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Append the maximum connected component size to the 'gccs' list</span></span>
-<span id="cb32-20"><a href="#cb32-20" aria-hidden="true" tabindex="-1"></a>  gccs <span class="ot">&lt;-</span> <span class="fu">c</span>(gccs, <span class="fu">max</span>(connected_components<span class="sc">$</span>csize))</span>
-<span id="cb32-21"><a href="#cb32-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-22"><a href="#cb32-22" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Append the number of connected components to the 'ncs' list</span></span>
-<span id="cb32-23"><a href="#cb32-23" aria-hidden="true" tabindex="-1"></a>  ncs <span class="ot">&lt;-</span> <span class="fu">c</span>(ncs, connected_components<span class="sc">$</span>no)</span>
-<span id="cb32-24"><a href="#cb32-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-25"><a href="#cb32-25" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calculate and append the mean distance weighted by timeUCB in g_perco to 'times' list</span></span>
-<span id="cb32-26"><a href="#cb32-26" aria-hidden="true" tabindex="-1"></a>  times <span class="ot">&lt;-</span> <span class="fu">c</span>(times, <span class="fu">mean_distance</span>(g_perco, <span class="at">directed=</span><span class="cn">FALSE</span>, <span class="at">weights=</span>df_edges_perco<span class="sc">$</span>timeUCB, <span class="at">unconnected=</span><span class="cn">TRUE</span>))</span>
-<span id="cb32-27"><a href="#cb32-27" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Iterate over thresholds</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="fu">max</span>(df_edges_sub<span class="sc">$</span>timeUCB))) {</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Create modified data frames based on the current threshold</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  df_nodes_perco <span class="ot">&lt;-</span> df_nodes_sub</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  df_edges_perco <span class="ot">&lt;-</span> <span class="fu">subset</span>(df_edges_sub, timeUCB <span class="sc">&lt;</span> i)</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Create a graph g_perco from the modified data frames</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>  g_perco <span class="ot">&lt;-</span> <span class="fu">graph_from_data_frame</span>(<span class="at">d =</span> df_edges_perco,</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>                         <span class="at">vertices =</span> df_nodes_perco,</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>                         <span class="at">directed =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Get connected components of the modified graph g_perco</span></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>  connected_components <span class="ot">&lt;-</span> <span class="fu">components</span>(g_perco)</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Append the current threshold value to the 'thresholds' list</span></span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>  thresholds <span class="ot">&lt;-</span> <span class="fu">c</span>(thresholds, i)</span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Append the maximum connected component size to the 'gccs' list</span></span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>  gccs <span class="ot">&lt;-</span> <span class="fu">c</span>(gccs, <span class="fu">max</span>(connected_components<span class="sc">$</span>csize))</span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Append the number of connected components to the 'ncs' list</span></span>
+<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a>  ncs <span class="ot">&lt;-</span> <span class="fu">c</span>(ncs, connected_components<span class="sc">$</span>no)</span>
+<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calculate and append the mean distance weighted by timeUCB in g_perco to 'times' list</span></span>
+<span id="cb23-26"><a href="#cb23-26" aria-hidden="true" tabindex="-1"></a>  times <span class="ot">&lt;-</span> <span class="fu">c</span>(times, <span class="fu">mean_distance</span>(g_perco, <span class="at">directed=</span><span class="cn">FALSE</span>, <span class="at">weights=</span>df_edges_perco<span class="sc">$</span>timeUCB, <span class="at">unconnected=</span><span class="cn">TRUE</span>))</span>
+<span id="cb23-27"><a href="#cb23-27" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="changes-in-the-size-of-the-giant-connected-component-as-edges-are-removed" class="level2" data-number="6.2">
-<h2 data-number="6.2" class="anchored" data-anchor-id="changes-in-the-size-of-the-giant-connected-component-as-edges-are-removed"><span class="header-section-number">6.2</span> Changes in the size of the giant connected component as edges are removed</h2>
+<section id="changes-in-the-size-of-the-giant-connected-component-as-edges-are-removed" class="level3" data-number="4.3.2">
+<h3 data-number="4.3.2" class="anchored" data-anchor-id="changes-in-the-size-of-the-giant-connected-component-as-edges-are-removed"><span class="header-section-number">4.3.2</span> Changes in the size of the giant connected component as edges are removed</h3>
 <p>Once the algorithm is done running, we can plot the size of the GCC as the value of the percolation parameter is varied.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a data frame for the plot with thresholds and gccs</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> thresholds, <span class="at">y =</span> gccs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a data frame for the plot with thresholds and gccs</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> thresholds, <span class="at">y =</span> gccs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co">#|</span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a ggplot2 plot</span></span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Travel time with border effect (minutes)"</span>, <span class="at">y =</span> <span class="st">"Size of GCC"</span>) <span class="sc">+</span></span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">#|</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a ggplot2 plot</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Travel time with border effect (minutes)"</span>, <span class="at">y =</span> <span class="st">"Size of GCC"</span>) <span class="sc">+</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-perco-traveltime" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -790,7 +756,7 @@ Figure&nbsp;6.1: Visualisation of road network in the South region of the Africa
 <img src="percolation_files/figure-html/fig-perco-traveltime-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-perco-traveltime-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;6.2: Relationship between the size of the Giant Connected Component and the percolation parameter.
+Figure&nbsp;4.3: Relationship between the size of the Giant Connected Component and the percolation parameter.
 </figcaption>
 </figure>
 </div>
@@ -798,20 +764,20 @@ Figure&nbsp;6.2: Relationship between the size of the Giant Connected Component 
 </div>
 <p>We observe that for small values of the percolation parameter rapid changes occur in the size of the GCC. When the percolation parameter takes approximately the values 150, 650, 1000, there are sudden changes in the size of the GCC, showing that there has been a significant alteration in the network’s topology. For example, when edges with associated travel times above 1000 minutes are removed, nodes that act like hubs may lose connections and as a result, the GCC may experience a significant drop in size.</p>
 </section>
-<section id="changes-in-the-number-of-connected-components-as-edges-are-removed" class="level2" data-number="6.3">
-<h2 data-number="6.3" class="anchored" data-anchor-id="changes-in-the-number-of-connected-components-as-edges-are-removed"><span class="header-section-number">6.3</span> Changes in the number of connected components as edges are removed</h2>
+<section id="changes-in-the-number-of-connected-components-as-edges-are-removed" class="level3" data-number="4.3.3">
+<h3 data-number="4.3.3" class="anchored" data-anchor-id="changes-in-the-number-of-connected-components-as-edges-are-removed"><span class="header-section-number">4.3.3</span> Changes in the number of connected components as edges are removed</h3>
 <p>We can also plot the number of connected components as the value of the percolation parameter is varied.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a data frame for the plot with thresholds and ncs</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> thresholds, <span class="at">y =</span> ncs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a data frame for the plot with thresholds and ncs</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> thresholds, <span class="at">y =</span> ncs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co">#|</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a ggplot2 plot</span></span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Travel time with border effect (minutes)"</span>, <span class="at">y =</span> <span class="st">"No. of connected components"</span>) <span class="sc">+</span></span>
-<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co">#|</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a ggplot2 plot</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Travel time with border effect (minutes)"</span>, <span class="at">y =</span> <span class="st">"No. of connected components"</span>) <span class="sc">+</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-no-connected-traveltime" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -819,7 +785,7 @@ Figure&nbsp;6.2: Relationship between the size of the Giant Connected Component 
 <img src="percolation_files/figure-html/fig-no-connected-traveltime-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-no-connected-traveltime-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;6.3: Relationship between the number of connected components and the percolation parameter.
+Figure&nbsp;4.4: Relationship between the number of connected components and the percolation parameter.
 </figcaption>
 </figure>
 </div>
@@ -827,19 +793,19 @@ Figure&nbsp;6.3: Relationship between the number of connected components and the
 </div>
 <p>We observe that for small values of the percolation threshold, nearly all the edges in the network are removed, so there are as many components as there are nodes. We also see that if we increase the percolation threshold above 250 minutes, the number of connected components is reduced, showing that the connectivity of the network is restored as we add additional edges.</p>
 </section>
-<section id="changes-in-the-average-travel-time-as-edges-are-removed" class="level2" data-number="6.4">
-<h2 data-number="6.4" class="anchored" data-anchor-id="changes-in-the-average-travel-time-as-edges-are-removed"><span class="header-section-number">6.4</span> Changes in the average travel time as edges are removed</h2>
+<section id="changes-in-the-average-travel-time-as-edges-are-removed" class="level3" data-number="4.3.4">
+<h3 data-number="4.3.4" class="anchored" data-anchor-id="changes-in-the-average-travel-time-as-edges-are-removed"><span class="header-section-number">4.3.4</span> Changes in the average travel time as edges are removed</h3>
 <p>Finally, we plot the average travel time between any pair of nodes as the value of the percolation parameter is varied.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a data frame for the plot with thresholds and times</span></span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> thresholds, <span class="at">y =</span> times)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a data frame for the plot with thresholds and times</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> thresholds, <span class="at">y =</span> times)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a ggplot2 plot</span></span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Travel time with border effect (minutes)"</span>, <span class="at">y =</span> <span class="st">"Average travel time (minutes)"</span>) <span class="sc">+</span></span>
-<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a ggplot2 plot</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Travel time with border effect (minutes)"</span>, <span class="at">y =</span> <span class="st">"Average travel time (minutes)"</span>) <span class="sc">+</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Removed 1 row containing missing values or values outside the scale range
 (`geom_line()`).</code></pre>
@@ -851,7 +817,7 @@ Figure&nbsp;6.3: Relationship between the number of connected components and the
 <img src="percolation_files/figure-html/fig-perco-averagetraveltime-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-perco-averagetraveltime-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;6.4: Relationship between the average travel time with border effect (minutes) and the percolation parameter.
+Figure&nbsp;4.5: Relationship between the average travel time with border effect (minutes) and the percolation parameter.
 </figcaption>
 </figure>
 </div>
