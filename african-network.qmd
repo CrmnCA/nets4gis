@@ -27,10 +27,10 @@ The data that specifies the nodes and edges of the African road network is store
 
 ```{r}
 # Read the CSV file containing network nodes data from a URL
-df_nodes <- read.csv("./data/AfricaNetworkNodes.csv")
+df_nodes <- read.csv("https://github.com/CrmnCA/nets4gis/raw/main/data/AfricaNetworkNodes.csv")
 
-# Read the CSV file containing network edges data from a URL
-df_edges <- read.csv("./data/AfricaNetworkEdges.csv")
+# Read the CSV file containing network nodes data from a URL
+df_edges <- read.csv("https://github.com/CrmnCA/nets4gis/raw/main/data/AfricaNetworkEdges.csv")
 ```
 
 We can then create an undirected graph as an igraph object from the data frames corresponding to the nodes and edges:
